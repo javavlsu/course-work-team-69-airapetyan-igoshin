@@ -1,285 +1,166 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {Post} from "../../components/Post";
 import {Post as PostType} from "../../utils/globalTypes";
-import {styled} from "@mui/material";
+import {
+  AsideToggleButton,
+  AvatarBlock,
+  BlogAvatar, BlogContentWrapper,
+  BlogDescription,
+  BlogName, BlogPostsColumn, BlogPostsContainer, BlogPostsWrapper,
+  BlogPreview,
+  BlogWrapper, ConfigBlock, ConfigBlockHeader, ConfigBlockLabel, ConfigBlockRow, ConfigContainer,
+  PreviewContainer, StatisticsBlock, StatisticsCount, StatisticsItem, ToolsItem, ToolsPanel
+} from './Blog.styled';
+import {observer} from "mobx-react-lite";
+import designStore from "../../store/designStore";
+import blogStore from "../../store/blogStore";
+import EditIcon from '@mui/icons-material/Edit';
+import {AsideMenu} from "../../components/AsideMenu";
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import {Box} from "@mui/material";
+import {ConfigSmartValue} from "./components/ConfigSmartValue";
+import { ConfigNode } from './components/ConfigNode';
 
-const BlogWrapper = styled('section')`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-`
+function parseToChunks<T>(arr: T[], columns: number): T[][] {
+  const output: T[][] = []
 
-interface PreviewOptions {height: number, horizontal: string, vertical: string}
-const BlogPreview = styled('div')<PreviewOptions>`
-  min-height: ${({ height }) => height }vh; // Если не прокатит то min-height
-  width: 100%;
-  display: flex;
-  justify-content: ${({ horizontal }) => horizontal };
-  align-items: ${({ vertical }) => vertical };
-  background: #9A9A9A;
-`
-const previewOptions: PreviewOptions = {
-  height: 50,
-  horizontal: 'center',
-  vertical: 'center',
-}
+  arr.forEach((el, index) => {
+    if (output[index % columns]) {
+      output[index % columns].push(el)
+    } else {
+      output[index % columns] = []
+      output[index % columns].push(el)
+    }
+  })
 
-interface PreviewContainerOptions {
-  horizontal: string,
-  gap: number;
-}
-const PreviewContainer = styled('div')<PreviewContainerOptions>`
-  display: flex;
-  flex-direction: column;
-  align-items: ${({ horizontal }) => horizontal };
-  gap: ${({ gap }) => gap }px;
-`
-const previewContainerOptions: PreviewContainerOptions = {
-  horizontal: 'center',
-  gap: 15,
+  return output
 }
 
-interface AvatarBlockOptions {
-  horizontal: string,
-}
-const AvatarBlock = styled('div')<AvatarBlockOptions>`
-  width: 100%;
-  display: flex;
-  justify-content: ${({ horizontal }) => horizontal };
-  
-`
-const avatarBlockOptions: AvatarBlockOptions = {
-  horizontal: 'center',
-}
-
-interface BlogAvatarOptions {
-  height: number,
-  width: number,
-  borderRadius: string,
-}
-const BlogAvatar = styled('img')<BlogAvatarOptions>`
-  height: ${({ height }) => height }px;
-  width: ${({ width }) => width }px;
-  border-radius: ${({ borderRadius }) => borderRadius };
-  background: #D9D9D9;
-`
-const blogAvatarOptions: BlogAvatarOptions = {
-  height: 100,
-  width: 100,
-  borderRadius: '100%',
-}
-
-interface BlogNameOptions {
-  fontSize: number;
-  color: string;
-  textTransform: string;
-  textDecoration: string;
-  fontStyle: string;
-  margin: string;
-}
-const BlogName = styled('h2')<BlogNameOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  text-transform: ${({ textTransform }) => textTransform };
-  text-decoration: ${({ textDecoration }) => textDecoration };
-  font-style: ${({ fontStyle }) => fontStyle };
-  margin: ${({ margin }) => margin };
-`
-const blogNameOptions: BlogNameOptions = {
-  fontSize: 20,
-  color: '#fff',
-  textTransform: 'capitalize',
-  textDecoration: 'none',
-  fontStyle: 'none',
-  margin: '0',
-}
-
-interface BlogDescriptionOptions {
-  fontSize: number;
-  color: string;
-  textTransform: string;
-  textDecoration: string;
-  fontStyle: string;
-  margin: string;
-}
-const BlogDescription = styled('h2')<BlogDescriptionOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  text-transform: ${({ textTransform }) => textTransform };
-  text-decoration: ${({ textDecoration }) => textDecoration };
-  font-style: ${({ fontStyle }) => fontStyle };
-  margin: ${({ margin }) => margin };
-`
-const blogDescriptionOptions: BlogDescriptionOptions = {
-  fontSize: 14,
-  color: '#fff',
-  textTransform: 'capitalize',
-  textDecoration: 'none',
-  fontStyle: 'none',
-  margin: '0',
-}
-
-interface StatisticsBlockOptions {
-  direction: string,
-  horizontal: string,
-  vertical: string,
-  gap: number,
-}
-const StatisticsBlock = styled('div')<StatisticsBlockOptions>`
-  display: flex;
-  flex-direction: ${({ direction }) => direction };
-  justify-content: ${(props) => props.direction === 'column' ? props.vertical : props.horizontal };
-  align-items: ${(props) => props.direction === 'column' ? props.horizontal : props.vertical };
-  gap: ${({ gap }) => gap }px;
-`
-const statisticsBlockOptions: StatisticsBlockOptions = {
-  direction: 'row',
-  horizontal: 'start',
-  vertical: 'center',
-  gap: 20,
-}
-
-interface StatisticsItemOptions {
-  direction: string,
-  horizontal: string,
-  vertical: string,
-  gap: number,
-}
-const StatisticsItem = styled('div')<StatisticsItemOptions>`
-  display: flex;
-  flex-direction: ${({ direction }) => direction };
-  justify-content: ${(props) => props.direction === 'column' ? props.vertical : props.horizontal };
-  align-items: ${(props) => props.direction === 'column' ? props.horizontal : props.vertical };
-  gap: ${({ gap }) => gap }px;
-  font-size: 12px;
-`
-const statisticsItemOptions: StatisticsItemOptions = {
-  direction: 'row',
-  horizontal: 'start',
-  vertical: 'center',
-  gap: 5,
-}
-
-interface StatisticsCountOptions {
-  fontSize: number,
-  color: string,
-  fontWeight: number,
-}
-const StatisticsCount = styled('span')<StatisticsCountOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  font-weight: ${({ fontWeight }) => fontWeight };
-`
-
-interface StatisticsCountsOptions {
-  subscribers: StatisticsCountOptions,
-  rating: StatisticsCountOptions,
-  posts: StatisticsCountOptions,
-}
-
-const statisticsCountsOptions: StatisticsCountsOptions = {
-  subscribers: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: 700,
-  },
-  rating: {
-    fontSize: 14,
-    color: '#166F00',
-    fontWeight: 700,
-  },
-  posts: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: 700,
-  }
-}
-
-const BlogPostsWrapper = styled('div')`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-`
-
-interface BlogPostsOptions {
-  width: string,
-  columns: number,
-}
-const BlogPostsContainer = styled('div')<BlogPostsOptions>`
-  width: ${({ width }) => width };
-  display: grid;
-  grid-template: 1fr / repeat(${({ columns }) => columns}, 1fr);
-  column-gap: 40px;
-  row-gap: 40px;
-  margin: 50px 0;
-`
-const blogPostsOptions: BlogPostsOptions = {
-  columns: 2,
-  width: '80%',
-}
-
-export const Blog = () => {
+const BlogComponent = () => {
   const posts: PostType[] = [
-    {
-      id: 1,
-      header: 'Заголовок',
-      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint quia officia a expedita officiis. Labore quis modi at iure beatae pariatur sapiente est accusantium unde tempore debitis necessitatibus, ipsam voluptate delectus! Modi suscipit quas vitae laborum deserunt magni consectetur rem consequatur possimus, cupiditate veritatis, qui obcaecati ea officiis, quo illo laboriosam amet quasi repudiandae tenetur asperiores aut mollitia! Dolorem molestias minima perspiciatis, expedita exercitationem ea quam, iure numquam est magnam accusamus amet consectetur quibusdam laborum non in iste nemo laboriosam incidunt? Consequuntur totam velit nemo facilis nulla quisquam quibusdam, aut soluta quia maiores optio sed officia! Maiores accusamus aut adipisci.',
-      picture: '',
-      rating: 145,
-      views: 1500
-    },
-    {
-      id: 2,
-      header: 'Заголовок',
-      description: 'Description...',
-      picture: '',
-      rating: 145,
-      views: 1500
-    },
-    {
-      id: 3,
-      header: 'Заголовок',
-      description: 'Description...',
-      picture: '',
-      rating: 145,
-      views: 1500
-    },
+      {
+        id: 1,
+        header: 'Заголовок',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint quia officia a expedita officiis. Labore quis modi at iure beatae pariatur sapiente est accusantium unde tempore debitis necessitatibus, ipsam voluptate delectus! Modi suscipit quas vitae laborum deserunt magni consectetur rem consequatur possimus, cupiditate veritatis, qui obcaecati ea officiis, quo illo laboriosam amet quasi repudiandae tenetur asperiores aut mollitia! Dolorem molestias minima perspiciatis, expedita exercitationem ea quam, iure numquam est magnam accusamus amet consectetur quibusdam laborum non in iste nemo laboriosam incidunt? Consequuntur totam velit nemo facilis nulla quisquam quibusdam, aut soluta quia maiores optio sed officia! Maiores accusamus aut adipisci.',
+        picture: '',
+        rating: 145,
+        views: 1500
+      },
+      {
+        id: 2,
+        header: 'Заголовок',
+        description: 'Description...',
+        picture: '',
+        rating: 145,
+        views: 1500
+      },
+      {
+        id: 3,
+        header: 'Заголовок',
+        description: 'accusamus aut adipisci.',
+        picture: '',
+        rating: 145,
+        views: 1500
+      },
+      {
+        id: 4,
+        header: 'Заголовок',
+        description: 'Description...',
+        picture: '',
+        rating: 145,
+        views: 1500
+      }
   ]
+  const [isAsideOpen, setIsAsideOpen] = useState(false)
+
+  const chunkedPosts = useMemo(() => {
+    return parseToChunks(posts, designStore.config.blogPostsOptions.columns)
+  }, [posts])
+
+  const turnEditMode = () => {
+    blogStore.isEditMode = !blogStore.isEditMode
+  }
+
+  const toggleAsideMenu = () => {
+    setIsAsideOpen(!isAsideOpen)
+  }
+
   return (
     <BlogWrapper>
-      <BlogPreview {...previewOptions}>
-        <PreviewContainer {...previewContainerOptions}>
-          <AvatarBlock {...avatarBlockOptions}>
-            <BlogAvatar {...blogAvatarOptions} />
+      <BlogPreview {...designStore.config.previewOptions}>
+        {
+          blogStore.isOwnBlog && (
+            <ToolsPanel>
+              <ToolsItem onClick={turnEditMode}>
+                <EditIcon sx={{
+                  height: '100%',
+                }}/>
+              </ToolsItem>
+            </ToolsPanel>
+          )
+        }
+        <PreviewContainer {...designStore.config.previewContainerOptions}>
+          <AvatarBlock {...designStore.config.avatarBlockOptions}>
+            <BlogAvatar {...designStore.config.blogAvatarOptions} />
           </AvatarBlock>
-          <BlogName {...blogNameOptions}>Название блога</BlogName>
-          <BlogDescription {...blogDescriptionOptions}>Описание...</BlogDescription>
-          <StatisticsBlock {...statisticsBlockOptions}>
-            <StatisticsItem {...statisticsItemOptions}>
-              <StatisticsCount {...statisticsCountsOptions.subscribers}>7456</StatisticsCount>Подписчиков
+          <BlogName {...designStore.config.blogNameOptions}>Название блога</BlogName>
+          <BlogDescription {...designStore.config.blogDescriptionOptions}>Описание...</BlogDescription>
+          <StatisticsBlock {...designStore.config.statisticsBlockOptions}>
+            <StatisticsItem {...designStore.config.statisticsItemOptions}>
+              <StatisticsCount {...designStore.config.statisticsCountsOptions.subscribers}>7456</StatisticsCount>Подписчиков
             </StatisticsItem>
-            <StatisticsItem {...statisticsItemOptions}>
-              <StatisticsCount {...statisticsCountsOptions.rating}>145</StatisticsCount>Рейтинг
+            <StatisticsItem {...designStore.config.statisticsItemOptions}>
+              <StatisticsCount {...designStore.config.statisticsCountsOptions.rating}>145</StatisticsCount>Рейтинг
             </StatisticsItem>
-            <StatisticsItem {...statisticsItemOptions}>
-              <StatisticsCount {...statisticsCountsOptions.posts}>45</StatisticsCount>Постов
+            <StatisticsItem {...designStore.config.statisticsItemOptions}>
+              <StatisticsCount {...designStore.config.statisticsCountsOptions.posts}>45</StatisticsCount>Постов
             </StatisticsItem>
           </StatisticsBlock>
         </PreviewContainer>
       </BlogPreview>
 
-      <BlogPostsWrapper>
-        <BlogPostsContainer {...blogPostsOptions}>
-          {
-            posts.map((post) => (
-              <Post post={post} />
-            ))
-          }
-        </BlogPostsContainer>
-      </BlogPostsWrapper>
+      <BlogContentWrapper isEditMode={ blogStore.isEditMode }>
+        {
+          blogStore.isEditMode && (
+            <AsideMenu isOpen={ isAsideOpen }>
+              <Box sx={{display: 'flex', width: '100%', justifyContent: 'end', cursor: 'pointer'}}>
+                <AsideToggleButton onClick={ toggleAsideMenu }>
+                  { isAsideOpen ? <ArrowCircleLeftIcon /> : <ArrowCircleRightIcon /> }
+                </AsideToggleButton>
+              </Box>
+              {
+                isAsideOpen && (
+                  <ConfigContainer>
+                    {
+                      Object.entries(designStore.config).map(([objKey, objValue]) => (
+                        <ConfigNode key={objKey} objKey={objKey} objValue={objValue} />
+                      ))
+                    }
+                  </ConfigContainer>
+                )
+              }
+            </AsideMenu>
+          )
+        }
+        <BlogPostsWrapper isAsideOpen={ blogStore.isEditMode && isAsideOpen }>
+          <BlogPostsContainer {...designStore.config.blogPostsOptions}>
+            {
+              chunkedPosts.map((_, index) => (
+                <BlogPostsColumn key={index}>
+                  {
+                    chunkedPosts[index].map((post) => (
+                      <Post post={post} key={post.id} />
+                    ))
+                  }
+                </BlogPostsColumn>
+              ))
+            }
+          </BlogPostsContainer>
+        </BlogPostsWrapper>
+      </BlogContentWrapper>
     </BlogWrapper>
   );
 };
+
+export const Blog = observer(BlogComponent)
