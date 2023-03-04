@@ -34,7 +34,7 @@ const layouts: Layout[] = [
         component: <PostPage />
       },
       {
-        path: 'blog',
+        path: 'blog/:id',
         component: <Blog />
       },
       {

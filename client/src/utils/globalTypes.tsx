@@ -1,3 +1,11 @@
+import {
+  AvatarBlockOptions,
+  BlogAvatarOptions, BlogDescriptionOptions,
+  BlogNameOptions, BlogPostsOptions,
+  PreviewContainerOptions,
+  PreviewOptions, StatisticsBlockOptions, StatisticsCountsOptions, StatisticsItemOptions
+} from "../pages/Blog/Blog.types";
+
 export interface Post {
   id: number,
   header: string,
@@ -14,4 +22,17 @@ export interface Blog {
   subscribers: number,
   rating: number,
   picture: string,
+}
+
+export interface IDesignConfig {
+  previewOptions: PreviewOptions,
+  previewContainerOptions: PreviewContainerOptions,
+  avatarBlockOptions: AvatarBlockOptions,
+  blogAvatarOptions: BlogAvatarOptions,
+  blogNameOptions: BlogNameOptions,
+  blogDescriptionOptions: BlogDescriptionOptions,
+  statisticsBlockOptions: StatisticsBlockOptions,
+  statisticsItemOptions: StatisticsItemOptions,
+  statisticsCountsOptions: StatisticsCountsOptions,
+  blogPostsOptions: BlogPostsOptions,
 }
