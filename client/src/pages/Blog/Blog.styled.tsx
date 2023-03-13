@@ -15,7 +15,7 @@ export const BlogWrapper = styled('section')`
   overflow-y: auto;
 `
 
-export const BlogPreview = styled('div')<PreviewOptions>`
+export const BlogPreviewWrapper = styled('div')<PreviewOptions>`
   min-height: ${({ height }) => height }vh;
   width: 100%;
   display: flex;
@@ -102,7 +102,7 @@ export const BlogPostsContainer = styled('div')<BlogPostsOptions>`
   row-gap: 40px;
   margin: 50px 0;
 `
-export const BlogPostsColumn = styled('div')`
+export const PostsColumn = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -142,12 +142,12 @@ export const AsideToggleButton = styled('div')`
 `
 
 export const ConfigContainer = styled('div')`
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: 5px;
 `
 
 export const ConfigBlock = styled('div')`
@@ -167,6 +167,7 @@ export const ConfigBlockRow = styled('div')`
   align-items: center;
   gap: 5px;
   margin-bottom: 5px;
+  padding: 0 16px;
 `
 
 export const ConfigBlockLabel = styled('p')`

@@ -6,7 +6,7 @@ import {
   PreviewOptions, StatisticsBlockOptions, StatisticsCountsOptions, StatisticsItemOptions
 } from "../pages/Blog/Blog.types";
 
-export interface Post {
+export interface IPost {
   id: number,
   header: string,
   description: string,
