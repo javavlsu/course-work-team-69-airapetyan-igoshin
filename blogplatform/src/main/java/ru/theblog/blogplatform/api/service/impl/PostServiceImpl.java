@@ -7,6 +7,9 @@ import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.repository.PostRepository;
 import ru.theblog.blogplatform.api.service.PostService;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -23,4 +26,10 @@ public class PostServiceImpl implements PostService {
     public Post getPost(Long id) {
         return repository.findById(id).get();
     }
+
+    @Override
+    public List<Post> getPosts(LocalDateTime from, LocalDateTime to) {
+        return repository.findByDateAfterAndDateBefore(from, to);
+    }
+
 }
