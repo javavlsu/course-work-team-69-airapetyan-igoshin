@@ -26,6 +26,14 @@ public class User {
     private LocalDate birthdate;
 
     @NonNull
+    @Column(nullable = false)
+    private String email;
+
+    @NonNull
+    @Column(nullable = false)
+    private String password;
+
+    @NonNull
     @Column(name="registration_date", nullable = false)
     private LocalDate registrationDate;
 

@@ -1,4 +1,4 @@
-package ru.theblog.blogplatform.api.controller.Params;
+package ru.theblog.blogplatform.api.controller.params;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -23,5 +23,10 @@ public class RoleSystem {
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
+    public RoleSystem(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     protected RoleSystem() { }
 }
