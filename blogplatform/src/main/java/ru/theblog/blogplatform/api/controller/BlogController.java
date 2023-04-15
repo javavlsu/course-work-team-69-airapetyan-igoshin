@@ -13,7 +13,7 @@ import ru.theblog.blogplatform.api.service.PostService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/api/blog")
 @RequiredArgsConstructor
 public class BlogController {
 
