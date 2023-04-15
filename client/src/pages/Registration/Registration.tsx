@@ -47,7 +47,6 @@ export const Registration = () => {
       <LoginTextFields>
         <TextField {...register('email')} label="E-mail"/>
         <TextField {...register('name')} label="Ваше имя"/>
-        <TextField {...register('birthdate')} type="date" label="Дата рождения"/>
         <FormControl variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
