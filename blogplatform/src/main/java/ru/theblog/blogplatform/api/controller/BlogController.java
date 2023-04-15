@@ -2,6 +2,7 @@ package ru.theblog.blogplatform.api.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.theblog.blogplatform.api.controller.params.PostParams;
 import ru.theblog.blogplatform.api.controller.params.UserForm;
@@ -20,7 +21,7 @@ public class BlogController {
     private final PostService _postService;
 
     @GetMapping("/getPosts")
-    //@PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Post> getPosts(@Valid PostParams s) {
         return _postService.getPosts(s.getFrom(), s.getTo());
     }
