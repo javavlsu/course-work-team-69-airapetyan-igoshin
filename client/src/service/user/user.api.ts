@@ -1,5 +1,5 @@
 import ky from "ky";
-import {LoginData, LoginResponseData} from "./user.types";
+import {LoginData, LoginResponseData, RegistrationData} from "./user.types";
 const PREFIX_API = 'api'
 const origin = 'http://localhost:8080'
 
@@ -16,6 +16,15 @@ export const getLoginData = async () => {
 export const login = async (json: LoginData) => {
   try {
     return await ky.post(`/${PREFIX_API}/login`, { json })
+
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const register = async (json: RegistrationData) => {
+  try {
+    return await ky.post(`/${PREFIX_API}/registration`, { json })
 
   } catch (e) {
     console.error(e)

@@ -2,33 +2,56 @@ import React, {FormEvent, useState} from 'react';
 import {FormHeader, LoginForm, LoginTextFields} from "../../components/Login/Login.styled";
 import {Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useForm} from "react-hook-form";
+import {LoginData, RegistrationData} from "../../service/user";
+import {useNavigate} from "react-router-dom";
+import User from "../../domain/User";
 
 export const Registration = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showPasswordRepeat, setShowPasswordRepeat] = useState(false)
+  const [repeatedPassword, setRepeatedPassword] = useState('')
+  const { register, handleSubmit } = useForm<RegistrationData>()
+  const navigate = useNavigate()
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
+  }
+  const handleRepeatedPassword = (value: string) => {
+    setRepeatedPassword(value)
   }
   const handleClickShowPasswordRepeat = () => {
     setShowPasswordRepeat(!showPasswordRepeat)
   }
 
-  const submit = (e: FormEvent) => {
-    e.preventDefault()
-  }
+  const submit = handleSubmit(async data => {
+    if (data.password !== repeatedPassword) {
+      console.log('ПАРОЛИ НЕ СОВПАДАЮТ!')
+      return
+    }
+
+    const response = await User.register(data)
+    console.log(response)
+
+    if (!response?.ok) {
+      console.error('Неверный логин или пароль!')
+    }
+
+    navigate('/login')
+
+  })
 
   return (
     <LoginForm onSubmit={submit}>
       <FormHeader>Регистрация</FormHeader>
       <LoginTextFields>
-        <TextField label="Логин"/>
-        <TextField label="Ваше имя"/>
-        <TextField type="email" label="E-mail"/>
+        <TextField {...register('email')} label="E-mail"/>
+        <TextField {...register('name')} label="Ваше имя"/>
         <FormControl variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
             id="password"
+            {...register('password')}
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
@@ -44,10 +67,12 @@ export const Registration = () => {
           />
         </FormControl>
         <FormControl variant="outlined">
-          <InputLabel htmlFor="password-repeat">Password</InputLabel>
+          <InputLabel htmlFor="password-repeat">repeat password</InputLabel>
           <OutlinedInput
             id="password-repeat"
             type={showPasswordRepeat ? 'text' : 'password'}
+            value={repeatedPassword}
+            onChange={(v) => handleRepeatedPassword(v.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -58,11 +83,11 @@ export const Registration = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="repeat password"
           />
         </FormControl>
       </LoginTextFields>
-      <Button>Зарегистрироваться</Button>
+      <Button type="submit">Зарегистрироваться</Button>
     </LoginForm>
   );
 };
