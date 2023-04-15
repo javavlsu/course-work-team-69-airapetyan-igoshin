@@ -30,7 +30,7 @@ public class SecurityConfig {
                  .requestMatchers("/**").permitAll()
                  .and().logout(logout ->
                          logout.deleteCookies("JSESSIONID"))
-                 .formLogin()
+                 .formLogin().loginProcessingUrl("/api/login")
                  .and().build();
                  //.authorizeHttpRequests().requestMatchers("/blog/**").authenticated()
                  //.and().formLogin()
