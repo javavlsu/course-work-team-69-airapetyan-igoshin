@@ -26,8 +26,8 @@ public class BlogController {
         return _postService.getPosts(s.getFrom(), s.getTo());
     }
 
-    @PostMapping("/addUser")
-    public String addUser(@RequestBody UserForm user) {
+    @PostMapping("/registration")
+    public String registration(@RequestBody UserForm user) {
         _blogService.addUser(user);
         return "Successful";
     }
