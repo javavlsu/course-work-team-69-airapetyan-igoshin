@@ -20,19 +20,6 @@ public class SecurityConfig {
     @Bean
     //authentication
     public UserDetailsService userDetailsService() {
-/*
-        UserDetails admin = User.withUsername("Adm")
-                .password(encoder.encode("123"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user = User.withUsername("Usr")
-                .password(encoder.encode("1234"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
-*/
         return new UserInfoDetailService();
     }
 
@@ -41,7 +28,9 @@ public class SecurityConfig {
          return http.csrf().disable()
                  .authorizeHttpRequests()
                  .requestMatchers("/**").permitAll()
-                 .and().formLogin()
+                 .and().logout(logout ->
+                         logout.deleteCookies("JSESSIONID"))
+                 .formLogin()
                  .and().build();
                  //.authorizeHttpRequests().requestMatchers("/blog/**").authenticated()
                  //.and().formLogin()
