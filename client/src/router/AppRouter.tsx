@@ -9,6 +9,7 @@ import {Profile} from "../pages/Profile";
 import {LoginLayout} from "../layouts/LoginLayout";
 import {Login} from "../pages/Login";
 import {Registration} from "../pages/Registration";
+import {PostEdit} from "../pages/PostEdit";
 
 interface Route {
   path: string,
@@ -44,6 +45,10 @@ const layouts: Layout[] = [
       {
         path: '/profile',
         component: <Profile />
+      },
+      {
+        path: '/post-edit',
+        component: <PostEdit />
       }
     ]
   },
