@@ -21,8 +21,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @NonNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate birthdate;
 
     @NonNull
@@ -53,4 +52,12 @@ public class User {
     private List<UserBlogRole> userBlogRoles;
 
     protected User() { }
+
+    public User(@NonNull String name, LocalDate birthdate, @NonNull String email, @NonNull String password, @NonNull LocalDate registrationDate) {
+        this.name = name;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.password = password;
+        this.registrationDate = registrationDate;
+    }
 }

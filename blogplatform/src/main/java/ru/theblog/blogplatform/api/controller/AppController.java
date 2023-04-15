@@ -13,9 +13,9 @@ import ru.theblog.blogplatform.api.service.PostService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/blog")
+@RequestMapping("/api")
 @RequiredArgsConstructor
-public class BlogController {
+public class AppController {
 
     private final BlogService _blogService;
     private final PostService _postService;
