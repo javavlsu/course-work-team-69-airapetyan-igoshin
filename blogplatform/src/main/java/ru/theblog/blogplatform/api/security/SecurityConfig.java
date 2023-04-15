@@ -1,5 +1,6 @@
 package ru.theblog.blogplatform.api.security;
 
+import jakarta.servlet.http.Cookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -28,9 +29,17 @@ public class SecurityConfig {
          return http.csrf().disable()
                  .authorizeHttpRequests()
                  .requestMatchers("/**").permitAll()
-                 .and().logout(logout ->
-                         logout.deleteCookies("JSESSIONID"))
-                 .formLogin().loginProcessingUrl("/api/login")
+                 .and().logout(logout -> logout
+                         .deleteCookies("Role")
+                         .logoutUrl("/api/logout"))
+
+                 .formLogin()
+                         .loginProcessingUrl("/api/login")
+                         .successHandler((request, response, authentication) ->
+                             response.addCookie(new Cookie("Role",
+                                     authentication.getAuthorities().stream().findFirst().get().getAuthority())
+                         ))
+
                  .and().build();
                  //.authorizeHttpRequests().requestMatchers("/blog/**").authenticated()
                  //.and().formLogin()
