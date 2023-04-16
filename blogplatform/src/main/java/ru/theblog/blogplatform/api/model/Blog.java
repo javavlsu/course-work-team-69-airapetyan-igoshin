@@ -15,12 +15,15 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "blog")
-    private List<UserBlogRole> userBlogRoles;
-
     @NonNull
     @Column(nullable = false)
     private String name;
+
+    @Column
+    private String description;
+
+    @OneToMany(mappedBy = "blog")
+    private List<UserBlogRole> userBlogRoles;
 
     protected Blog() { }
 }

@@ -14,6 +14,9 @@ public class RoleBlog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String name;
+
     @OneToMany(mappedBy = "role")
     private List<UserBlogRole> userBlogRoles;
 }

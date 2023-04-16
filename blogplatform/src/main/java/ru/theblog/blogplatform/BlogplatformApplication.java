@@ -12,11 +12,13 @@ public class BlogplatformApplication {
 
 }
 
-//@Configuration
-//class WebConfiguration implements WebMvcConfigurer {
+/*
+@Configuration
+class WebConfiguration implements WebMvcConfigurer {
 
-	//@Override
-	//public void addCorsMappings(CorsRegistry registry) {
-		//registry.addMapping("/**").allowedMethods("*");
-	//}
-//}
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("*");
+	}
+}
+*/
