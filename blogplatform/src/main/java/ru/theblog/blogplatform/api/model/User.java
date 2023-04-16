@@ -28,6 +28,9 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column
+    private String status;
+
     @NonNull
     @Column(nullable = false)
     private String password;
