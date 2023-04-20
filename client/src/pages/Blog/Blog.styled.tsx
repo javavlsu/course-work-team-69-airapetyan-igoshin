@@ -1,11 +1,16 @@
-import {styled} from "@mui/material";
+import { styled } from '@mui/material'
 import {
   AvatarBlockOptions,
-  BlogAvatarOptions, BlogDescriptionOptions,
-  BlogNameOptions, BlogPostsOptions,
+  BlogAvatarOptions,
+  BlogDescriptionOptions,
+  BlogNameOptions,
+  BlogPostsOptions,
   PreviewContainerOptions,
-  PreviewOptions, StatisticsBlockOptions, StatisticsCountOptions, StatisticsItemOptions
-} from "./Blog.types";
+  PreviewOptions,
+  StatisticsBlockOptions,
+  StatisticsCountOptions,
+  StatisticsItemOptions
+} from './Blog.types'
 
 export const BlogWrapper = styled('section')`
   display: flex;
@@ -16,92 +21,104 @@ export const BlogWrapper = styled('section')`
 `
 
 export const BlogPreviewWrapper = styled('div')<PreviewOptions>`
-  min-height: ${({ height }) => height }vh;
+  min-height: ${({ height }) => height}vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: #9A9A9A;
+  background: #9a9a9a;
 `
+
 export const PreviewContainer = styled('div')<PreviewContainerOptions>`
   display: flex;
   flex-direction: column;
-  align-items: ${({ horizontal }) => horizontal };
-  gap: ${({ gap }) => gap }px;
+  align-items: ${({ horizontal }) => horizontal};
+  gap: ${({ gap }) => gap}px;
   flex-grow: 1;
-  justify-content: ${({ vertical }) => vertical };
-  align-items: ${({ horizontal }) => horizontal };
+  justify-content: ${({ vertical }) => vertical};
+  align-items: ${({ horizontal }) => horizontal};
 `
+
 export const AvatarBlock = styled('div')<AvatarBlockOptions>`
   width: 100%;
   display: flex;
-  justify-content: ${({ horizontal }) => horizontal };
-  
+  justify-content: ${({ horizontal }) => horizontal};
 `
+
 export const BlogAvatar = styled('img')<BlogAvatarOptions>`
-  height: ${({ height }) => height }px;
-  width: ${({ width }) => width }px;
-  border-radius: ${({ borderRadius }) => borderRadius };
-  background: #D9D9D9;
+  height: ${({ height }) => height}px;
+  width: ${({ width }) => width}px;
+  border-radius: ${({ borderRadius }) => borderRadius};
+  background: #d9d9d9;
 `
+
 export const BlogName = styled('h2')<BlogNameOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  text-transform: ${({ textTransform }) => textTransform };
-  text-decoration: ${({ textDecoration }) => textDecoration };
-  font-style: ${({ fontStyle }) => fontStyle };
-  margin: ${({ margin }) => margin };
+  font-size: ${({ fontSize }) => fontSize}px;
+  color: ${({ color }) => color};
+  text-transform: ${({ textTransform }) => textTransform};
+  text-decoration: ${({ textDecoration }) => textDecoration};
+  font-style: ${({ fontStyle }) => fontStyle};
+  margin: ${({ margin }) => margin};
 `
+
 export const BlogDescription = styled('h2')<BlogDescriptionOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  text-transform: ${({ textTransform }) => textTransform };
-  text-decoration: ${({ textDecoration }) => textDecoration };
-  font-style: ${({ fontStyle }) => fontStyle };
-  margin: ${({ margin }) => margin };
+  font-size: ${({ fontSize }) => fontSize}px;
+  color: ${({ color }) => color};
+  text-transform: ${({ textTransform }) => textTransform};
+  text-decoration: ${({ textDecoration }) => textDecoration};
+  font-style: ${({ fontStyle }) => fontStyle};
+  margin: ${({ margin }) => margin};
 `
+
 export const StatisticsBlock = styled('div')<StatisticsBlockOptions>`
   display: flex;
-  flex-direction: ${({ direction }) => direction };
-  justify-content: ${(props) => props.direction === 'column' ? props.vertical : props.horizontal };
-  align-items: ${(props) => props.direction === 'column' ? props.horizontal : props.vertical };
-  gap: ${({ gap }) => gap }px;
+  flex-direction: ${({ direction }) => direction};
+  justify-content: ${(props) =>
+    props.direction === 'column' ? props.vertical : props.horizontal};
+  align-items: ${(props) =>
+    props.direction === 'column' ? props.horizontal : props.vertical};
+  gap: ${({ gap }) => gap}px;
 `
+
 export const StatisticsItem = styled('div')<StatisticsItemOptions>`
   display: flex;
-  flex-direction: ${({ direction }) => direction };
-  justify-content: ${(props) => props.direction === 'column' ? props.vertical : props.horizontal };
-  align-items: ${(props) => props.direction === 'column' ? props.horizontal : props.vertical };
-  gap: ${({ gap }) => gap }px;
+  flex-direction: ${({ direction }) => direction};
+  justify-content: ${(props) =>
+    props.direction === 'column' ? props.vertical : props.horizontal};
+  align-items: ${(props) =>
+    props.direction === 'column' ? props.horizontal : props.vertical};
+  gap: ${({ gap }) => gap}px;
   font-size: 12px;
 `
+
 export const StatisticsCount = styled('span')<StatisticsCountOptions>`
-  font-size: ${({ fontSize }) => fontSize }px;
-  color: ${({ color }) => color };
-  font-weight: ${({ fontWeight }) => fontWeight };
+  font-size: ${({ fontSize }) => fontSize}px;
+  color: ${({ color }) => color};
+  font-weight: ${({ fontWeight }) => fontWeight};
 `
 
 export const BlogContentWrapper = styled('div')<{ isEditMode: boolean }>`
   flex-grow: 1;
   width: 100%;
   display: grid;
-  grid-template: 1fr / ${({ isEditMode }) => isEditMode ? '32px' : 0} 238px 1fr;
+  grid-template: 1fr / ${({ isEditMode }) => (isEditMode ? '32px' : 0)} 238px 1fr;
 `
 
 export const BlogPostsWrapper = styled('div')<{ isAsideOpen: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
-  grid-column: ${({ isAsideOpen }) => isAsideOpen ? '3' : '2'} / -1;
+  grid-column: ${({ isAsideOpen }) => (isAsideOpen ? '3' : '2')} / -1;
 `
 
 export const BlogPostsContainer = styled('div')<BlogPostsOptions>`
-  width: ${({ width }) => width };
+  width: ${({ width }) => width};
   display: grid;
   grid-template: 1fr / repeat(${({ columns }) => columns}, 1fr);
   column-gap: 40px;
   row-gap: 40px;
   margin: 50px 0;
 `
+
 export const PostsColumn = styled('div')`
   display: flex;
   flex-direction: column;
@@ -123,8 +140,8 @@ export const ToolsItem = styled('div')`
   height: 100%;
   display: flex;
   min-width: 40px;
-  opacity: .5;
-  transition: .1s;
+  opacity: 0.5;
+  transition: 0.1s;
   cursor: pointer;
   &:hover {
     opacity: 1;
@@ -135,7 +152,7 @@ export const ToolsItem = styled('div')`
 export const AsideToggleButton = styled('div')`
   width: 32px;
   height: 32px;
-  background: #A8A8A8;
+  background: #a8a8a8;
   display: flex;
   justify-content: center;
   align-items: center;

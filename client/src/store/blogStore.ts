@@ -1,5 +1,4 @@
-import React from "react"
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable } from 'mobx'
 
 class BlogStore {
   isOwnBlog = true

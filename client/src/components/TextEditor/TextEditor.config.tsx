@@ -1,5 +1,10 @@
-import React from "react";
-import {FormatItalic, FormatBold, FormatUnderlined, Code} from "@mui/icons-material";
+import React from 'react'
+import {
+  FormatItalic,
+  FormatBold,
+  FormatUnderlined,
+  Code
+} from '@mui/icons-material'
 
 export const inlineStyles = [
   {
@@ -23,19 +28,19 @@ export const inlineStyles = [
 export const blockStyles = [
   {
     style: 'header-one',
-    label: 'Заголовок',
+    label: 'Заголовок'
   },
   {
     style: 'header-two',
-    label: 'Подзаголовок',
+    label: 'Подзаголовок'
   },
   {
     style: 'blockquote',
-    label: 'Цитата',
+    label: 'Цитата'
   },
   {
     style: 'unordered-list-item',
-    label: 'Лист (точки)',
+    label: 'Лист (точки)'
   },
   {
     style: 'ordered-list-item',

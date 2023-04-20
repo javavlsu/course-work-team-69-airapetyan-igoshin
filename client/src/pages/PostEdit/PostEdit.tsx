@@ -1,12 +1,11 @@
-import React from 'react';
-import {TextEditor} from "../../components/TextEditor";
-import {styled} from "@mui/material";
+import React from 'react'
+import { TextEditor } from '../../components/TextEditor'
+import { styled } from '@mui/material'
 
 const PageContainer = styled('div')`
   width: 80%;
   margin: 0 auto;
 `
-
 const EditArea = styled('div')`
   padding: 20px;
   border-radius: 10px;
@@ -20,5 +19,5 @@ export const PostEdit = () => {
         <TextEditor />
       </EditArea>
     </PageContainer>
-  );
-};
+  )
+}

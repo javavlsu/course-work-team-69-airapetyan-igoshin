@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
-import {styled, TextField} from "@mui/material";
+import React, { FC } from 'react'
+import { styled, TextField } from '@mui/material'
 
 interface ProfileInputProps {
-  type?: string,
-  placeholder: string,
-  isAsideOpen: boolean,
-  value: string,
+  type?: string
+  placeholder: string
+  isAsideOpen: boolean
+  value: string
 }
 
 const ProfileTextField = styled('p')`
@@ -14,18 +14,19 @@ const ProfileTextField = styled('p')`
   font-size: 16px;
 `
 
-export const ProfileInput:FC<ProfileInputProps> = ({ isAsideOpen, placeholder, type="text", value }) => {
+export const ProfileInput: FC<ProfileInputProps> = ({
+  isAsideOpen,
+  placeholder,
+  type = 'text',
+  value
+}) => {
   return (
     <>
-      {
-        isAsideOpen
-        ? (
-            <TextField placeholder={placeholder} type={type} value={value} />
-          )
-        : (
-            <ProfileTextField>{value}</ProfileTextField>
-          )
-      }
+      {isAsideOpen ? (
+        <TextField placeholder={placeholder} type={type} value={value} />
+      ) : (
+        <ProfileTextField>{value}</ProfileTextField>
+      )}
     </>
-  );
-};
+  )
+}

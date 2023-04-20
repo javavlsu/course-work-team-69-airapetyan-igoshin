@@ -13,5 +13,5 @@ export const translateConfig = {
   margin: 'Отступ',
   direction: 'Направление блоков (вниз или вправо)',
   fontWeight: 'Вес шрифта',
-  columns: 'Количество колонок',
+  columns: 'Количество колонок'
 }
