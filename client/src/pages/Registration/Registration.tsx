@@ -1,11 +1,23 @@
-import React, {FormEvent, useState} from 'react';
-import {FormHeader, LoginForm, LoginTextFields} from "../../components/Login/Login.styled";
-import {Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useForm} from "react-hook-form";
-import {LoginData, RegistrationData} from "../../service/user";
-import {useNavigate} from "react-router-dom";
-import User from "../../domain/User";
+import React, { useState } from 'react'
+import {
+  FormHeader,
+  LoginForm,
+  LoginTextFields
+} from '../../components/Login/Login.styled'
+import {
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useForm } from 'react-hook-form'
+import { RegistrationData } from '../../service/user'
+import { useNavigate } from 'react-router-dom'
+import User from '../../domain/User'
 
 export const Registration = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -17,20 +29,22 @@ export const Registration = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
+
   const handleRepeatedPassword = (value: string) => {
     setRepeatedPassword(value)
   }
+
   const handleClickShowPasswordRepeat = () => {
     setShowPasswordRepeat(!showPasswordRepeat)
   }
-
-  const submit = handleSubmit(async data => {
+  const submit = handleSubmit(async (data) => {
     if (data.password !== repeatedPassword) {
       console.log('ПАРОЛИ НЕ СОВПАДАЮТ!')
       return
     }
 
     const response = await User.register(data)
+
     console.log(response)
 
     if (!response?.ok) {
@@ -38,15 +52,14 @@ export const Registration = () => {
     }
 
     navigate('/login')
-
   })
 
   return (
     <LoginForm onSubmit={submit}>
       <FormHeader>Регистрация</FormHeader>
       <LoginTextFields>
-        <TextField {...register('email')} label="E-mail"/>
-        <TextField {...register('name')} label="Ваше имя"/>
+        <TextField {...register('email')} label="E-mail" />
+        <TextField {...register('name')} label="Ваше имя" />
         <FormControl variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
@@ -55,11 +68,8 @@ export const Registration = () => {
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff/> : <Visibility/>}
+                <IconButton onClick={handleClickShowPassword} edge="end">
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
@@ -75,11 +85,8 @@ export const Registration = () => {
             onChange={(v) => handleRepeatedPassword(v.target.value)}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPasswordRepeat}
-                  edge="end"
-                >
-                  {showPasswordRepeat ? <VisibilityOff/> : <Visibility/>}
+                <IconButton onClick={handleClickShowPasswordRepeat} edge="end">
+                  {showPasswordRepeat ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
@@ -89,5 +96,5 @@ export const Registration = () => {
       </LoginTextFields>
       <Button type="submit">Зарегистрироваться</Button>
     </LoginForm>
-  );
-};
+  )
+}

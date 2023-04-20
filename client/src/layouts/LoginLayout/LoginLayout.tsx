@@ -1,6 +1,6 @@
-import React from 'react';
-import {Outlet} from "react-router-dom";
-import {styled} from "@mui/material";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import { styled } from '@mui/material'
 
 const LoginLayoutWrapper = styled('section')`
   display: grid;
@@ -8,11 +8,10 @@ const LoginLayoutWrapper = styled('section')`
   width: 100%;
   height: 100vh;
 `
-
 const ContentWrapper = styled('div')`
   grid-column: 2;
   height: 100%;
-  background: #D9D9D9;
+  background: #d9d9d9;
   display: flex;
   align-items: center;
 `
@@ -24,5 +23,5 @@ export const LoginLayout = () => {
         <Outlet />
       </ContentWrapper>
     </LoginLayoutWrapper>
-  );
-};
+  )
+}

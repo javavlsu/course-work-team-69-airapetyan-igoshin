@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import {Blog as BlogType} from "../../utils/globalTypes";
-import {styled} from "@mui/material";
+import React, { FC } from 'react'
+import { Blog as BlogType } from '../../utils/globalTypes'
+import { styled } from '@mui/material'
 
 interface BlogCardProps {
-  blog: BlogType,
+  blog: BlogType
 }
 
 const BlogCardWrapper = styled('div')`
@@ -12,36 +12,32 @@ const BlogCardWrapper = styled('div')`
   align-items: center;
   border-radius: 10px;
   gap: 15px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   height: 100px;
   padding-right: 20px;
 `
-
 const BlogCardPicture = styled('img')`
   width: 100px;
   height: 100%;
   border-radius: 10px;
   background: #878787;
 `
-
 const BlogCardContent = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 15px;
   flex-grow: 1;
 `
-
+// color: ${({ theme }) => theme.palette.postColors.main};
 const BlogTitle = styled('h3')`
   margin: 0;
   font-size: 18px;
 `
-
 const BlogDescription = styled('p')`
   margin: 0;
   padding: 0;
   font-size: 12px;
 `
-
 const StatisticsBlock = styled('div')`
   height: 100%;
   display: flex;
@@ -51,19 +47,17 @@ const StatisticsBlock = styled('div')`
   gap: 5px;
   font-size: 12px;
 `
-
 const StatisticsItem = styled('div')`
   display: flex;
   align-items: center;
 `
-
-const StatisticsCount = styled('span')<{color: string}>`
-  color: ${({color}) => color};
+const StatisticsCount = styled('span')<{ color: string }>`
+  color: ${({ color }) => color};
   font-size: 16px;
   margin-left: 10px;
 `
 
-export const BlogCard:FC<BlogCardProps> = ({ blog }) => {
+export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   return (
     <BlogCardWrapper>
       <BlogCardPicture />
@@ -73,12 +67,14 @@ export const BlogCard:FC<BlogCardProps> = ({ blog }) => {
       </BlogCardContent>
       <StatisticsBlock>
         <StatisticsItem>
-          Подписчиков: <StatisticsCount color="blue">{blog.subscribers}</StatisticsCount>
+          Подписчиков:{' '}
+          <StatisticsCount color="blue">{blog.subscribers}</StatisticsCount>
         </StatisticsItem>
         <StatisticsItem>
-          Рейтинг: <StatisticsCount color="green">{blog.rating}</StatisticsCount>
+          Рейтинг:{' '}
+          <StatisticsCount color="green">{blog.rating}</StatisticsCount>
         </StatisticsItem>
       </StatisticsBlock>
     </BlogCardWrapper>
-  );
-};
+  )
+}

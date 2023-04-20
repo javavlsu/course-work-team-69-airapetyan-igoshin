@@ -1,28 +1,27 @@
-import React from "react"
-import {action, makeAutoObservable} from "mobx"
-import {IDesignConfig} from "../utils/globalTypes";
+import { action, makeAutoObservable } from 'mobx'
+import { IDesignConfig } from '../utils/globalTypes'
 
 class DesignStore {
   config: IDesignConfig = {
     previewOptions: {
       name: 'Превью блога',
-      height: 50,
+      height: 50
     },
     previewContainerOptions: {
       name: 'Содержимое превью',
       horizontal: 'center',
       vertical: 'center',
-      gap: 15,
+      gap: 15
     },
     avatarBlockOptions: {
       name: 'Позиция аватара',
-      horizontal: 'center',
+      horizontal: 'center'
     },
     blogAvatarOptions: {
       name: 'Аватар',
       height: 100,
       width: 100,
-      borderRadius: '100%',
+      borderRadius: '100%'
     },
     blogNameOptions: {
       name: 'Имя блога',
@@ -31,7 +30,7 @@ class DesignStore {
       textTransform: 'capitalize',
       textDecoration: 'none',
       fontStyle: 'none',
-      margin: '0',
+      margin: '0'
     },
     blogDescriptionOptions: {
       name: 'Описание блога',
@@ -40,21 +39,21 @@ class DesignStore {
       textTransform: 'capitalize',
       textDecoration: 'none',
       fontStyle: 'none',
-      margin: '0',
+      margin: '0'
     },
     statisticsBlockOptions: {
       name: 'Расположение статистики',
       direction: 'row',
       horizontal: 'start',
       vertical: 'center',
-      gap: 20,
+      gap: 20
     },
     statisticsItemOptions: {
       name: 'Элемент статистики',
       direction: 'row',
       horizontal: 'start',
       vertical: 'center',
-      gap: 5,
+      gap: 5
     },
     statisticsCountsOptions: {
       name: 'Цифры статистики',
@@ -63,48 +62,55 @@ class DesignStore {
         name: 'Подписчики',
         fontSize: 14,
         color: '#fff',
-        fontWeight: 700,
+        fontWeight: 700
       },
       rating: {
         name: 'Рейтинг',
         fontSize: 14,
         color: '#166F00',
-        fontWeight: 700,
+        fontWeight: 700
       },
       posts: {
         name: 'Посты',
         fontSize: 14,
         color: '#fff',
-        fontWeight: 700,
+        fontWeight: 700
       }
     },
     blogPostsOptions: {
       name: 'Кофигурация постов',
       columns: 2,
-      width: '70%',
+      width: '70%'
     }
   }
   constructor() {
     makeAutoObservable(this)
   }
 
-  handleDesignParam<T extends keyof IDesignConfig>(block: T | string, key: keyof IDesignConfig[T]) {
+  handleDesignParam<T extends keyof IDesignConfig>(
+    block: T | string,
+    key: keyof IDesignConfig[T]
+  ) {
     let path = this.config
 
     if (block.includes('.')) {
       block.split('.').forEach((_newBlock) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         path = path[_newBlock]
       })
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       path = path[block]
     }
 
     const handler = (newValue: any) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       path[key] = newValue
     }
+
     return action(handler)
   }
 }

@@ -1,22 +1,11 @@
-import ky from "ky";
-import {LoginData, LoginResponseData, RegistrationData} from "./user.types";
+import ky from 'ky'
+import { RegistrationData } from './user.types'
+
 const PREFIX_API = 'api'
-const origin = 'http://localhost:8080'
 
-export const getLoginData = async () => {
+export const login = async (body: FormData) => {
   try {
-    const response = await ky.get(`/api/login`)
-    return await response.json<LoginResponseData>()
-
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-export const login = async (json: LoginData) => {
-  try {
-    return await ky.post(`/${PREFIX_API}/login`, { json })
-
+    return await ky.post(`/${PREFIX_API}/login`, { body })
   } catch (e) {
     console.error(e)
   }
@@ -25,7 +14,14 @@ export const login = async (json: LoginData) => {
 export const register = async (json: RegistrationData) => {
   try {
     return await ky.post(`/${PREFIX_API}/registration`, { json })
+  } catch (e) {
+    console.error(e)
+  }
+}
 
+export const logout = async () => {
+  try {
+    return await ky.get(`/${PREFIX_API}/logout`)
   } catch (e) {
     console.error(e)
   }
