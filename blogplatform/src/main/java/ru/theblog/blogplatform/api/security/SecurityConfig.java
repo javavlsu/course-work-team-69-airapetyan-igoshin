@@ -44,7 +44,7 @@ public class SecurityConfig {
                                      var c = new Cookie("Role",
                                              authentication.getAuthorities().stream().findFirst().get().getAuthority());
                                      c.setPath("/");
-                                     c.setHttpOnly(true);
+                                     c.setHttpOnly(false);
                                      response.addCookie(c);
                                  }
                          )
