@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import ru.theblog.blogplatform.api.model.enums.ComplaintStatus;
+import ru.theblog.blogplatform.api.model.enums.ContentType;
 
 import java.time.LocalDateTime;
 

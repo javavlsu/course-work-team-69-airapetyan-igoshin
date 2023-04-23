@@ -54,6 +54,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserBlogRole> userBlogRoles;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserBlogPermission> permissions;
+
     protected User() { }
 
     public User(@NonNull String name, LocalDate birthdate, @NonNull String email, @NonNull String password, @NonNull LocalDate registrationDate) {

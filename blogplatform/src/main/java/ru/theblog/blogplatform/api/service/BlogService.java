@@ -1,6 +1,6 @@
 package ru.theblog.blogplatform.api.service;
 
-import ru.theblog.blogplatform.api.controller.params.UserForm;
+import ru.theblog.blogplatform.api.model.params.UserForm;
 import ru.theblog.blogplatform.api.model.Blog;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.BlogUserResult;

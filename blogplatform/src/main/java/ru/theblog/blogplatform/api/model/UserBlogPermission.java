@@ -4,25 +4,27 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import ru.theblog.blogplatform.api.model.enums.ReactionType;
+import ru.theblog.blogplatform.api.model.enums.PermissionType;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-public class Reaction {
+public class UserBlogPermission {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
+    @ManyToOne
+    private Blog blog;
+
+    @NonNull
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Post post;
-
     @NonNull
-    @Column(name = "reaction_type", nullable = false)
-    private ReactionType reactionType;
+    private PermissionType permission;
 
-    protected Reaction() { }
+    public UserBlogPermission() { }
 }

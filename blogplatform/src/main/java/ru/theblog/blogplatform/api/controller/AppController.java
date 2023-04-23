@@ -7,8 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import ru.theblog.blogplatform.api.controller.params.PostParams;
-import ru.theblog.blogplatform.api.controller.params.UserForm;
+import ru.theblog.blogplatform.api.model.dto.BlogResult;
+import ru.theblog.blogplatform.api.model.params.PostParams;
+import ru.theblog.blogplatform.api.model.params.UserForm;
 import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.dto.ProfileResult;
 import ru.theblog.blogplatform.api.service.BlogService;
@@ -53,5 +54,10 @@ public class AppController {
         result.blogs = _blogService.getUserBlogs(user);
 
         return new ResponseEntity<>(result, HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping("/blog/{blogId}")
+    public BlogResult blog() {
+        return null;
     }
 }

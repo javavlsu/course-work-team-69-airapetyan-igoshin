@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.theblog.blogplatform.api.controller.params.UserForm;
+import ru.theblog.blogplatform.api.model.params.UserForm;
 import ru.theblog.blogplatform.api.model.Blog;
 import ru.theblog.blogplatform.api.model.RoleSystem;
 import ru.theblog.blogplatform.api.model.User;
@@ -63,7 +63,7 @@ public class BlogServiceImpl implements BlogService {
             rItem.id = blog.getId();
             rItem.description = blog.getDescription();
             rItem.name = blog.getName();
-            rItem.role = role.getRole().getName();
+            rItem.role = role.getRole().name();
             //rItem.subscribers
             result.add(rItem);
         }
