@@ -5,7 +5,7 @@ import { AsideMenuWrapper } from './AsideMenu.style'
 export const AsideMenu: FC<AsideMenuProps> = ({
   isOpen,
   children,
-  background = '#D9D9D9'
+  background
 }) => {
   return (
     <AsideMenuWrapper background={background} isOpen={isOpen}>

@@ -4,7 +4,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
@@ -17,9 +18,16 @@ export const ExpansionPanel: FC<ExpansionPanelProps> = ({
   title,
   children
 }) => {
+  const theme = useTheme()
+
   return (
     <ExpansionPanelWrapper>
-      <Accordion>
+      <Accordion
+        sx={{
+          background: theme.appComponents.expansionPanel.background,
+          color: theme.appComponents.expansionPanel.color
+        }}
+      >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>{title}</Typography>
         </AccordionSummary>

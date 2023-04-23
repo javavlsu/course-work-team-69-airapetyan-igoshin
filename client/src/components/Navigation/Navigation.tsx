@@ -1,36 +1,29 @@
 import React, { FC } from 'react'
-import { Box, IconButton, styled, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { UserPreview } from '../UserPreviewDetails'
 import { AppButton } from '../AppButton'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import {
+  MenuIconButton,
+  BlogName,
+  NavigationWrapper
+} from './Navigation.styles'
 
 interface NavigationProps {
   toggleAside: () => void
 }
 
-const BlogName = styled(Link)`
-  text-decoration: none;
-  color: black;
-`
-
 export const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
   const navigate = useNavigate()
+  const theme = useTheme()
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '15px',
-        width: '100%',
-        margin: '0 50px 0 40px'
-      }}
-    >
-      <IconButton onClick={toggleAside} color="default">
+    <NavigationWrapper>
+      <MenuIconButton onClick={toggleAside}>
         <MenuIcon />
-      </IconButton>
+      </MenuIconButton>
       <BlogName to="/">
         <Typography variant="h5">CustomBlog</Typography>
       </BlogName>
@@ -44,10 +37,16 @@ export const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
         }}
       >
         <UserPreview />
-        <AppButton onClick={() => navigate('/post-edit')}>
+        <AppButton
+          sx={{
+            color: theme.appComponents.navbar.button.color,
+            background: theme.appComponents.navbar.button.background
+          }}
+          onClick={() => navigate('/post-edit')}
+        >
           <ControlPointIcon /> Создать
         </AppButton>
       </Box>
-    </Box>
+    </NavigationWrapper>
   )
 }

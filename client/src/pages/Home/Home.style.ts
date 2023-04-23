@@ -11,7 +11,7 @@ export const MenuBlock = styled('div')<{ isOpen: boolean }>`
       height: ${({ isOpen }) => (isOpen ? '1px' : 0)};
       width: 85%;
       position: absolute;
-      background: #fff;
+      background: ${({ theme }) => theme.appComponents.aside.dividerColor};
       bottom: -5px;
       left: 50%;
       transform: translateX(-50%);
@@ -22,7 +22,8 @@ export const MenuBlock = styled('div')<{ isOpen: boolean }>`
 export const MenuHeader = styled('p')`
   padding: 0;
   margin: 20px;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 700;
 `
 
 export const MenuButton = styled('button')<{ isOpen: boolean }>`
@@ -30,14 +31,16 @@ export const MenuButton = styled('button')<{ isOpen: boolean }>`
   height: 45px;
   display: flex;
   align-items: center;
-  background: #969696;
+  background: ${({ theme }) => theme.appComponents.aside.menuItemBackground};
+  color: ${({ theme }) => theme.appComponents.aside.menuItemColor};
   padding: 0 ${(props) => (props.isOpen ? '20px' : '10px')};
   border: none;
   cursor: pointer;
   ${(props) => !props.isOpen && 'justify-content: center;'}
 
   &:hover {
-    background: #ecc5c5;
+    background: ${({ theme }) => theme.appComponents.aside.selected};
+    color: ${({ theme }) => theme.appComponents.aside.selectedText};
   }
 `
 

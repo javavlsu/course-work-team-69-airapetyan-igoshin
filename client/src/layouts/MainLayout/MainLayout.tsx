@@ -3,18 +3,20 @@ import { Outlet } from 'react-router-dom'
 import { styled } from '@mui/material'
 import { Navigation } from '../../components/Navigation'
 
-const Template = styled('div')(() => ({
-  display: 'grid',
-  gridTemplate: '50px 1fr / 1fr',
-  height: '100vh'
-}))
-const NavigationWrapper = styled('nav')(() => ({
-  gridRow: '1',
-  gridColumn: '1',
-  background: '#D9D9D9',
-  display: 'flex',
-  alignItems: 'center'
-}))
+const Template = styled('div')`
+  display: grid;
+  grid-template: 50px 1fr / 1fr;
+  height: 100vh;
+  color: ${({ theme }) => theme.appComponents.app.color};
+  background: ${({ theme }) => theme.appComponents.app.background};
+`
+const NavigationWrapper = styled('nav')`
+  grid-row: 1;
+  grid-column: 1;
+  background: ${({ theme }) => theme.appComponents.navbar.background};
+  display: flex;
+  align-items: center;
+`
 const ContentWrapper = styled('div')(() => ({
   gridRow: '2',
   gridColumn: '1',

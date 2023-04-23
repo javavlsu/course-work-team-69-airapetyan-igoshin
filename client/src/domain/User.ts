@@ -3,14 +3,17 @@ import UserStore from '../store/userStore'
 import { parseCookie } from '../utils/cookieParser'
 
 class User {
+  loadRole() {
+    UserStore.role = this.getRole()
+  }
+  getRole() {
+    return parseCookie(document.cookie).Role
+  }
   async login(json: FormData) {
     const res = await login(json)
 
     if (res && res.ok) {
-      const c = parseCookie(document.cookie)
-
-      console.log(c)
-      // UserStore.role = c.Role
+      this.loadRole()
     }
 
     return res

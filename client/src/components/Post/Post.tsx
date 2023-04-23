@@ -12,15 +12,17 @@ const PostWrapper = styled('div')`
   flex-direction: column;
   padding-top: 30px;
   border-radius: 10px;
-  background: #d9d9d9;
+  background: ${({ theme }) => theme.appComponents.postPreview.background};
+  color: ${({ theme }) => theme.appComponents.postPreview.color};
   width: 100%;
   word-wrap: break-word;
   overflow-x: hidden;
+  box-shadow: ${({ theme }) => theme.boxShadow.lightBlue};
 `
 const PostHeader = styled('h6')`
   margin: 5px 0 10px 20px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
 `
 const PostDescription = styled('p')`
   padding: 0;
