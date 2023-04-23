@@ -32,4 +32,8 @@ public class PostServiceImpl implements PostService {
         return repository.findByDateAfterAndDateBefore(from, to);
     }
 
+    @Override
+    public List<Post> getBlogPosts(long blogId) {
+        return repository.findByBlog_Id(blogId);
+    }
 }

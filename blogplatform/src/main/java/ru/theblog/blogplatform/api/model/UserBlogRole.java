@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import ru.theblog.blogplatform.api.model.enums.BlogRole;
 
 @Entity
 @Data
@@ -21,8 +22,8 @@ public class UserBlogRole {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private RoleBlog role;
+    @NonNull
+    private BlogRole role;
 
     protected UserBlogRole() { }
 }

@@ -40,5 +40,9 @@ public class Post {
     @Column(name = "reaction_count", nullable = false)
     private int reactionCount;
 
+    @ManyToOne
+    @NonNull
+    private Blog blog;
+
     protected Post() { }
 }

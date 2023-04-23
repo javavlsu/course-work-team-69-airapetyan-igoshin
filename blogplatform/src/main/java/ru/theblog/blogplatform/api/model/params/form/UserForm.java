@@ -1,4 +1,4 @@
-package ru.theblog.blogplatform.api.controller.params;
+package ru.theblog.blogplatform.api.model.params.form;
 
 import java.time.LocalDate;
 

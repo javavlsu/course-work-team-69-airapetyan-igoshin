@@ -9,4 +9,5 @@ public interface PostService {
     void create(Post post);
     Post getPost(Long id);
     List<Post> getPosts(LocalDateTime from, LocalDateTime to);
+    List<Post> getBlogPosts(long blogId);
 }
