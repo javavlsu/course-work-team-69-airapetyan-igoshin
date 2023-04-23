@@ -12,7 +12,9 @@ const BlogCardWrapper = styled('div')`
   align-items: center;
   border-radius: 10px;
   gap: 15px;
-  background: #d9d9d9;
+  background: ${({ theme }) => theme.appComponents.blogCard.background};
+  color: ${({ theme }) => theme.appComponents.blogCard.color};
+  box-shadow: ${({ theme }) => theme.boxShadow.lightBlue};
   height: 100px;
   padding-right: 20px;
 `

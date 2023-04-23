@@ -10,11 +10,7 @@ export const AppButton: FC<AppButtonProps> = (props) => {
   const { children } = props
 
   return (
-    <Button
-      {...props}
-      sx={{ padding: '5px 15px', borderRadius: '10px' }}
-      variant="contained"
-    >
+    <Button {...props} variant="contained">
       {children}
     </Button>
   )

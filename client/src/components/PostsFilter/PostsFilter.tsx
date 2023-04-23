@@ -9,11 +9,17 @@ const PostsFilterWrapper = styled('div')`
 const PostsFilterInput = styled('input')`
   width: 80%;
   padding: 10px 15px;
-  background: #d9d9d9;
+  background: ${({ theme }) => theme.appComponents.searchBar.background};
+  color: ${({ theme }) => theme.appComponents.searchBar.color};
+  box-shadow: ${({ theme }) => theme.boxShadow.lightBlue};
   border: none;
   border-radius: 10px;
+  outline: none;
   &::placeholder {
     color: rgba(0, 0, 0, 0.8);
+  }
+  &:focus {
+    box-shadow: none;
   }
 `
 

@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
-import UserStore from '../store/userStore'
 import { Navigate } from 'react-router-dom'
+import User from '../domain/User'
 
 export const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
-  if (!UserStore.isAuth) {
+  if (!User.getRole()) {
     return <Navigate to="/login" replace={true} />
   }
 
