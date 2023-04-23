@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import ru.theblog.blogplatform.api.model.enums.RoleBlog;
+import ru.theblog.blogplatform.api.model.enums.BlogRole;
 
 @Entity
 @Data
@@ -23,7 +23,7 @@ public class UserBlogRole {
     private User user;
 
     @NonNull
-    private RoleBlog role;
+    private BlogRole role;
 
     protected UserBlogRole() { }
 }

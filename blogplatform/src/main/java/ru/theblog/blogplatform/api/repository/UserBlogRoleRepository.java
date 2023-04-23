@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserBlogRoleRepository extends JpaRepository<UserBlogRole, Long> {
     List<UserBlogRole> findAllByUser(User user);
+    int countAllByBlog_Id(long blogId);
+    UserBlogRole findByUser_IdAndBlog_Id(long userId, long blogId);
 }

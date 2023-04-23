@@ -22,8 +22,21 @@ public class Blog {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
     private List<UserBlogRole> userBlogRoles;
 
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
+    private List<Post> posts;
+
     protected Blog() { }
+
+    public Blog(long id, @NonNull String name, String description) {
+        this(name, description);
+        this.id = id;
+    }
+
+    public Blog(@NonNull String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
