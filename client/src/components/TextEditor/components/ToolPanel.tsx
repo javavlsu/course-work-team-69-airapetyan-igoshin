@@ -1,27 +1,9 @@
 import React from 'react'
 import editorStore from '../../../store/editorStore'
 import { observer } from 'mobx-react-lite'
-import { blockStyles, inlineStyles } from '../TextEditor.config'
-import { IconButton, styled } from '@mui/material'
-
-const ToolsWrapper = styled('div')`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`
-const ToolsLine = styled('div')`
-  width: 100%;
-  display: flex;
-  gap: 4px;
-`
-const ToolsItem = styled(IconButton)`
-  border-radius: 0;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-`
+import { blockStyles, decorators, inlineStyles } from '../TextEditor.config'
+import { ToolsItem, ToolsLine, ToolsWrapper } from '../TextEditor.styles'
+import { Button } from '@mui/material'
 
 const ToolPanelComponent = () => {
   return (
@@ -45,7 +27,13 @@ const ToolPanelComponent = () => {
             {el.icon}
           </ToolsItem>
         ))}
+        {decorators.map((decorator, index) => (
+          <ToolsItem key={index} onClick={decorator.handler}>
+            {decorator.icon}
+          </ToolsItem>
+        ))}
       </ToolsLine>
+      <Button onClick={() => console.log(editorStore.toHtml())}>To html</Button>
     </ToolsWrapper>
   )
 }

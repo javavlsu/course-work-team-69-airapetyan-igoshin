@@ -3,63 +3,84 @@ import {
   FormatItalic,
   FormatBold,
   FormatUnderlined,
-  Code
+  Code,
+  InsertLink
 } from '@mui/icons-material'
+import editorStore from '../../store/editorStore'
+
+export enum InlineStyle {
+  BOLD = 'BOLD',
+  ITALIC = 'ITALIC',
+  UNDERLINE = 'UNDERLINE',
+  CODE = 'CODE'
+}
 
 export const inlineStyles = [
   {
-    style: 'BOLD',
+    style: InlineStyle.BOLD,
     icon: <FormatBold />
   },
   {
-    style: 'ITALIC',
+    style: InlineStyle.ITALIC,
     icon: <FormatItalic />
   },
   {
-    style: 'UNDERLINE',
+    style: InlineStyle.UNDERLINE,
     icon: <FormatUnderlined />
   },
   {
-    style: 'CODE',
+    style: InlineStyle.CODE,
     icon: <Code />
   }
 ]
 
+const handleAddLink = () => {
+  const url = prompt('URL: ')
+
+  if (!url) return
+
+  editorStore.addLink(url)
+}
+
+export const decorators = [
+  {
+    icon: <InsertLink />,
+    handler: handleAddLink
+  }
+]
+
+export enum BlockStyle {
+  h1 = 'header-one',
+  h2 = 'header-two',
+  BLOCKQUOTE = 'blockquote',
+  UNORDERED_LIST = 'unordered-list-item',
+  ORDERED_LIST = 'ordered-list-item',
+  DEFAULT = 'default'
+}
+
 export const blockStyles = [
   {
-    style: 'header-one',
+    style: BlockStyle.h1,
     label: 'Заголовок'
   },
   {
-    style: 'header-two',
+    style: BlockStyle.h2,
     label: 'Подзаголовок'
   },
   {
-    style: 'blockquote',
+    style: BlockStyle.BLOCKQUOTE,
     label: 'Цитата'
   },
   {
-    style: 'unordered-list-item',
+    style: BlockStyle.UNORDERED_LIST,
     label: 'Лист (точки)'
   },
   {
-    style: 'ordered-list-item',
+    style: BlockStyle.ORDERED_LIST,
     label: 'Лист (цифры)'
   }
 ]
 
-// type CoreDraftBlockType =
-//   | 'header-one'
-//   | 'header-two'
-//   | 'header-three'
-//   | 'header-four'
-//   | 'header-five'
-//   | 'header-six'
-//   | 'section'
-//   | 'article'
-//   | 'unordered-list-item'
-//   | 'ordered-list-item'
-//   | 'blockquote'
-//   | 'atomic'
-//   | 'code-block'
-//   | 'unstyled';
+export enum EntityType {
+  link = 'link'
+}
