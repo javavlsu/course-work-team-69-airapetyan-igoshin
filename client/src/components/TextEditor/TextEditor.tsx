@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import { Editor } from 'draft-js'
 import { ToolPanel } from './components/ToolPanel'
 import editorStore from '../../store/editorStore'
 import { observer } from 'mobx-react-lite'
+import { TextEditorProps } from './TextEditor.types'
 
-const TextEditorComponent = () => {
+const TextEditorComponent: FC<TextEditorProps> = ({ html }) => {
+  useEffect(() => {
+    html && editorStore.loadContent(html)
+    console.log('-----log----- html has been rendered')
+  }, [])
   return (
     <>
       <ToolPanel />
