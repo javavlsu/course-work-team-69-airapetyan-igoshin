@@ -72,6 +72,7 @@ public class AppController {
         }
 
         var result = new BlogResult();
+        result.id = blog.getId();
         result.name = blog.getName();
         result.description = blog.getDescription();
         result.subscribers = _blogService.getSubscribersCount(blogId);
