@@ -63,7 +63,7 @@ public class AppController {
     }
 
     @GetMapping("/blog/{blogId}")
-    public BlogResult blog(@PathVariable long blogId, @Valid BlogParams params, Authentication auth) {
+    public BlogResult getBlog(@PathVariable long blogId, Authentication auth) {
         var blog = _blogService.getBlog(blogId);
         var posts = _postService.getBlogPosts(blogId);
         User user = null;
@@ -93,7 +93,7 @@ public class AppController {
     }
 
     @PostMapping("/blog")
-    public ResponseEntity blog(@RequestBody BlogForm blog, Authentication auth) {
+    public ResponseEntity addBlog(@RequestBody BlogForm blog, Authentication auth) {
         try {
             if (auth == null) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
@@ -106,7 +106,7 @@ public class AppController {
     }
 
     @PutMapping("/blog")
-    public ResponseEntity blog(@RequestBody BlogUpdateForm blog, Authentication auth) {
+    public ResponseEntity editBlog(@RequestBody BlogUpdateForm blog, Authentication auth) {
         try {
             if (blog.name == null || blog.name.isEmpty()) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(400));
@@ -130,7 +130,7 @@ public class AppController {
     }
 
     @DeleteMapping("/blog/{blogId}")
-    public ResponseEntity blog(@PathVariable long blogId, Authentication auth) {
+    public ResponseEntity deleteBlog(@PathVariable long blogId, Authentication auth) {
         try {
             if (auth == null) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
