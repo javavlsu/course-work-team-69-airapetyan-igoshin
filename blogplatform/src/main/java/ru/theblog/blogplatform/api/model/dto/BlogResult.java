@@ -5,6 +5,7 @@ import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import java.util.List;
 
 public class BlogResult {
+    public long id;
     public String name;
     public String description;
     public BlogRole userRole;
