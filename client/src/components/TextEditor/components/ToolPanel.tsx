@@ -33,7 +33,9 @@ const ToolPanelComponent = () => {
           </ToolsItem>
         ))}
       </ToolsLine>
-      <Button onClick={() => console.log(editorStore.toHtml())}>To html</Button>
+      <Button onClick={() => console.log(editorStore.toHtml())}>
+        create global post
+      </Button>
     </ToolsWrapper>
   )
 }

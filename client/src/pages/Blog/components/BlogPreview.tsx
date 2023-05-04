@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { FC } from 'react'
 import designStore from '../../../store/designStore'
-import blogStore from '../../../store/blogStore'
 import {
   AvatarBlock,
   BlogAvatar,
@@ -16,17 +15,20 @@ import {
 } from '../Blog.styled'
 import EditIcon from '@mui/icons-material/Edit'
 import { observer } from 'mobx-react-lite'
+import { BlogPreviewProps } from '../Blog.types'
 
-const BlogPreviewComponent = () => {
-  const turnEditMode = () => {
-    blogStore.isEditMode = !blogStore.isEditMode
-  }
+const BlogPreviewComponent: FC<BlogPreviewProps> = ({
+  isCreator,
+  toggleEditMode,
+  blog
+}) => {
+  const { name, subscribers, rating, posts, description } = blog
 
   return (
     <BlogPreviewWrapper {...designStore.config.previewOptions}>
-      {blogStore.isOwnBlog && (
+      {isCreator && (
         <ToolsPanel>
-          <ToolsItem onClick={turnEditMode}>
+          <ToolsItem onClick={toggleEditMode}>
             <EditIcon
               sx={{
                 height: '100%'
@@ -39,18 +41,16 @@ const BlogPreviewComponent = () => {
         <AvatarBlock {...designStore.config.avatarBlockOptions}>
           <BlogAvatar {...designStore.config.blogAvatarOptions} />
         </AvatarBlock>
-        <BlogName {...designStore.config.blogNameOptions}>
-          Название блога
-        </BlogName>
+        <BlogName {...designStore.config.blogNameOptions}>{name}</BlogName>
         <BlogDescription {...designStore.config.blogDescriptionOptions}>
-          Описание...
+          {description}
         </BlogDescription>
         <StatisticsBlock {...designStore.config.statisticsBlockOptions}>
           <StatisticsItem {...designStore.config.statisticsItemOptions}>
             <StatisticsCount
               {...designStore.config.statisticsCountsOptions.subscribers}
             >
-              7456
+              {subscribers}
             </StatisticsCount>
             Подписчиков
           </StatisticsItem>
@@ -58,7 +58,7 @@ const BlogPreviewComponent = () => {
             <StatisticsCount
               {...designStore.config.statisticsCountsOptions.rating}
             >
-              145
+              {rating}
             </StatisticsCount>
             Рейтинг
           </StatisticsItem>
@@ -66,7 +66,7 @@ const BlogPreviewComponent = () => {
             <StatisticsCount
               {...designStore.config.statisticsCountsOptions.posts}
             >
-              45
+              {posts?.length || 0}
             </StatisticsCount>
             Постов
           </StatisticsItem>

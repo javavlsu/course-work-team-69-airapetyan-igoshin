@@ -39,19 +39,15 @@ export const Home = () => {
   const posts: IPost[] = [
     {
       id: 1,
-      header: 'Заголовок',
+      title: 'Заголовок',
       description: 'Description...',
-      picture: '',
-      rating: 145,
-      views: 1500
+      rating: 145
     },
     {
       id: 2,
-      header: 'Заголовок',
+      title: 'Заголовок',
       description: 'Description...',
-      picture: '',
-      rating: 145,
-      views: 1500
+      rating: 145
     }
   ]
 

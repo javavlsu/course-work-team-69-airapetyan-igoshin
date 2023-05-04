@@ -13,16 +13,14 @@ import { EntityType } from '../components/TextEditor/TextEditor.config'
 import { stateToHtml } from '../components/TextEditor/components/ConverterToHtml/ConverterToHtml'
 
 const decorator = new CompositeDecorator([LinkDecorator])
-const html = '<p>text</p>'
 
 class EditorStore {
   state: EditorState
+  lastPost = ''
 
   constructor() {
     makeAutoObservable(this)
     this.state = EditorState.createEmpty(decorator)
-
-    // this.state = EditorState.createEmpty(decorator)
   }
 
   loadContent(html: string) {
@@ -32,7 +30,7 @@ class EditorStore {
       htmlBlock.entityMap
     )
 
-    this.state = EditorState.createWithContent(contentState)
+    this.state = EditorState.createWithContent(contentState, decorator)
   }
 
   onChange = (newState: EditorState) => {
@@ -79,6 +77,7 @@ class EditorStore {
   }
 
   addLink(url: string) {
+    console.log(url)
     this.addEntity(EntityType.link, { url }, 'MUTABLE')
   }
   setEntityData(entityKey: string, data: any) {
@@ -92,7 +91,14 @@ class EditorStore {
     )
   }
   toHtml() {
-    return stateToHtml(this.state.getCurrentContent())
+    const html = stateToHtml(this.state.getCurrentContent())
+
+    this.testSave(html)
+    return html
+  }
+  testSave(html: string) {
+    this.lastPost = html
+    console.log(this.lastPost)
   }
 }
 

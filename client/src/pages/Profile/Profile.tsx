@@ -37,51 +37,57 @@ export const Profile = () => {
   const blogs: BlogType[] = [
     {
       id: 1,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     },
     {
       id: 2,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     },
     {
       id: 3,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     },
     {
       id: 4,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     },
     {
       id: 5,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     },
     {
       id: 6,
-      title: 'Название блога',
+      name: 'Название блога',
       description: 'Описание...',
       subscribers: 7456,
       rating: 145,
-      picture: ''
+      postAmount: 0,
+      userRole: null
     }
   ]
 

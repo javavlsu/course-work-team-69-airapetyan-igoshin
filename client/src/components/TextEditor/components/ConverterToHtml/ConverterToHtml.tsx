@@ -7,21 +7,11 @@ export const stateToHtml = convertToHTML<InlineStyle, BlockStyle>({
       case InlineStyle.BOLD:
         return <strong />
       case InlineStyle.ITALIC:
-        return <span style={{ fontStyle: 'italic' }} className="text--italic" />
+        return <span className="text--italic" />
       case InlineStyle.UNDERLINE:
-        return (
-          <span
-            style={{ textDecoration: 'underline' }}
-            className="text--underline"
-          />
-        )
+        return <span className="text--underline" />
       case InlineStyle.CODE:
-        return (
-          <span
-            style={{ fontFamily: "'Consolas', sans-serif'" }}
-            className="text--code"
-          />
-        )
+        return <span className="text--code" />
       default:
         return null
     }
@@ -29,17 +19,17 @@ export const stateToHtml = convertToHTML<InlineStyle, BlockStyle>({
   blockToHTML: (block) => {
     switch (block.type) {
       case BlockStyle.h1:
-        return <h1 />
+        return <h1 className={'post__text--title'} />
       case BlockStyle.h2:
-        return <h2 />
+        return <h2 className={'post__text--subtitle'} />
       case BlockStyle.BLOCKQUOTE:
-        return <blockquote />
+        return <blockquote className={'post__text--blockquote'} />
       case BlockStyle.UNORDERED_LIST:
-        return <ul />
+        return <ul className={'post__text--list'} />
       case BlockStyle.ORDERED_LIST:
-        return <ol />
+        return <ol className={'post__text--list-ordered'} />
       case BlockStyle.DEFAULT:
-        return <p />
+        return <p className={'post__text'} />
       default:
         return null
     }
@@ -95,7 +85,3 @@ export const htmlToState = convertFromHTML<DOMStringMap, BlockStyle>({
     }
   }
 })
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-window.htmlToState = htmlToState

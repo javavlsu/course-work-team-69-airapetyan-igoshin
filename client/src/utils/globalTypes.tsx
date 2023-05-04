@@ -13,20 +13,20 @@ import {
 
 export interface IPost {
   id: number
-  header: string
+  title: string
   description: string
-  picture: string
   rating: number
-  views: number
 }
 
 export interface Blog {
   id: number
-  title: string
+  name: string
   description: string
+  userRole: UserBlogRole | null
   subscribers: number
   rating: number
-  picture: string
+  postAmount: number
+  posts?: IPost[]
 }
 
 export interface IDesignConfig {
@@ -40,4 +40,10 @@ export interface IDesignConfig {
   statisticsItemOptions: StatisticsItemOptions
   statisticsCountsOptions: StatisticsCountsOptions
   blogPostsOptions: BlogPostsOptions
+}
+
+export enum UserBlogRole {
+  Subscriber,
+  Collaborator,
+  Creator
 }

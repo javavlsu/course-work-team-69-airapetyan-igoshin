@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+.post__text--title {
+  font-size: 30px;
+}
+.post__text--subtitle {
+  font-size: 26px;
+}
+.post__text--blockquote {
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 18px;
+  line-height: 1.5;
+  border-left: 5px solid #ccc;
+  color: #666;
+}
+.post__text--list {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+.post__text--list-ordered {
+  list-style-type: decimal;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+.text--code {
+  font-family: 'Courier Prime', monospace;
+}
+.text--underline {
+  text-decoration: underline;
+}
+.text--italic {
+  font-style: italic;
+}
