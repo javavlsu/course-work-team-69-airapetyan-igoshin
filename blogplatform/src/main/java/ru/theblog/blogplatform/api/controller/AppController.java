@@ -13,7 +13,7 @@ import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.FeedPostResult;
 import ru.theblog.blogplatform.api.model.dto.ProfileResult;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
-import ru.theblog.blogplatform.api.model.params.*;
+import ru.theblog.blogplatform.api.model.params.PostParams;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
@@ -76,7 +76,7 @@ public class AppController {
         result.name = blog.getName();
         result.description = blog.getDescription();
         result.subscribers = _blogService.getSubscribersCount(blogId);
-        result.userRole = user != null ? _blogService.getUserBlogRole(user.getId(), blogId) : null;
+        result.userRole = user != null ? _blogService.getUserBlogRole(user.getId(), blogId).ordinal() : null;
         result.postAmount = posts.size();
         result.rating = _blogService.getRating(blogId);
         result.posts = new ArrayList<>();
