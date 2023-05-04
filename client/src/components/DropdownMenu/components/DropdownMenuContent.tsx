@@ -9,6 +9,8 @@ import { DropdownMenuContentProps } from '../DropdownMenu.types'
 import User from '../../../domain/User'
 import { useNavigate } from 'react-router-dom'
 import UserStore from '../../../store/userStore'
+import modalStore from '../../../store/modalStore'
+import { BlogForm } from './BlogForm'
 
 export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
   handleClose
@@ -27,6 +29,11 @@ export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
     navigate('/profile')
   }
 
+  const handleAddBlog = () => {
+    handleClose()
+    modalStore.open(<BlogForm />)
+  }
+
   return (
     <>
       {UserStore.isAuth && (
@@ -39,7 +46,7 @@ export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
         <Avatar /> My blog
       </MenuItem>
       <Divider />
-      <MenuItem onClick={handleClose}>
+      <MenuItem onClick={handleAddBlog}>
         <ListItemIcon>
           <Add fontSize="small" />
         </ListItemIcon>

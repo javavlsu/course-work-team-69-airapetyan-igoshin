@@ -55,7 +55,7 @@ const PostStatistics = styled('span')<{ color: string }>`
 export const Post: FC<PostProps> = ({ post, isAsideOpen = false }) => {
   return (
     <PostWrapper>
-      <PostHeader>{post.header}</PostHeader>
+      <PostHeader>{post.title}</PostHeader>
       <PostDescription>{post.description}</PostDescription>
       <PostPicture isAsideOpen={isAsideOpen} />
       <PostFooter>
@@ -63,8 +63,7 @@ export const Post: FC<PostProps> = ({ post, isAsideOpen = false }) => {
           Рейтинг: <PostStatistics color="green">{post.rating}</PostStatistics>
         </PostFooterItem>
         <PostFooterItem>
-          Просмотров:{' '}
-          <PostStatistics color="black">{post.views}</PostStatistics>
+          Просмотров: <PostStatistics color="black">{0}</PostStatistics>
         </PostFooterItem>
       </PostFooter>
     </PostWrapper>

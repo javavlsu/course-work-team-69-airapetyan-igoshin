@@ -1,3 +1,5 @@
+import { Blog } from '../../utils/globalTypes'
+
 export interface PreviewOptions {
   name: string
   height: number
@@ -77,4 +79,10 @@ export interface StatisticsCountOptions {
   fontSize: number
   color: string
   fontWeight: number
+}
+
+export interface BlogPreviewProps {
+  isCreator: boolean
+  toggleEditMode: () => void
+  blog: Blog
 }

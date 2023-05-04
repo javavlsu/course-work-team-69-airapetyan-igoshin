@@ -64,7 +64,7 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
     <BlogCardWrapper>
       <BlogCardPicture />
       <BlogCardContent>
-        <BlogTitle>{blog.title}</BlogTitle>
+        <BlogTitle>{blog.name}</BlogTitle>
         <BlogDescription>{blog.description}</BlogDescription>
       </BlogCardContent>
       <StatisticsBlock>
