@@ -27,7 +27,7 @@ export const useBlog = (id: number) => {
   const blogRequest = async () => {
     const response = await getBlog(id)
 
-    if (!response) return navigate('/blog-not-found')
+    if (!response) return navigate('/not-found')
     setBlog(response)
   }
 

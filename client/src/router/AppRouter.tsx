@@ -11,6 +11,7 @@ import { Login } from '../pages/Login'
 import { Registration } from '../pages/Registration'
 import { PostEdit } from '../pages/PostEdit'
 import { ProtectedRoute } from '../hocks/ProtectedRoute'
+import { PageNotFound } from '../pages/PageNotFound'
 
 interface Route {
   path: string
@@ -42,6 +43,10 @@ const layouts: Layout[] = [
       {
         path: '/blog-edit',
         component: <BlogEdit />
+      },
+      {
+        path: '/not-found',
+        component: <PageNotFound />
       },
       {
         path: '/profile',
