@@ -2,14 +2,21 @@ import React, { FC } from 'react'
 import { BlogPostsColumn } from './BlogPostsColumn'
 import { IPreviewPost } from '../../../utils/globalTypes'
 
-export const BlogPosts: FC<{ chunkedPosts: IPreviewPost[][] }> = ({
-  chunkedPosts
-}) => (
+export const BlogPosts: FC<{
+  chunkedPosts: IPreviewPost[][]
+  deletable: boolean
+  handleDelete: (id: number) => void
+}> = ({ chunkedPosts, deletable, handleDelete }) => (
   <>
     {chunkedPosts.length ? (
       <>
         {chunkedPosts.map((_, index) => (
-          <BlogPostsColumn key={index} posts={chunkedPosts[index]} />
+          <BlogPostsColumn
+            deletable={deletable}
+            handleDelete={handleDelete}
+            key={index}
+            posts={chunkedPosts[index]}
+          />
         ))}
       </>
     ) : (

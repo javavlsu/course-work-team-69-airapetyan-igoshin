@@ -13,11 +13,13 @@ import { parseToChunks } from './Blog.utils'
 import { useBlog } from '../../hooks/useBlog'
 import { useParams } from 'react-router-dom'
 import { BlogPosts } from './components/BlogPosts'
+import { UserBlogRole } from '../../utils/globalTypes'
 
 const BlogComponent = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false)
   const { id } = useParams()
-  const { isEditMode, blogRole, toggleEditMode, blog } = useBlog(Number(id))
+  const { isEditMode, blogRole, toggleEditMode, handlePostDelete, blog } =
+    useBlog(Number(id))
   const chunkedPosts = useMemo(() => {
     if (!blog?.posts) return []
     return parseToChunks(
@@ -45,7 +47,11 @@ const BlogComponent = () => {
             )}
             <BlogPostsWrapper isAsideOpen={isEditMode && isAsideOpen}>
               <BlogPostsContainer {...designStore.config.blogPostsOptions}>
-                <BlogPosts chunkedPosts={chunkedPosts} />
+                <BlogPosts
+                  deletable={blogRole >= UserBlogRole.Collaborator}
+                  handleDelete={handlePostDelete}
+                  chunkedPosts={chunkedPosts}
+                />
               </BlogPostsContainer>
             </BlogPostsWrapper>
           </BlogContentWrapper>

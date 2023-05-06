@@ -1,60 +1,37 @@
-import React, { FC } from 'react'
-import { styled } from '@mui/material'
+import { Delete } from '@mui/icons-material'
 import { IPreviewPost } from '../../utils/globalTypes'
+import {
+  PostWrapper,
+  PostPicture,
+  PostStatistics,
+  PostFooter,
+  PostFooterItem,
+  PostHeader,
+  PostDescription,
+  DeleteButton
+} from './Post.styles'
+import { FC } from 'react'
 
 interface PostProps {
   post: IPreviewPost
   isAsideOpen?: boolean
+  deletable?: boolean
+  handleDelete?: (id: number) => void
 }
 
-const PostWrapper = styled('div')`
-  display: flex;
-  flex-direction: column;
-  padding-top: 30px;
-  border-radius: 10px;
-  background: ${({ theme }) => theme.palette.app.main};
-  color: ${({ theme }) => theme.palette.app.contrastText};
-  width: 100%;
-  word-wrap: break-word;
-  overflow-x: hidden;
-  box-shadow: ${({ theme }) => theme.shadows[1]};
-`
-const PostHeader = styled('h6')`
-  margin: 5px 0 10px 20px;
-  font-weight: 500;
-  font-size: 20px;
-`
-const PostDescription = styled('p')`
-  padding: 0;
-  margin: 10px 0 10px 20px;
-  font-size: 14px;
-`
-const PostPicture = styled('img')<{ isAsideOpen: boolean }>`
-  margin: 10px 0;
-  background: #9a9a9a;
-  width: 100%;
-  height: ${({ isAsideOpen }) => (isAsideOpen ? '260px' : '350px')};
-`
-const PostFooter = styled('div')`
-  display: flex;
-  justify-content: end;
-  width: 100%;
-  gap: 30px;
-  padding: 0 20px 5px;
-`
-const PostFooterItem = styled('div')`
-  display: flex;
-  gap: 10px;
-  font-size: 12px;
-`
-const PostStatistics = styled('span')<{ color: string }>`
-  color: ${({ color }) => color};
-  font-size: 14px;
-`
-
-export const Post: FC<PostProps> = ({ post, isAsideOpen = false }) => {
+export const Post: FC<PostProps> = ({
+  post,
+  isAsideOpen = false,
+  deletable,
+  handleDelete
+}) => {
   return (
     <PostWrapper>
+      {deletable && (
+        <DeleteButton onClick={() => handleDelete && handleDelete(post.id)}>
+          <Delete />
+        </DeleteButton>
+      )}
       <PostHeader>{post.title}</PostHeader>
       <PostDescription>{post.description}</PostDescription>
       <PostPicture isAsideOpen={isAsideOpen} />

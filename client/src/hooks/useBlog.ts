@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getBlog } from '../service/Blog'
 import { Blog, UserBlogRole } from '../utils/globalTypes'
 import { useLocation, useNavigate } from 'react-router-dom'
+import DomainPost from '../domain/Post'
 
 export const useBlog = (id: number) => {
   const [isEditMode, setIsEditMode] = useState(false)
@@ -32,6 +33,12 @@ export const useBlog = (id: number) => {
     setBlog(response)
   }
 
+  const handlePostDelete = async (id: number) => {
+    const response = await DomainPost.removePost(id)
+
+    response && blogRequest()
+  }
+
   useEffect(() => {
     blogRequest()
   }, [location.key])
@@ -43,6 +50,7 @@ export const useBlog = (id: number) => {
     turnOnEdit,
     turnOffEdit,
     toggleEditMode,
+    handlePostDelete,
     isCreator
   }
 }
