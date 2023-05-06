@@ -55,4 +55,11 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
+
+    @Override
+    public void updateStatus(Long postId, boolean isDraft) {
+        var post = postRepository.findById(postId).get();
+        post.setDraft(isDraft);
+        postRepository.saveAndFlush(post);
+    }
 }

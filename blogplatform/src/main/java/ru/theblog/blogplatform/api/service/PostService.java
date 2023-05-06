@@ -14,4 +14,5 @@ public interface PostService {
     List<Post> getBlogPosts(long blogId);
     void updatePost(PostUpdateBody postBody, Post post);
     void deletePost(Long postId);
+    void updateStatus(Long postId, boolean isDraft);
 }

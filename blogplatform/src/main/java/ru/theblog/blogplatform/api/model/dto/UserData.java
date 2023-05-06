@@ -4,5 +4,5 @@ import java.util.List;
 
 public class UserData {
     public String systemRole;
-    public List<UserBlogData> userBlogs;
+    public List<UserBlogData> blogs;
 }
