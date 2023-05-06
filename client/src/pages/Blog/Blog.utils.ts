@@ -1,3 +1,5 @@
+import { IPreviewPost } from '../../utils/globalTypes'
+
 export function parseToChunks<T>(arr: T[], columns: number): T[][] {
   const output: T[][] = []
 
@@ -11,4 +13,8 @@ export function parseToChunks<T>(arr: T[], columns: number): T[][] {
   })
 
   return output
+}
+
+export const removeFromChunks = (chunks: IPreviewPost[][], id: number) => {
+  return chunks.filter((chunk) => chunk.filter((item) => item.id !== id))
 }

@@ -8,20 +8,33 @@ import {
   PublishButton
 } from './PostEdit.styles'
 import editorStore from '../../store/editorStore'
+import { useSearchParams } from 'react-router-dom'
+import Post from '../../domain/Post'
 
 export const PostEdit = () => {
+  const [searchParams] = useSearchParams()
   const { register, handleSubmit } =
     useForm<Record<'title' | 'description', string>>()
-  const publicPost = handleSubmit(({ title, description }) => {
-    const content = editorStore.toHtml()
-    const json = {
-      title,
-      description,
-      content
-    }
+  const publicPost = (isDraft: boolean) =>
+    handleSubmit(({ title, description }) => {
+      const content = editorStore.toHtml()
+      const blogId = searchParams.get('blogId')
 
-    console.log(json)
-  })
+      if (!blogId) {
+        console.log('Не получили blogId')
+        // Вызов Алерта нужен на странице
+      }
+
+      const json = {
+        blogId: Number(blogId),
+        title,
+        description,
+        content,
+        isDraft
+      }
+
+      Post.publishPost(json)
+    })()
 
   return (
     <PageContainer>
@@ -41,11 +54,11 @@ export const PostEdit = () => {
         <PublishButton
           variant={'contained'}
           color={'success'}
-          onClick={publicPost}
+          onClick={() => publicPost(false)}
         >
           Опубликовать
         </PublishButton>
-        <PublishButton variant={'outlined'} onClick={publicPost}>
+        <PublishButton variant={'outlined'} onClick={() => publicPost(true)}>
           Сохранить в черновик
         </PublishButton>
       </PublishButtons>

@@ -1,5 +1,6 @@
 import ky from 'ky'
 import { PublishPost, UpdatedPost } from './Post.types'
+import { IPost } from '../../utils/globalTypes'
 
 const PREFIX_API = '/api'
 
@@ -35,7 +36,7 @@ export const removePost = async (id: number) => {
 
 export const getPost = async (id: number) => {
   try {
-    return await ky.get(`${PREFIX_API}/post/${id}`).json()
+    return await ky.get(`${PREFIX_API}/post/${id}`).json<IPost>()
   } catch (e) {
     return null
   }

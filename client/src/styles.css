@@ -15,12 +15,10 @@
 }
 .post__text--list {
   list-style-type: disc;
-  margin-left: 20px;
   padding-left: 20px;
 }
 .post__text--list-ordered {
   list-style-type: decimal;
-  margin-left: 20px;
   padding-left: 20px;
 }
 .text--code {

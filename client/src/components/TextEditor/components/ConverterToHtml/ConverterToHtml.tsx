@@ -25,9 +25,15 @@ export const stateToHtml = convertToHTML<InlineStyle, BlockStyle>({
       case BlockStyle.BLOCKQUOTE:
         return <blockquote className={'post__text--blockquote'} />
       case BlockStyle.UNORDERED_LIST:
-        return <ul className={'post__text--list'} />
+        return {
+          element: <li />,
+          nest: <ul className={'post__text--list'} />
+        }
       case BlockStyle.ORDERED_LIST:
-        return <ol className={'post__text--list-ordered'} />
+        return {
+          element: <li />,
+          nest: <ul className={'post__text--list-ordered'} />
+        }
       case BlockStyle.DEFAULT:
         return <p className={'post__text'} />
       default:

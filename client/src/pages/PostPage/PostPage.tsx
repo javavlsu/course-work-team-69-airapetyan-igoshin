@@ -1,61 +1,1 @@
-import React from 'react'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import { PostComments } from '../../components/PostComments'
-import { Box } from '@mui/material'
-import {
-  PostPageWrapper,
-  CommentsWrapper,
-  PostContent,
-  PostFooter,
-  PostPath,
-  PostPathTitle,
-  PostTitle,
-  PostRating,
-  PostRatingCount,
-  RatingButton,
-  PostPicture,
-  IconAdd,
-  IconRemove
-} from './PostPage.styles'
-import editorStore from '../../store/editorStore'
-import { observer } from 'mobx-react-lite'
-
-const PostPageComponent = () => {
-  return (
-    <Box
-      sx={{
-        height: '100%',
-        overflowY: 'auto'
-      }}
-    >
-      <PostPageWrapper>
-        <PostTitle>Заголовок поста</PostTitle>
-        <PostContent
-          dangerouslySetInnerHTML={{ __html: editorStore.lastPost }}
-        />
-        <PostFooter>
-          <PostPicture />
-          <PostPath>
-            <PostPathTitle>Название блога</PostPathTitle>
-            <ArrowRightIcon />
-            <PostPathTitle>Название поста</PostPathTitle>
-          </PostPath>
-          <PostRating>
-            <RatingButton>
-              <IconRemove />
-            </RatingButton>
-            <PostRatingCount>567</PostRatingCount>
-            <RatingButton>
-              <IconAdd />
-            </RatingButton>
-          </PostRating>
-        </PostFooter>
-        <CommentsWrapper>
-          <PostComments />
-        </CommentsWrapper>
-      </PostPageWrapper>
-    </Box>
-  )
-}
-
-export const PostPage = observer(PostPageComponent)
+import React, { useEffect, useState } from 'react'import { observer } from 'mobx-react-lite'import { useLocation, useParams } from 'react-router-dom'import Post from '../../domain/Post'import { IPost } from '../../utils/globalTypes'import {  CommentsWrapper,  IconAdd,  IconRemove,  PostContent,  PostFooter,  PostPageWrapper,  PostPath,  PostPathTitle,  PostPicture,  PostRating,  PostRatingCount,  PostTitle,  RatingButton} from './PostPage.styles'import ArrowRightIcon from '@mui/icons-material/ArrowRight'import { PostComments } from '../../components/PostComments'import { Box } from '@mui/material'import LoaderPage from '../../hocks/LoaderPage'const PostPageComponent = () => {  const location = useLocation()  const { id } = useParams<{ id: string }>()  const [post, setPost] = useState<IPost>()  const [isLoaded, setIsLoaded] = useState(false)  const requestPost = async () => {    const response = await Post.getPost(Number(id))    setIsLoaded(true)    if (!response) return    setPost(response)  }  useEffect(() => {    if (!id) return    requestPost()  }, [location.key])  return (    <LoaderPage loadingData={post} isLoaded={isLoaded}>      <Box        sx={{          height: '100%',          overflowY: 'auto'        }}      >        <PostPageWrapper>          <PostTitle>{post?.title}</PostTitle>          <PostContent            dangerouslySetInnerHTML={{ __html: post?.content || '' }}          />          <PostFooter>            <PostPicture />            <PostPath>              <PostPathTitle>Название блога</PostPathTitle>              <ArrowRightIcon />              <PostPathTitle>{post?.title}</PostPathTitle>            </PostPath>            <PostRating>              <RatingButton>                <IconRemove />              </RatingButton>              <PostRatingCount>567</PostRatingCount>              <RatingButton>                <IconAdd />              </RatingButton>            </PostRating>          </PostFooter>          <CommentsWrapper>            <PostComments />          </CommentsWrapper>        </PostPageWrapper>      </Box>    </LoaderPage>  )}export const PostPage = observer(PostPageComponent)
