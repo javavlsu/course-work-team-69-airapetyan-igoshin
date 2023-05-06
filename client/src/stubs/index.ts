@@ -1,6 +1,6 @@
-import { IPost } from '../utils/globalTypes.js'
+import { IPreviewPost } from '../utils/globalTypes.js'
 
-export const stubPosts: IPost[] = [
+export const stubPosts: IPreviewPost[] = [
   {
     id: 1,
     title: 'Заголовок',

@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { styled } from '@mui/material'
-import { IPost } from '../../utils/globalTypes'
+import { IPreviewPost } from '../../utils/globalTypes'
 
 interface PostProps {
-  post: IPost
+  post: IPreviewPost
   isAsideOpen?: boolean
 }
 

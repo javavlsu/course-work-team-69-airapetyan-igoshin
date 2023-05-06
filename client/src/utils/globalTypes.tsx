@@ -13,10 +13,15 @@ import {
 
 export interface IPost {
   id: number
+  blogId: number
   title: string
   description: string
+  content: string
   rating: number
+  isDraft: boolean
 }
+
+export type IPreviewPost = Omit<IPost, 'content' | 'isDraft' | 'blogId'>
 
 export interface Blog {
   id: number

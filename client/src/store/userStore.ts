@@ -1,14 +1,16 @@
 import { makeAutoObservable } from 'mobx'
+import { Blog } from '../utils/globalTypes'
 
 class UserStore {
-  role: string | null = null
+  systemRole?: string
+  blogs: Pick<Blog, 'name' | 'userRole' | 'id'>[] = []
 
   constructor() {
     makeAutoObservable(this)
   }
 
   get isAuth() {
-    return !!this.role
+    return !!this.systemRole
   }
 }
 

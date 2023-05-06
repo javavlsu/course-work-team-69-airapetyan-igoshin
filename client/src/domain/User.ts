@@ -1,19 +1,27 @@
-import { login, RegistrationData, register, logout } from '../service/user'
-import UserStore from '../store/userStore'
-import { parseCookie } from '../utils/cookieParser'
+import {
+  login,
+  RegistrationData,
+  register,
+  logout,
+  getUserData
+} from '../service/user'
+import userStore from '../store/userStore'
 
 class User {
-  loadRole() {
-    UserStore.role = this.getRole()
+  async getUserData() {
+    const data = await getUserData()
+
+    if (!data) return
+
+    userStore.systemRole = data.systemRole
+    userStore.blogs = data.blogs
   }
-  getRole() {
-    return parseCookie(document.cookie).Role
-  }
+
   async login(json: FormData) {
     const res = await login(json)
 
     if (res && res.ok) {
-      this.loadRole()
+      this.getUserData()
     }
 
     return res
@@ -25,7 +33,8 @@ class User {
 
   async logout(callback?: () => void) {
     await logout()
-    UserStore.role = null
+    userStore.systemRole = ''
+    userStore.blogs = []
     callback && callback()
   }
 }

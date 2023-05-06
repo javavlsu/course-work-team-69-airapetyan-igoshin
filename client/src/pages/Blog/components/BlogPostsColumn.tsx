@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { Post } from '../../../components/Post'
 import { PostsColumn } from '../Blog.styled'
-import { IPost } from '../../../utils/globalTypes'
+import { IPreviewPost } from '../../../utils/globalTypes'
 
-export const BlogPostsColumn: FC<{ posts: IPost[] }> = ({ posts }) => {
+export const BlogPostsColumn: FC<{ posts: IPreviewPost[] }> = ({ posts }) => {
   return (
     <PostsColumn>
       {posts.map((post) => (

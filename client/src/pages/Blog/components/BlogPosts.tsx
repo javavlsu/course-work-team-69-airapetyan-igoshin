@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { BlogPostsColumn } from './BlogPostsColumn'
-import { IPost } from '../../../utils/globalTypes'
+import { IPreviewPost } from '../../../utils/globalTypes'
 
-export const BlogPosts: FC<{ chunkedPosts: IPost[][] }> = ({
+export const BlogPosts: FC<{ chunkedPosts: IPreviewPost[][] }> = ({
   chunkedPosts
 }) => (
   <>

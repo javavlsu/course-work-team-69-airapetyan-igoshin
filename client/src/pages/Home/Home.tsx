@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 import { AsideMenu } from '../../components/AsideMenu'
 import { useOutletContext } from 'react-router-dom'
 import { Post } from '../../components/Post'
-import { IPost } from '../../utils/globalTypes'
+import { IPreviewPost } from '../../utils/globalTypes'
 import { PostsFilter } from '../../components/PostsFilter'
 import { AsideContent } from './components/AsideContent'
 
@@ -36,7 +36,7 @@ const SearchBarBlock = styled('div')`
 
 export const Home = () => {
   const { isAsideOpen } = useOutletContext<{ isAsideOpen: boolean }>()
-  const posts: IPost[] = [
+  const posts: IPreviewPost[] = [
     {
       id: 1,
       title: 'Заголовок',

@@ -45,7 +45,7 @@ const layouts: Layout[] = [
         component: <BlogEdit />
       },
       {
-        path: '/not-found',
+        path: '*',
         component: <PageNotFound />
       },
       {

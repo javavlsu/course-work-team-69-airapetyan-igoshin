@@ -1,50 +1,34 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import MenuItem from '@mui/material/MenuItem'
-import Avatar from '@mui/material/Avatar'
 import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Add from '@mui/icons-material/Add'
 import Logout from '@mui/icons-material/Logout'
-import { DropdownMenuContentProps } from '../DropdownMenu.types'
-import User from '../../../domain/User'
-import { useNavigate } from 'react-router-dom'
+import BookIcon from '@mui/icons-material/Book'
+import PersonIcon from '@mui/icons-material/Person'
 import UserStore from '../../../store/userStore'
-import modalStore from '../../../store/modalStore'
-import { BlogForm } from './BlogForm'
+import { DropdownMenuContentProps } from '../DropdownMenu.types'
+import { useDropdownMenu } from '../hooks/useDropdownMenu'
+import { DropdownItem } from '../DropdownMenu.styles'
 
 export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
   handleClose
 }) => {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    handleClose()
-    User.logout(() => {
-      navigate('/login')
-    })
-  }
-
-  const handleProfile = () => {
-    handleClose()
-    navigate('/profile')
-  }
-
-  const handleAddBlog = () => {
-    handleClose()
-    modalStore.open(<BlogForm />)
-  }
+  const { redirectToBlog, handleAddBlog, handleProfile, handleLogout } =
+    useDropdownMenu(handleClose)
 
   return (
     <>
       {UserStore.isAuth && (
-        <MenuItem onClick={handleProfile}>
-          <Avatar /> Profile
-        </MenuItem>
+        <DropdownItem onClick={handleProfile}>
+          <PersonIcon color={'secondary'} /> Profile
+        </DropdownItem>
       )}
-      {/*тут будет много блогов*/}
-      <MenuItem onClick={handleClose}>
-        <Avatar /> My blog
-      </MenuItem>
+      {UserStore.blogs.map((blog) => (
+        <DropdownItem key={blog.id} onClick={() => redirectToBlog(blog.id)}>
+          <BookIcon color={'secondary'} /> {blog.name}
+        </DropdownItem>
+      ))}
       <Divider />
       <MenuItem onClick={handleAddBlog}>
         <ListItemIcon>
