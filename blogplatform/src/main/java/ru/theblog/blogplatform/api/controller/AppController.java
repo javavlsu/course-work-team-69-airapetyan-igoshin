@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.theblog.blogplatform.api.model.Post;
+import ru.theblog.blogplatform.api.model.ReactionBody;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.*;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
@@ -20,7 +21,9 @@ import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
 import ru.theblog.blogplatform.api.service.BlogService;
 import ru.theblog.blogplatform.api.service.PostService;
+import ru.theblog.blogplatform.api.service.ReactionService;
 import ru.theblog.blogplatform.api.service.UserService;
+import ru.theblog.blogplatform.api.service.impl.ReactionServiceImpl;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class AppController {
     private final BlogService _blogService;
     private final PostService _postService;
     private final UserService _userService;
+    private final ReactionService _reactionService;
 
     @GetMapping("/getPosts")
     public List<Post> getPosts(@Valid PostParams s) {
@@ -271,4 +275,24 @@ public class AppController {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
         }
     }
+
+    @PostMapping("/reaction")
+    public ResponseEntity createReaction(@RequestBody @Valid ReactionBody reactionBody, Authentication auth) {
+        try {
+            if (auth == null) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+
+            _reactionService.createReaction(reactionBody.postId, auth, reactionBody.reactionType);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (e.getMessage().equals(ReactionServiceImpl.POST_NOT_EXIST)) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+            }
+
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
 }

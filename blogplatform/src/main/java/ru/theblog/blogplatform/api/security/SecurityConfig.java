@@ -1,6 +1,5 @@
 package ru.theblog.blogplatform.api.security;
 
-import jakarta.servlet.http.Cookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -33,21 +32,12 @@ public class SecurityConfig {
                  .authorizeHttpRequests()
                  .requestMatchers("/**").permitAll()
                  .and().logout(logout -> logout
-                         .deleteCookies("Role")
                          .logoutUrl("/api/logout"))
 
                  .formLogin()
                          .loginProcessingUrl("/api/login")
                          //.usernameParameter("email")
-                         .successHandler((request, response, authentication) ->
-                                 {
-                                     var c = new Cookie("Role",
-                                             authentication.getAuthorities().stream().findFirst().get().getAuthority());
-                                     c.setPath("/");
-                                     c.setHttpOnly(false);
-                                     response.addCookie(c);
-                                 }
-                         )
+                         .successHandler((request, response, authentication) -> { })
 
                  .and()
                  .cors().and()

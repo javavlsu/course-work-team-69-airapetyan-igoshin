@@ -24,5 +24,11 @@ public class Reaction {
     @Column(name = "reaction_type", nullable = false)
     private ReactionType reactionType;
 
-    protected Reaction() { }
+    public Reaction() { }
+
+    public Reaction(User user, Post post, ReactionType reactionType) {
+        this.user = user;
+        this.post = post;
+        this.reactionType = reactionType;
+    }
 }

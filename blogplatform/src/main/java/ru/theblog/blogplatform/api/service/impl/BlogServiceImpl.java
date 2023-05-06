@@ -89,7 +89,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public BlogRole getUserBlogRole(long userId, long blogId) {
-        var role = userBlogRoleRepository.findByUser_IdAndBlog_Id(userId, blogId);
+        var role = userBlogRoleRepository.findByUser_IdAndBlog_Id(userId, blogId).orElse(null);
         return role != null ? role.getRole() : null;
     }
 
