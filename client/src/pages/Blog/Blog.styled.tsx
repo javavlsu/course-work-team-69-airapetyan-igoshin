@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { css, styled } from '@mui/material'
 import {
   AvatarBlockOptions,
   BlogAvatarOptions,
@@ -129,24 +129,30 @@ export const PostsColumn = styled('div')`
 
 export const ToolsPanel = styled('div')`
   width: 100%;
-  height: 40px;
   display: flex;
   justify-content: end;
   align-items: center;
   overflow: hidden;
+  gap: 20px;
+  padding: 20px;
 `
 
-export const ToolsItem = styled('div')`
+export const ToolsItem = styled('div')<{ $animated: boolean }>`
   height: 100%;
   display: flex;
   min-width: 40px;
-  opacity: 0.5;
   transition: 0.1s;
   cursor: pointer;
-  &:hover {
-    opacity: 1;
-    transform: scale(1.1);
-  }
+  ${({ $animated }) =>
+    $animated &&
+    css`
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    `}
 `
 
 export const AsideToggleButton = styled('div')`

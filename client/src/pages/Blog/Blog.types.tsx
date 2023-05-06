@@ -1,4 +1,4 @@
-import { Blog } from '../../utils/globalTypes'
+import { Blog, UserBlogRole } from '../../utils/globalTypes'
 
 export interface PreviewOptions {
   name: string
@@ -82,7 +82,7 @@ export interface StatisticsCountOptions {
 }
 
 export interface BlogPreviewProps {
-  isCreator: boolean
+  blogRole: UserBlogRole
   toggleEditMode: () => void
   blog: Blog
 }

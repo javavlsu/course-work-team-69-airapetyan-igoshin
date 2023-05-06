@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { UserPreview } from '../UserPreviewDetails'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -36,19 +35,7 @@ const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
           gap: '20px'
         }}
       >
-        {userStore.isAuth ? (
-          <>
-            <UserPreview />
-            <Button
-              variant={'contained'}
-              onClick={() => navigate('/post-edit')}
-            >
-              <ControlPointIcon /> Создать
-            </Button>
-          </>
-        ) : (
-          <Link to={'/login'}>Войти</Link>
-        )}
+        {userStore.isAuth ? <UserPreview /> : <Link to={'/login'}>Войти</Link>}
       </Box>
     </NavigationWrapper>
   )

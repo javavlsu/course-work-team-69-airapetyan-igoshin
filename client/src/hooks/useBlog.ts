@@ -8,7 +8,7 @@ export const useBlog = (id: number) => {
   const [blog, setBlog] = useState<Blog | null>()
   const navigate = useNavigate()
   const blogRole = useMemo(() => {
-    return blog?.userRole
+    return blog?.userRole || 0
   }, [blog])
   const isCreator = blogRole === UserBlogRole.Creator
 

@@ -3,7 +3,6 @@ import editorStore from '../../../store/editorStore'
 import { observer } from 'mobx-react-lite'
 import { blockStyles, decorators, inlineStyles } from '../TextEditor.config'
 import { ToolsItem, ToolsLine, ToolsWrapper } from '../TextEditor.styles'
-import { Button } from '@mui/material'
 
 const ToolPanelComponent = () => {
   return (
@@ -33,9 +32,6 @@ const ToolPanelComponent = () => {
           </ToolsItem>
         ))}
       </ToolsLine>
-      <Button onClick={() => console.log(editorStore.toHtml())}>
-        create global post
-      </Button>
     </ToolsWrapper>
   )
 }

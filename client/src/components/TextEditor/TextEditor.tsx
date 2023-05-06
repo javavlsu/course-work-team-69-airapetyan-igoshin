@@ -8,8 +8,7 @@ import { TextEditorProps } from './TextEditor.types'
 const TextEditorComponent: FC<TextEditorProps> = ({ html }) => {
   useEffect(() => {
     html && editorStore.loadContent(html)
-    console.log('-----log----- html has been rendered')
-  }, [])
+  }, [html])
   return (
     <>
       <ToolPanel />

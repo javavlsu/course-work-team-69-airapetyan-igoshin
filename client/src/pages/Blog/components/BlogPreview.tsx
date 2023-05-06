@@ -16,27 +16,54 @@ import {
 import EditIcon from '@mui/icons-material/Edit'
 import { observer } from 'mobx-react-lite'
 import { BlogPreviewProps } from '../Blog.types'
+import ControlPointIcon from '@mui/icons-material/ControlPoint'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { UserBlogRole } from '../../../utils/globalTypes'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
-  isCreator,
+  blogRole,
   toggleEditMode,
   blog
 }) => {
   const { name, subscribers, rating, posts, description } = blog
+  const navigate = useNavigate()
+  const toolsItems = [
+    {
+      permissionLevel: UserBlogRole.Collaborator,
+      content: (
+        <Button variant={'contained'} onClick={() => navigate('/post-edit')}>
+          <ControlPointIcon /> Создать пост
+        </Button>
+      ),
+      handler: () => navigate('/post-edit'),
+      animated: false
+    },
+    {
+      permissionLevel: UserBlogRole.Creator,
+      content: <EditIcon sx={{ height: '100%' }} />,
+      handler: toggleEditMode,
+      animated: true
+    }
+  ]
 
   return (
     <BlogPreviewWrapper {...designStore.config.previewOptions}>
-      {isCreator && (
-        <ToolsPanel>
-          <ToolsItem onClick={toggleEditMode}>
-            <EditIcon
-              sx={{
-                height: '100%'
-              }}
-            />
-          </ToolsItem>
-        </ToolsPanel>
-      )}
+      <ToolsPanel>
+        {toolsItems.map(
+          (tool, index) =>
+            blogRole >= tool.permissionLevel && (
+              <ToolsItem
+                $animated={tool.animated}
+                key={index}
+                onClick={tool.handler}
+              >
+                {tool.content}
+              </ToolsItem>
+            )
+        )}
+      </ToolsPanel>
+
       <PreviewContainer {...designStore.config.previewContainerOptions}>
         <AvatarBlock {...designStore.config.avatarBlockOptions}>
           <BlogAvatar {...designStore.config.blogAvatarOptions} />
