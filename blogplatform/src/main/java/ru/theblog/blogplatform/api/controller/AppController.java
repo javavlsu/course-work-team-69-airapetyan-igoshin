@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.theblog.blogplatform.api.model.Post;
@@ -37,7 +36,6 @@ public class AppController {
     private final UserService _userService;
 
     @GetMapping("/getPosts")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Post> getPosts(@Valid PostParams s) {
         return _postService.getPosts(s.getFrom(), s.getTo());
     }
@@ -54,6 +52,7 @@ public class AppController {
         var blogs = _blogService.getUserBlogs(user);
         for (var blog : blogs) {
             var userBlog = new UserBlogData();
+            userBlog.id = blog.id;
             userBlog.name = blog.name;
             userBlog.userRole = BlogRole.valueOf(blog.role).ordinal();
             userData.blogs.add(userBlog);
