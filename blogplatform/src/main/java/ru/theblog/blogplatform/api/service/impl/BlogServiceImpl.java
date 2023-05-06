@@ -100,13 +100,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void update(BlogUpdateForm blog, Authentication auth) {
-        var user = userRepository.findByEmail(auth.getName());
-        var role = userBlogRoleRepository.findByUser_IdAndBlog_Id(user.getId(), blog.id);
-        if (role.getRole() != BlogRole.Creator) {
-            return;
-        }
-
+    public void update(BlogUpdateForm blog) {
         blogRepository.saveAndFlush(new Blog(blog.id, blog.name, blog.description));
     }
 
