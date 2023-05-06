@@ -11,7 +11,7 @@ export const MenuBlock = styled('div')<{ isOpen: boolean }>`
       height: ${({ isOpen }) => (isOpen ? '1px' : 0)};
       width: 85%;
       position: absolute;
-      background: ${({ theme }) => theme.appComponents.aside.dividerColor};
+      background: ${({ theme }) => theme.palette.neutral.light};
       bottom: -5px;
       left: 50%;
       transform: translateX(-50%);
@@ -31,16 +31,16 @@ export const MenuButton = styled('button')<{ isOpen: boolean }>`
   height: 45px;
   display: flex;
   align-items: center;
-  background: ${({ theme }) => theme.appComponents.aside.menuItemBackground};
-  color: ${({ theme }) => theme.appComponents.aside.menuItemColor};
+  background: ${({ theme }) => theme.palette.app.main};
+  color: ${({ theme }) => theme.palette.app.contrastText};
   padding: 0 ${(props) => (props.isOpen ? '20px' : '10px')};
   border: none;
   cursor: pointer;
   ${(props) => !props.isOpen && 'justify-content: center;'}
 
   &:hover {
-    background: ${({ theme }) => theme.appComponents.aside.selected};
-    color: ${({ theme }) => theme.appComponents.aside.selectedText};
+    background: ${({ theme }) => theme.palette.app.light};
+    color: ${({ theme }) => theme.palette.app.contrastText};
   }
 `
 

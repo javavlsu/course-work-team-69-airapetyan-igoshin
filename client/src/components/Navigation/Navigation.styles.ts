@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 export const BlogName = styled(Link)`
   text-decoration: none;
-  color: ${({ theme }) => theme.appComponents.navbar.logoColor};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `
 
 export const MenuIconButton = styled(IconButton)`
-  color: ${({ theme }) => theme.appComponents.navbar.menuColor};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `
 
 export const NavigationWrapper = styled('div')`

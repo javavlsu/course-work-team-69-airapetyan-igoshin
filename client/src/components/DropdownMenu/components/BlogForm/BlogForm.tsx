@@ -6,9 +6,9 @@ import {
   BlogFromTextField
 } from './BlogForm.styles'
 import { useForm } from 'react-hook-form'
-import { AppButton } from '../../../AppButton'
 import { createBlog } from '../../../../service/Blog/Blog.api'
 import { BlogCreateData } from '../../../../service/Blog/Blog.types'
+import { Button } from '@mui/material'
 
 const BlogForm = forwardRef<HTMLFormElement>((props, ref) => {
   const { register, handleSubmit } = useForm<BlogCreateData>()
@@ -28,7 +28,9 @@ const BlogForm = forwardRef<HTMLFormElement>((props, ref) => {
         placeholder={'Description...'}
         rows={2}
       />
-      <AppButton type={'submit'}>Создать</AppButton>
+      <Button variant={'contained'} type={'submit'}>
+        Создать
+      </Button>
     </BlogFormRoot>
   )
 })

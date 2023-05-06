@@ -12,12 +12,12 @@ const PostWrapper = styled('div')`
   flex-direction: column;
   padding-top: 30px;
   border-radius: 10px;
-  background: ${({ theme }) => theme.appComponents.postPreview.background};
-  color: ${({ theme }) => theme.appComponents.postPreview.color};
+  background: ${({ theme }) => theme.palette.app.main};
+  color: ${({ theme }) => theme.palette.app.contrastText};
   width: 100%;
   word-wrap: break-word;
   overflow-x: hidden;
-  box-shadow: ${({ theme }) => theme.boxShadow.lightBlue};
+  box-shadow: ${({ theme }) => theme.shadows[1]};
 `
 const PostHeader = styled('h6')`
   margin: 5px 0 10px 20px;

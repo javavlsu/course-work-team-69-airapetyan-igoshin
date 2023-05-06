@@ -1,7 +1,7 @@
-import { AppButton } from '../../components/AppButton'
 import { PageNotFoundRoot, PageNotFoundImage } from './PageNotFound.styles'
 import PageNotFoundPic from './assets/PageNotFound.png'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '@mui/material'
 
 const PageNotFound = () => {
   const navigate = useNavigate()
@@ -13,7 +13,9 @@ const PageNotFound = () => {
   return (
     <PageNotFoundRoot>
       <PageNotFoundImage src={PageNotFoundPic} />
-      <AppButton onClick={redirectToHome}>To Home</AppButton>
+      <Button variant={'contained'} onClick={redirectToHome}>
+        To Home
+      </Button>
     </PageNotFoundRoot>
   )
 }
