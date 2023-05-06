@@ -32,11 +32,15 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
     {
       permissionLevel: UserBlogRole.Collaborator,
       content: (
-        <Button variant={'contained'} onClick={() => navigate('/post-edit')}>
+        <Button variant={'contained'}>
           <ControlPointIcon /> Создать пост
         </Button>
       ),
-      handler: () => navigate('/post-edit'),
+      handler: () =>
+        navigate({
+          pathname: '/post-edit',
+          search: `?blogId=${blog.id}`
+        }),
       animated: false
     },
     {
