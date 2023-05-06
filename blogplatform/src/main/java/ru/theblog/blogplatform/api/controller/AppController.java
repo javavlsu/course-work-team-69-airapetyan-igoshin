@@ -1,6 +1,7 @@
 package ru.theblog.blogplatform.api.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,12 @@ import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.FeedPostResult;
+import ru.theblog.blogplatform.api.model.dto.PostResult;
 import ru.theblog.blogplatform.api.model.dto.ProfileResult;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
+import ru.theblog.blogplatform.api.model.params.PostBody;
 import ru.theblog.blogplatform.api.model.params.PostParams;
+import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
@@ -123,7 +127,7 @@ public class AppController {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
             }
 
-            _blogService.update(blog, auth);
+            _blogService.update(blog);
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,6 +149,79 @@ public class AppController {
             }
 
             _blogService.deleteBlog(blogId);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
+    @GetMapping("/post/{postId}")
+    public PostResult getPost(@PathVariable long postId, Authentication auth) {
+        var post = _postService.getPost(postId);
+        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft());
+    }
+
+    @PostMapping("/post")
+    public ResponseEntity createPost(@RequestBody @Valid PostBody postBody, Authentication auth) {
+        try {
+            if (auth == null) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+            var user = _userService.getUserByEmail(auth.getName());
+            var userBlogRole = _blogService.getUserBlogRole(user.getId(), postBody.blogId);
+            if (userBlogRole == null || userBlogRole == BlogRole.Subscriber) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+
+            _postService.createPost(postBody);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
+    @PutMapping("/post")
+    public ResponseEntity editPost(@RequestBody @Valid PostUpdateBody postBody, Authentication auth) {
+        try {
+            if (auth == null) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+            var post = _postService.getPost(postBody.id);
+
+            var user = _userService.getUserByEmail(auth.getName());
+            var userBlogRole = _blogService.getUserBlogRole(user.getId(), post.getBlog().getId());
+            if (userBlogRole == null || userBlogRole == BlogRole.Subscriber) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+
+            _postService.updatePost(postBody, post);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity deletePost(@PathVariable @NotNull Long postId, Authentication auth) {
+        try {
+            if (auth == null) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+            var post = _postService.getPost(postId);
+            if (post == null) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+            }
+
+            var user = _userService.getUserByEmail(auth.getName());
+            var userBlogRole = _blogService.getUserBlogRole(user.getId(), post.getBlog().getId());
+            if (userBlogRole == null || userBlogRole == BlogRole.Subscriber) {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+            }
+
+            _postService.deletePost(postId);
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } catch (Exception e) {
             e.printStackTrace();

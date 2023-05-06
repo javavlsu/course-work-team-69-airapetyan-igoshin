@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByDateAfterAndDateBefore(LocalDateTime from, LocalDateTime to);
+    List<Post> findByCreateDateAfterAndCreateDateBefore(LocalDateTime from, LocalDateTime to);
     List<Post> findByBlog_Id(long blogId);
     @Query("SELECT SUM(p.reactionCount) FROM Post p WHERE p.blog.id = :blogId")
     Integer getTotalReputation(@Param("blogId")long blogId);

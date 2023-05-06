@@ -19,6 +19,6 @@ public interface BlogService {
     int getSubscribersCount(long blogId);
     BlogRole getUserBlogRole(long userId, long blogId);
     int getRating(long blogId);
-    void update(BlogUpdateForm blog, Authentication auth);
+    void update(BlogUpdateForm blog);
     void deleteBlog(long blogId);
 }

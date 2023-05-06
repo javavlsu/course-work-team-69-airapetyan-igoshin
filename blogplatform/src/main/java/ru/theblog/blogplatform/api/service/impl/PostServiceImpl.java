@@ -4,7 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.theblog.blogplatform.api.model.Post;
+import ru.theblog.blogplatform.api.model.params.PostBody;
+import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
+import ru.theblog.blogplatform.api.repository.BlogRepository;
 import ru.theblog.blogplatform.api.repository.PostRepository;
+import ru.theblog.blogplatform.api.repository.UserRepository;
 import ru.theblog.blogplatform.api.service.PostService;
 
 import java.time.LocalDateTime;
@@ -15,25 +19,40 @@ import java.util.List;
 @Transactional
 public class PostServiceImpl implements PostService {
 
-    private final PostRepository repository;
+    private final PostRepository postRepository;
+    private final BlogRepository blogRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public void create(Post post) {
-        repository.saveAndFlush(post);
+    public void createPost(PostBody postBody) {
+        var blog = blogRepository.findById(postBody.blogId).get();
+        var post = new Post(postBody.title, postBody.description, postBody.content, LocalDateTime.now(), 0, postBody.isDraft, blog);
+        postRepository.saveAndFlush(post);
     }
 
     @Override
     public Post getPost(Long id) {
-        return repository.findById(id).get();
+        var post = postRepository.findById(id);
+        return post.orElse(null);
     }
 
     @Override
     public List<Post> getPosts(LocalDateTime from, LocalDateTime to) {
-        return repository.findByDateAfterAndDateBefore(from, to);
+        return postRepository.findByCreateDateAfterAndCreateDateBefore(from, to);
     }
 
     @Override
     public List<Post> getBlogPosts(long blogId) {
-        return repository.findByBlog_Id(blogId);
+        return postRepository.findByBlog_Id(blogId);
+    }
+
+    @Override
+    public void updatePost(PostUpdateBody postBody, Post post) {
+        postRepository.saveAndFlush(new Post(post.getId(), postBody.title, postBody.description, postBody.content, post.getCreateDate(), LocalDateTime.now(), post.getReactionCount(),  postBody.isDraft, post.getBlog()));
+    }
+
+    @Override
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
     }
 }
