@@ -180,7 +180,7 @@ public class AppController {
     @GetMapping("/post/{postId}")
     public PostResult getPost(@PathVariable long postId, Authentication auth) {
         var post = _postService.getPost(postId);
-        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft());
+        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft(), post.getBlog().getId(), post.getBlog().getName());
     }
 
     @PostMapping("/post")
