@@ -24,8 +24,8 @@ export const ExpansionPanel: FC<ExpansionPanelProps> = ({
     <ExpansionPanelWrapper>
       <Accordion
         sx={{
-          background: theme.appComponents.expansionPanel.background,
-          color: theme.appComponents.expansionPanel.color
+          background: theme.palette.neutral.main,
+          color: theme.palette.neutral.contrastText
         }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

@@ -31,6 +31,6 @@ export const BlogDescription = styled('textarea')`
   font-size: 14px;
   font-weight: 500;
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.palette.primary.main};
+    outline: 2px solid ${({ theme }) => theme.palette.app.main};
   }
 `

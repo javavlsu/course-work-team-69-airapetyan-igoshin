@@ -7,13 +7,13 @@ const Template = styled('div')`
   display: grid;
   grid-template: 50px 1fr / 1fr;
   height: 100vh;
-  color: ${({ theme }) => theme.appComponents.app.color};
-  background: ${({ theme }) => theme.appComponents.app.background};
+  color: ${({ theme }) => theme.palette.text.secondary};
+  background: ${({ theme }) => theme.palette.neutral.main};
 `
 const NavigationWrapper = styled('nav')`
   grid-row: 1;
   grid-column: 1;
-  background: ${({ theme }) => theme.appComponents.navbar.background};
+  background: ${({ theme }) => theme.palette.app.main};
   display: flex;
   align-items: center;
 `

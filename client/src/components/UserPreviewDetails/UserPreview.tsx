@@ -19,10 +19,10 @@ export const UserPreview = () => {
           sx={{
             width: '35px',
             height: '35px',
-            border: '1px solid ' + theme.appComponents.navbar.avatar.border
+            border: '1px solid ' + theme.palette.secondary.main
           }}
         />
-        <Typography variant="h6" color={theme.appComponents.navbar.avatar.text}>
+        <Typography variant="h6" color={theme.palette.secondary.main}>
           Username
         </Typography>
       </UserPreviewWrapper>

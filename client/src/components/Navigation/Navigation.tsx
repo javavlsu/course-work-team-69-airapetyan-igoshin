@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { UserPreview } from '../UserPreviewDetails'
-import { AppButton } from '../AppButton'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   MenuIconButton,
@@ -11,14 +10,14 @@ import {
   NavigationWrapper
 } from './Navigation.styles'
 import userStore from '../../store/userStore'
+import { observer } from 'mobx-react-lite'
 
 interface NavigationProps {
   toggleAside: () => void
 }
 
-export const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
+const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
   const navigate = useNavigate()
-  const theme = useTheme()
 
   return (
     <NavigationWrapper>
@@ -40,15 +39,12 @@ export const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
         {userStore.isAuth ? (
           <>
             <UserPreview />
-            <AppButton
-              sx={{
-                color: theme.appComponents.navbar.button.color,
-                background: theme.appComponents.navbar.button.background
-              }}
+            <Button
+              variant={'contained'}
               onClick={() => navigate('/post-edit')}
             >
               <ControlPointIcon /> Создать
-            </AppButton>
+            </Button>
           </>
         ) : (
           <Link to={'/login'}>Войти</Link>
@@ -57,3 +53,5 @@ export const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
     </NavigationWrapper>
   )
 }
+
+export default observer(Navigation)
