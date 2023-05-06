@@ -10,10 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.User;
-import ru.theblog.blogplatform.api.model.dto.BlogResult;
-import ru.theblog.blogplatform.api.model.dto.FeedPostResult;
-import ru.theblog.blogplatform.api.model.dto.PostResult;
-import ru.theblog.blogplatform.api.model.dto.ProfileResult;
+import ru.theblog.blogplatform.api.model.dto.*;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import ru.theblog.blogplatform.api.model.params.PostBody;
 import ru.theblog.blogplatform.api.model.params.PostParams;
@@ -42,6 +39,26 @@ public class AppController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Post> getPosts(@Valid PostParams s) {
         return _postService.getPosts(s.getFrom(), s.getTo());
+    }
+
+    @GetMapping("/user")
+    public UserData getUser(Authentication auth) {
+        if (auth == null)
+            return null;
+
+        var userData = new UserData();
+        userData.systemRole = auth.getAuthorities().stream().findFirst().get().getAuthority();
+        userData.userBlogs = new ArrayList<>();
+        var user = _userService.getUserByEmail(auth.getName());
+        var blogs = _blogService.getUserBlogs(user);
+        for (var blog : blogs) {
+            var userBlog = new UserBlogData();
+            userBlog.title = blog.name;
+            userBlog.role = BlogRole.valueOf(blog.role).ordinal();
+            userData.userBlogs.add(userBlog);
+        }
+
+        return userData;
     }
 
     @PostMapping("/registration")
