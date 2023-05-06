@@ -8,7 +8,6 @@ import ru.theblog.blogplatform.api.model.params.PostBody;
 import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
 import ru.theblog.blogplatform.api.repository.BlogRepository;
 import ru.theblog.blogplatform.api.repository.PostRepository;
-import ru.theblog.blogplatform.api.repository.UserRepository;
 import ru.theblog.blogplatform.api.service.PostService;
 
 import java.time.LocalDateTime;
@@ -21,7 +20,6 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final BlogRepository blogRepository;
-    private final UserRepository userRepository;
 
     @Override
     public void createPost(PostBody postBody) {
