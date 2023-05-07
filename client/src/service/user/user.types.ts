@@ -13,6 +13,16 @@ export interface RegistrationData {
 }
 
 export interface UserData {
+  username: string
   systemRole: string
   blogs: Pick<Blog, 'name' | 'userRole' | 'id'>[]
+}
+
+export interface IProfile {
+  name: string
+  profileImage: string
+  birthdate: Date
+  status: string
+  email: string
+  blogs: Blog[]
 }

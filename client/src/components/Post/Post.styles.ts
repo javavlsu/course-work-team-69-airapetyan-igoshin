@@ -12,6 +12,11 @@ export const PostWrapper = styled('div')`
   overflow-x: hidden;
   box-shadow: ${({ theme }) => theme.shadows[1]};
   position: relative;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows[4]};
+  }
 `
 
 export const PostHeader = styled('h6')`

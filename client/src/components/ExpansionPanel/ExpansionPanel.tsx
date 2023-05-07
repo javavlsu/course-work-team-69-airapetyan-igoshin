@@ -23,9 +23,11 @@ export const ExpansionPanel: FC<ExpansionPanelProps> = ({
   return (
     <ExpansionPanelWrapper>
       <Accordion
+        variant={'outlined'}
         sx={{
-          background: theme.palette.neutral.main,
-          color: theme.palette.neutral.contrastText
+          background: theme.palette.app.main,
+          color: theme.palette.app.contrastText,
+          borderRadius: '0 !important'
         }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -33,7 +35,8 @@ export const ExpansionPanel: FC<ExpansionPanelProps> = ({
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            padding: '0'
+            padding: '5px 0',
+            background: theme.palette.base.main
           }}
         >
           {children}

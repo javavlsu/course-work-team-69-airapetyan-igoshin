@@ -9,6 +9,9 @@ import { useForm } from 'react-hook-form'
 import { createBlog } from '../../../../service/Blog/Blog.api'
 import { BlogCreateData } from '../../../../service/Blog/Blog.types'
 import { Button } from '@mui/material'
+import alertStore from '../../../../store/alertStore'
+import modalStore from '../../../../store/modalStore'
+import User from '../../../../domain/User'
 
 const BlogForm = forwardRef<HTMLFormElement>((props, ref) => {
   const { register, handleSubmit } = useForm<BlogCreateData>()
@@ -16,7 +19,14 @@ const BlogForm = forwardRef<HTMLFormElement>((props, ref) => {
     event?.preventDefault()
     const isSuccess = await createBlog(data)
 
-    console.log('Блог создан?' + isSuccess)
+    if (isSuccess) {
+      alertStore.create({
+        type: 'success',
+        children: 'Блог успешно создан!'
+      })
+      modalStore.close()
+      User.getUserData()
+    }
   })
 
   return (

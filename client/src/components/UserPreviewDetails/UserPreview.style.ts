@@ -6,4 +6,5 @@ export const UserPreviewWrapper = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  z-index: 2;
 `

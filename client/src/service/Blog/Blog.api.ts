@@ -20,3 +20,13 @@ export const createBlog = async (json: BlogCreateData) => {
 
   return response.ok
 }
+
+export const removeBlog = async (id: number) => {
+  try {
+    const response = await ky.delete(`${PREFIX_API}/blog/${id}`)
+
+    return response.ok
+  } catch (e) {
+    throw new Error()
+  }
+}

@@ -1,5 +1,5 @@
 import ky from 'ky'
-import { PublishPost, UpdatedPost } from './Post.types'
+import { PublishPost, ReactionBody, UpdatedPost } from './Post.types'
 import { IPost } from '../../utils/globalTypes'
 
 const PREFIX_API = '/api'
@@ -39,5 +39,15 @@ export const getPost = async (id: number) => {
     return await ky.get(`${PREFIX_API}/post/${id}`).json<IPost>()
   } catch (e) {
     return null
+  }
+}
+
+export const addReact = async (json: ReactionBody) => {
+  try {
+    const response = await ky.post(`${PREFIX_API}/reaction`, { json })
+
+    return response.ok
+  } catch (e) {
+    throw new Error()
   }
 }

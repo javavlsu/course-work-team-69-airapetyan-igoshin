@@ -3,18 +3,23 @@ import {
   RegistrationData,
   register,
   logout,
-  getUserData
+  getUserData,
+  getProfile
 } from '../service/user'
 import userStore from '../store/userStore'
 
 class User {
   async getUserData() {
+    userStore.loaded = false
     const data = await getUserData()
+
+    userStore.loaded = true
 
     if (!data) return
 
     userStore.systemRole = data.systemRole
     userStore.blogs = data.blogs
+    userStore.name = data.username
   }
 
   async login(json: FormData) {
@@ -36,6 +41,10 @@ class User {
     userStore.systemRole = ''
     userStore.blogs = []
     callback && callback()
+  }
+
+  async getProfile() {
+    return await getProfile()
   }
 }
 

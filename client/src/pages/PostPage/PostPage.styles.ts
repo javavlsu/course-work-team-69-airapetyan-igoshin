@@ -8,11 +8,12 @@ export const PostPageWrapper = styled('section')`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-top: 20px;
 `
 
 export const PostTitle = styled('h2')`
   font-size: 30px;
-  margin: 50px 0 0 0;
+  margin: 25px 0 0 0;
 `
 
 export const PostContent = styled('p')`
@@ -84,3 +85,10 @@ export const PostRatingCount = styled('p')`
 `
 
 export const CommentsWrapper = styled('div')``
+
+export const ToolsPanel = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`

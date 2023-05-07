@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { styled } from '@mui/material'
 import { Navigation } from '../../components/Navigation'
+import { observer } from 'mobx-react-lite'
 
 const Template = styled('div')`
   display: grid;
@@ -24,7 +25,7 @@ const ContentWrapper = styled('div')(() => ({
   height: '100%'
 }))
 
-export const MainLayout = () => {
+const MainLayout = () => {
   const [isOpen, setIsOpen] = useState(true)
 
   const toggleAside = () => {
@@ -42,3 +43,5 @@ export const MainLayout = () => {
     </Template>
   )
 }
+
+export default observer(MainLayout)

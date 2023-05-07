@@ -11,6 +11,7 @@ import {
   DeleteButton
 } from './Post.styles'
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface PostProps {
   post: IPreviewPost
@@ -25,8 +26,14 @@ export const Post: FC<PostProps> = ({
   deletable,
   handleDelete
 }) => {
+  const navigate = useNavigate()
+
+  const navigateToPost = () => {
+    navigate(`/post/${post.id}`)
+  }
+
   return (
-    <PostWrapper>
+    <PostWrapper onClick={navigateToPost}>
       {deletable && (
         <DeleteButton onClick={() => handleDelete && handleDelete(post.id)}>
           <Delete />
