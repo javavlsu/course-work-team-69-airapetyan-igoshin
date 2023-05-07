@@ -7,10 +7,10 @@ export const ToolsPanelRoot = styled('div')`
   align-items: center;
   overflow: hidden;
   gap: 20px;
-  padding: 20px 0;
 `
 
 export const ToolsItem = styled('div')<{ $animated: boolean }>`
+  padding: 15px 0;
   height: 100%;
   display: flex;
   min-width: 40px;

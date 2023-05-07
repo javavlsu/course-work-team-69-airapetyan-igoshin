@@ -1,5 +1,5 @@
 import ky from 'ky'
-import { RegistrationData, UserData } from './user.types'
+import { IProfile, RegistrationData, UserData } from './user.types'
 
 const PREFIX_API = '/api'
 
@@ -32,5 +32,13 @@ export const getUserData = async () => {
     return await ky.get(`${PREFIX_API}/user`).json<UserData>()
   } catch (e) {
     return null
+  }
+}
+
+export const getProfile = async () => {
+  try {
+    return await ky.get(`${PREFIX_API}/profile`).json<IProfile>()
+  } catch (e) {
+    throw new Error()
   }
 }

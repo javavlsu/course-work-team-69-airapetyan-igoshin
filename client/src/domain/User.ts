@@ -3,7 +3,8 @@ import {
   RegistrationData,
   register,
   logout,
-  getUserData
+  getUserData,
+  getProfile
 } from '../service/user'
 import userStore from '../store/userStore'
 
@@ -18,6 +19,7 @@ class User {
 
     userStore.systemRole = data.systemRole
     userStore.blogs = data.blogs
+    userStore.name = data.username
   }
 
   async login(json: FormData) {
@@ -39,6 +41,10 @@ class User {
     userStore.systemRole = ''
     userStore.blogs = []
     callback && callback()
+  }
+
+  async getProfile() {
+    return await getProfile()
   }
 }
 

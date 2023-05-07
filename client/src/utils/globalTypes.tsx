@@ -19,9 +19,13 @@ export interface IPost {
   content: string
   rating: number
   isDraft: boolean
+  blogName: string
 }
 
-export type IPreviewPost = Omit<IPost, 'content' | 'isDraft' | 'blogId'>
+export type IPreviewPost = Omit<
+  IPost,
+  'content' | 'isDraft' | 'blogId' | 'blogName'
+>
 
 export interface Blog {
   id: number
@@ -30,7 +34,6 @@ export interface Blog {
   userRole: UserBlogRole | null
   subscribers: number
   rating: number
-  postAmount: number
   posts?: IPost[]
 }
 

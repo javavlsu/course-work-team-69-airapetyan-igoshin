@@ -1,1 +1,1 @@
-export * from './UserPreview'
+export { default as UserPreview } from './UserPreview'

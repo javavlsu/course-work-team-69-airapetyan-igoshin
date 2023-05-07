@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { styled } from '@mui/material'
 import { Navigation } from '../../components/Navigation'
-import userStore from '../../store/userStore'
-import LoaderPage from '../../hocks/LoaderPage'
 import { observer } from 'mobx-react-lite'
 
 const Template = styled('div')`
@@ -36,18 +34,12 @@ const MainLayout = () => {
 
   return (
     <Template>
-      <LoaderPage
-        loadingData={null}
-        isLoaded={userStore.loaded}
-        possibleEmptyData={true}
-      >
-        <NavigationWrapper>
-          <Navigation toggleAside={toggleAside} />
-        </NavigationWrapper>
-        <ContentWrapper>
-          <Outlet context={{ isAsideOpen: isOpen }} />
-        </ContentWrapper>
-      </LoaderPage>
+      <NavigationWrapper>
+        <Navigation toggleAside={toggleAside} />
+      </NavigationWrapper>
+      <ContentWrapper>
+        <Outlet context={{ isAsideOpen: isOpen }} />
+      </ContentWrapper>
     </Template>
   )
 }
