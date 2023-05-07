@@ -9,7 +9,7 @@ INSERT INTO public.users (id, birthdate, email, name, password, registration_dat
 VALUES (DEFAULT, null, 'user@g.com', 'User', '$2a$10$xF5xxLpShRJSzBeniu704eLwpW3wGI7lz9bsnS3aFReJDScD1rFjK',
         '2023-04-23', null, 1);
 
-INSERT INTO public.post (id, content, create_date, update_date, description, reaction_count, title, blog_id, is_draft)
+INSERT INTO public.post (id, content, create_date, update_date, description, rating, title, blog_id, is_draft)
 VALUES (DEFAULT, 'Post1Draft', '2023-04-23 16:49:50.000000', '2023-04-23 16:49:50.000000', 'Text', 12, 'SamplePost', 1, true),
        (DEFAULT, 'Post2Draft', '2023-04-23 16:49:50.000000', '2023-04-23 16:49:50.000000', 'Text', 12, 'SamplePost', 1, true),
        (DEFAULT, 'Post3NotDraft', '2023-04-23 16:49:50.000000', '2023-04-23 16:49:50.000000', 'Text', 12, 'SamplePost', 1, false);

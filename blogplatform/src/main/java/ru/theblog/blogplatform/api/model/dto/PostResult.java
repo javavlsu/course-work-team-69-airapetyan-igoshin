@@ -8,8 +8,9 @@ public class PostResult {
     public Boolean isDraft;
     public Long blogId;
     public String blogName;
+    public int rating;
 
-    public PostResult(long id, String title, String description, String content, Boolean isDraft, long blogId, String blogName) {
+    public PostResult(long id, String title, String description, String content, Boolean isDraft, long blogId, String blogName, int rating) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -17,5 +18,6 @@ public class PostResult {
         this.isDraft = isDraft;
         this.blogId = blogId;
         this.blogName = blogName;
+        this.rating = rating;
     }
 }

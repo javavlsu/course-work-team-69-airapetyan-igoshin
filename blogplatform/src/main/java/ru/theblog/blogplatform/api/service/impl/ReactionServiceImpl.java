@@ -34,7 +34,7 @@ public class ReactionServiceImpl implements ReactionService {
         var reaction = reactionRepository.findByUser_IdAndPost_Id(user.getId(), postId).orElse(null);
         if (reaction != null) {
             if (reactionType == null) {
-                post.setReactionCount(post.getReactionCount() + (reaction.getReactionType() == ReactionType.Upvote ? -1 : 1));
+                post.setRating(post.getRating() + (reaction.getReactionType() == ReactionType.Upvote ? -1 : 1));
                 reactionRepository.delete(reaction);
                 postRepository.saveAndFlush(post);
                 return;
@@ -42,7 +42,7 @@ public class ReactionServiceImpl implements ReactionService {
 
             if (reaction.getReactionType() != reactionType) {
                 reaction.setReactionType(reactionType);
-                post.setReactionCount(post.getReactionCount() + (reactionType == ReactionType.Upvote ? 1 : -1));
+                post.setRating(post.getRating() + (reactionType == ReactionType.Upvote ? 1 : -1));
                 reactionRepository.saveAndFlush(reaction);
                 postRepository.saveAndFlush(post);
             }
@@ -52,7 +52,7 @@ public class ReactionServiceImpl implements ReactionService {
         }
 
         reaction = new Reaction(user, post, reactionType);
-        post.setReactionCount(post.getReactionCount() + (reactionType == ReactionType.Upvote ? 1 : -1));
+        post.setRating(post.getRating() + (reactionType == ReactionType.Upvote ? 1 : -1));
         postRepository.saveAndFlush(post);
         reactionRepository.saveAndFlush(reaction);
     }

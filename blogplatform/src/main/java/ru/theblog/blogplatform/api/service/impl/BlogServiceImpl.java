@@ -74,7 +74,7 @@ public class BlogServiceImpl implements BlogService {
             rItem.id = blog.getId();
             rItem.description = blog.getDescription();
             rItem.name = blog.getName();
-            rItem.role = role.getRole().name();
+            rItem.userRole = role.getRole().ordinal();
             //rItem.subscribers
             result.add(rItem);
         }

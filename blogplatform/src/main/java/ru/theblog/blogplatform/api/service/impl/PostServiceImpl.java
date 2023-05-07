@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updatePost(PostUpdateBody postBody, Post post) {
-        postRepository.saveAndFlush(new Post(post.getId(), postBody.title, postBody.description, postBody.content, post.getCreateDate(), LocalDateTime.now(), post.getReactionCount(),  postBody.isDraft, post.getBlog()));
+        postRepository.saveAndFlush(new Post(post.getId(), postBody.title, postBody.description, postBody.content, post.getCreateDate(), LocalDateTime.now(), post.getRating(),  postBody.isDraft, post.getBlog()));
     }
 
     @Override

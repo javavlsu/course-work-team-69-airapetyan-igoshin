@@ -2,7 +2,7 @@ package ru.theblog.blogplatform.api.model.dto;
 
 public class BlogUserResult {
     public long id;
-    public String role;
+    public Integer userRole;
     //blogPreview???
     public String name;
     public String description;
