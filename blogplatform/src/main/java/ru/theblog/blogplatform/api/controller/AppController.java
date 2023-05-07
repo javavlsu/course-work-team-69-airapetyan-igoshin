@@ -49,10 +49,12 @@ public class AppController {
         if (auth == null)
             return null;
 
+        var user = _userService.getUserByEmail(auth.getName());
+
         var userData = new UserData();
         userData.systemRole = auth.getAuthorities().stream().findFirst().get().getAuthority();
         userData.blogs = new ArrayList<>();
-        var user = _userService.getUserByEmail(auth.getName());
+        userData.username = user.getName();
         var blogs = _blogService.getUserBlogs(user);
         for (var blog : blogs) {
             var userBlog = new UserBlogData();
