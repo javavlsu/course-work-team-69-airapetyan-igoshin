@@ -38,6 +38,7 @@ public class SecurityConfig {
                          .loginProcessingUrl("/api/login")
                          //.usernameParameter("email")
                          .successHandler((request, response, authentication) -> { })
+                         .failureHandler((request, response, authentication) -> response.setStatus(400))
 
                  .and()
                  .cors().and()
