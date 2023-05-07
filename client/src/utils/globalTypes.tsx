@@ -55,3 +55,8 @@ export enum UserBlogRole {
   Collaborator,
   Creator
 }
+
+export enum Reaction {
+  Upvote,
+  Downvote
+}

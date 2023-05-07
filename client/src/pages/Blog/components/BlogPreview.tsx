@@ -15,10 +15,12 @@ import EditIcon from '@mui/icons-material/Edit'
 import { observer } from 'mobx-react-lite'
 import { BlogPreviewProps } from '../Blog.types'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
-import { Button } from '@mui/material'
+import { Box, Button, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { UserBlogRole } from '../../../utils/globalTypes'
 import { ToolsItem, ToolsPanel } from '../../../components/ToolsPanel'
+import { Delete } from '@mui/icons-material'
+import { removeBlog } from '../../../service/Blog/Blog.api'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   blogRole,
@@ -44,15 +46,31 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
     },
     {
       condition: blogRole >= UserBlogRole.Creator,
-      content: <EditIcon sx={{ height: '100%' }} />,
+      content: (
+        <IconButton>
+          <EditIcon />
+        </IconButton>
+      ),
       handler: toggleEditMode,
+      animated: true
+    },
+    {
+      condition: blogRole >= UserBlogRole.Creator,
+      content: (
+        <IconButton>
+          <Delete />
+        </IconButton>
+      ),
+      handler: () => removeBlog(blog.id).then(() => navigate('/profile')),
       animated: true
     }
   ]
 
   return (
     <BlogPreviewWrapper {...designStore.config.previewOptions}>
-      <ToolsPanel items={toolsItems} />
+      <Box sx={{ marginRight: '20px' }}>
+        <ToolsPanel items={toolsItems} />
+      </Box>
 
       <PreviewContainer {...designStore.config.previewContainerOptions}>
         <AvatarBlock {...designStore.config.avatarBlockOptions}>

@@ -142,7 +142,6 @@ export const ConfigContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
 `
 
 export const ConfigBlock = styled('div')`

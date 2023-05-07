@@ -1,5 +1,15 @@
-import { getPost, publishPost, removePost, updatePost } from '../service/Post'
-import { PublishPost, UpdatedPost } from '../service/Post/Post.types'
+import {
+  addReact,
+  getPost,
+  publishPost,
+  removePost,
+  updatePost
+} from '../service/Post'
+import {
+  PublishPost,
+  ReactionBody,
+  UpdatedPost
+} from '../service/Post/Post.types'
 
 class Post {
   getPost(id: number) {
@@ -13,6 +23,9 @@ class Post {
   }
   updatePost(json: UpdatedPost) {
     return updatePost(json)
+  }
+  async addReact(json: ReactionBody) {
+    return await addReact(json)
   }
 }
 

@@ -15,12 +15,12 @@ export const PostEdit = () => {
     <PageContainer>
       <Typography variant={'h2'}>Создание поста</Typography>
       <TextField
-        InputLabelProps={{ shrink: Boolean(post) }}
+        InputLabelProps={{ shrink: true }}
         {...register('title', { required: true })}
         label={'Заголовок'}
       />
       <TextField
-        InputLabelProps={{ shrink: Boolean(post) }}
+        InputLabelProps={{ shrink: true }}
         {...register('description', { required: true })}
         label={'Описание'}
       />

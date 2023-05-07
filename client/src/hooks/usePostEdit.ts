@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { IPost } from '../utils/globalTypes'
 import { checkUserRights } from '../utils/checkUserRights'
+import alertStore from '../store/alertStore'
 
 export const usePostEdit = () => {
   const navigate = useNavigate()
@@ -18,8 +19,11 @@ export const usePostEdit = () => {
       const blogId = searchParams.get('blogId')
 
       if (!blogId) {
-        console.log('Не получили blogId')
-        // Вызов Алерта нужен на странице
+        alertStore.create({
+          type: 'error',
+          children:
+            'Что-то пошло не так. Скорее всего вы перешли не со страницы блога'
+        })
       }
 
       const json = {
@@ -32,8 +36,18 @@ export const usePostEdit = () => {
 
       if (id) {
         await Post.updatePost({ id, ...json })
+        alertStore.create({
+          type: 'success',
+          children: 'Пост успешно обновлен!'
+        })
       } else {
         await Post.publishPost(json)
+        alertStore.create({
+          type: 'success',
+          children: `Пост успешно ${
+            isDraft ? 'сохранен в черновик' : 'создан'
+          }!`
+        })
       }
     })()
 

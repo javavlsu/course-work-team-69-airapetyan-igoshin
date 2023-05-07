@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import React, { useEffect, useMemo, useState } from 'react'
-import { IPost } from '../utils/globalTypes'
+import { IPost, Reaction } from '../utils/globalTypes'
 import Post from '../domain/Post'
 import { ToolsItem } from '../components/ToolsPanel'
 import { Button } from '@mui/material'
@@ -12,6 +12,19 @@ export const usePostPage = () => {
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<IPost>()
   const [isLoaded, setIsLoaded] = useState(false)
+
+  const handleRating = async (reactionType: Reaction) => {
+    if (!post) return
+
+    const newRating =
+      reactionType === Reaction.Upvote ? post.rating + 1 : post.rating - 1
+
+    setPost({ ...post, rating: newRating })
+    Post.addReact({
+      postId: post.id,
+      reactionType: reactionType
+    })
+  }
   const toolsItems: ToolsItem[] = useMemo(
     () => [
       {
@@ -49,6 +62,7 @@ export const usePostPage = () => {
   return {
     toolsItems,
     post,
-    isLoaded
+    isLoaded,
+    handleRating
   }
 }
