@@ -20,7 +20,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Reaction> reactions;
 
     @NonNull
@@ -41,8 +41,8 @@ public class Post {
     @Column(name = "update_date", nullable = false)
     private LocalDateTime updateDate;
 
-    @Column(name = "reaction_count", nullable = false)
-    private int reactionCount;
+    @Column(name = "rating", nullable = false)
+    private int rating;
 
     @Column(name = "is_draft", nullable = false)
     private boolean isDraft;
@@ -53,25 +53,25 @@ public class Post {
 
     protected Post() { }
 
-    public Post(@NonNull String title, String description, @NonNull String content, @NonNull LocalDateTime createDate, int reactionCount, boolean isDraft, @NonNull Blog blog) {
+    public Post(@NonNull String title, String description, @NonNull String content, @NonNull LocalDateTime createDate, int rating, boolean isDraft, @NonNull Blog blog) {
         this.title = title;
         this.description = description;
         this.content = content;
         this.createDate = createDate;
         this.updateDate = createDate;
-        this.reactionCount = reactionCount;
+        this.rating = rating;
         this.isDraft = isDraft;
         this.blog = blog;
     }
 
-    public Post(@NonNull Long id, @NonNull String title, String description, @NonNull String content, @NonNull LocalDateTime createDate, @NonNull LocalDateTime updateDate, int reactionCount, boolean isDraft, @NonNull Blog blog) {
+    public Post(@NonNull Long id, @NonNull String title, String description, @NonNull String content, @NonNull LocalDateTime createDate, @NonNull LocalDateTime updateDate, int rating, boolean isDraft, @NonNull Blog blog) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.content = content;
         this.createDate = createDate;
         this.updateDate = updateDate;
-        this.reactionCount = reactionCount;
+        this.rating = rating;
         this.isDraft = isDraft;
         this.blog = blog;
     }

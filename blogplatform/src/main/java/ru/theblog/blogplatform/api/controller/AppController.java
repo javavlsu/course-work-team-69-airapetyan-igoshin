@@ -58,7 +58,7 @@ public class AppController {
             var userBlog = new UserBlogData();
             userBlog.id = blog.id;
             userBlog.name = blog.name;
-            userBlog.userRole = BlogRole.valueOf(blog.role).ordinal();
+            userBlog.userRole = blog.userRole;
             userData.blogs.add(userBlog);
         }
 
@@ -112,7 +112,7 @@ public class AppController {
             feedPost.id = post.getId();
             feedPost.title = post.getTitle();
             feedPost.description = post.getDescription();
-            feedPost.rating = post.getReactionCount();
+            feedPost.rating = post.getRating();
             result.posts.add(feedPost);
         }
 
@@ -180,7 +180,7 @@ public class AppController {
     @GetMapping("/post/{postId}")
     public PostResult getPost(@PathVariable long postId, Authentication auth) {
         var post = _postService.getPost(postId);
-        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft(), post.getBlog().getId(), post.getBlog().getName());
+        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft(), post.getBlog().getId(), post.getBlog().getName(), post.getRating());
     }
 
     @PostMapping("/post")
