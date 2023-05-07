@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form'
 import { TextField, Typography } from '@mui/material'
 import { TextEditor } from '../../components/TextEditor'
 import {
@@ -7,58 +6,49 @@ import {
   PublishButtons,
   PublishButton
 } from './PostEdit.styles'
-import editorStore from '../../store/editorStore'
-import { useSearchParams } from 'react-router-dom'
-import Post from '../../domain/Post'
+import { usePostEdit } from '../../hooks/usePostEdit'
 
 export const PostEdit = () => {
-  const [searchParams] = useSearchParams()
-  const { register, handleSubmit } =
-    useForm<Record<'title' | 'description', string>>()
-  const publicPost = (isDraft: boolean) =>
-    handleSubmit(({ title, description }) => {
-      const content = editorStore.toHtml()
-      const blogId = searchParams.get('blogId')
-
-      if (!blogId) {
-        console.log('Не получили blogId')
-        // Вызов Алерта нужен на странице
-      }
-
-      const json = {
-        blogId: Number(blogId),
-        title,
-        description,
-        content,
-        isDraft
-      }
-
-      Post.publishPost(json)
-    })()
+  const { register, post, publishPost } = usePostEdit()
 
   return (
     <PageContainer>
       <Typography variant={'h2'}>Создание поста</Typography>
       <TextField
+        InputLabelProps={{ shrink: Boolean(post) }}
         {...register('title', { required: true })}
         label={'Заголовок'}
       />
       <TextField
+        InputLabelProps={{ shrink: Boolean(post) }}
         {...register('description', { required: true })}
         label={'Описание'}
       />
       <EditArea>
-        <TextEditor />
+        <TextEditor html={post?.content} />
       </EditArea>
       <PublishButtons>
+        {post ? (
+          <PublishButton
+            variant={'contained'}
+            color={'warning'}
+            onClick={() => publishPost({ isDraft: false, id: post?.id })}
+          >
+            Опубликовать
+          </PublishButton>
+        ) : (
+          <PublishButton
+            variant={'contained'}
+            color={'success'}
+            onClick={() => publishPost({ isDraft: false })}
+          >
+            Опубликовать
+          </PublishButton>
+        )}
         <PublishButton
-          variant={'contained'}
-          color={'success'}
-          onClick={() => publicPost(false)}
+          variant={'outlined'}
+          onClick={() => publishPost({ isDraft: true })}
         >
-          Опубликовать
-        </PublishButton>
-        <PublishButton variant={'outlined'} onClick={() => publicPost(true)}>
           Сохранить в черновик
         </PublishButton>
       </PublishButtons>

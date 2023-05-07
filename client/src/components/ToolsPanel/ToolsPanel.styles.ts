@@ -1,0 +1,29 @@
+import { css, styled } from '@mui/material'
+
+export const ToolsPanelRoot = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  overflow: hidden;
+  gap: 20px;
+  padding: 20px 0;
+`
+
+export const ToolsItem = styled('div')<{ $animated: boolean }>`
+  height: 100%;
+  display: flex;
+  min-width: 40px;
+  transition: 0.1s;
+  cursor: pointer;
+  ${({ $animated }) =>
+    $animated &&
+    css`
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    `}
+`

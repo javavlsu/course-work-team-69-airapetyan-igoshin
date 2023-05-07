@@ -3,6 +3,7 @@ import { Blog } from '../utils/globalTypes'
 
 class UserStore {
   systemRole?: string
+  loaded = false
   blogs: Pick<Blog, 'name' | 'userRole' | 'id'>[] = []
 
   constructor() {

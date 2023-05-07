@@ -9,7 +9,10 @@ import userStore from '../store/userStore'
 
 class User {
   async getUserData() {
+    userStore.loaded = false
     const data = await getUserData()
+
+    userStore.loaded = true
 
     if (!data) return
 
