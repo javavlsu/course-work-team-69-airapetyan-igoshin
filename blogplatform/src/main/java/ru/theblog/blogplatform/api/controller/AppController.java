@@ -103,8 +103,10 @@ public class AppController {
         result.name = blog.getName();
         result.description = blog.getDescription();
         result.subscribers = _blogService.getSubscribersCount(blogId);
-        var userblogrole = _blogService.getUserBlogRole(user.getId(), blogId);
-        result.userRole = userblogrole != null ? userblogrole.ordinal() : null;
+        if (user != null) {
+            var userblogrole = _blogService.getUserBlogRole(user.getId(), blogId);
+            result.userRole = userblogrole != null ? userblogrole.ordinal() : null;
+        }
         result.postAmount = posts.size();
         result.rating = _blogService.getRating(blogId);
         result.posts = new ArrayList<>();
