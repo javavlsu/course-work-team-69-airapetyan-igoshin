@@ -37,12 +37,13 @@ public class BlogServiceImpl implements BlogService {
     private final PasswordEncoder encoder;
 
     @Override
-    public void create(BlogForm blogForm, Authentication auth) {
-        var blog = new Blog(blogForm.name, blogForm.description);
+    public Long create(BlogForm blogForm, Authentication auth) {
+        var blog = new Blog(blogForm.name, blogForm.description, blogForm.config);
         var user = userRepository.findByEmail(auth.getName());
 
         blogRepository.saveAndFlush(blog);
         userBlogRoleRepository.saveAndFlush(new UserBlogRole(blog, user, BlogRole.Creator));
+        return blog.getId();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void update(BlogUpdateForm blog) {
-        blogRepository.saveAndFlush(new Blog(blog.id, blog.name, blog.description));
+        blogRepository.saveAndFlush(new Blog(blog.id, blog.name, blog.description, blog.config));
     }
 
     @Override

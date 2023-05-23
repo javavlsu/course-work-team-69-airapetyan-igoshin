@@ -22,6 +22,10 @@ public class Blog {
     @Column
     private String description;
 
+    @NonNull
+    @Column(nullable = false)
+    private String config;
+
     @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
     private List<UserBlogRole> userBlogRoles;
 
@@ -30,13 +34,14 @@ public class Blog {
 
     protected Blog() { }
 
-    public Blog(long id, @NonNull String name, String description) {
-        this(name, description);
+    public Blog(long id, @NonNull String name, String description, @NonNull String config) {
+        this(name, description, config);
         this.id = id;
     }
 
-    public Blog(@NonNull String name, String description) {
+    public Blog(@NonNull String name, String description, @NonNull String config) {
         this.name = name;
         this.description = description;
+        this.config = config;
     }
 }

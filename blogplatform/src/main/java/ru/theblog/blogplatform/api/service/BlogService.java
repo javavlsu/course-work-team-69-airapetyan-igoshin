@@ -12,7 +12,7 @@ import ru.theblog.blogplatform.api.model.params.form.UserForm;
 import java.util.List;
 
 public interface BlogService {
-    void create(BlogForm blog, Authentication auth);
+    Long create(BlogForm blog, Authentication auth);
     Blog getBlog(Long id);
     void addUser(UserForm user);
     List<BlogUserResult> getUserBlogs(User user);

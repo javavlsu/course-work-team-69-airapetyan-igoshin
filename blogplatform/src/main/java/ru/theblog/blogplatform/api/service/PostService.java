@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostService {
-    void createPost(PostBody postBody);
+    Long createPost(PostBody postBody);
     Post getPost(Long id);
     List<Post> getPosts(LocalDateTime from, LocalDateTime to);
     List<Post> getBlogPosts(long blogId);

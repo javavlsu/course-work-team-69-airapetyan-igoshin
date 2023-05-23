@@ -102,6 +102,7 @@ public class AppController {
         result.id = blog.getId();
         result.name = blog.getName();
         result.description = blog.getDescription();
+        result.config = blog.getConfig();
         result.subscribers = _blogService.getSubscribersCount(blogId);
         if (user != null) {
             var userblogrole = _blogService.getUserBlogRole(user.getId(), blogId);
@@ -124,13 +125,16 @@ public class AppController {
     }
 
     @PostMapping("/blog")
-    public ResponseEntity addBlog(@RequestBody BlogForm blog, Authentication auth) {
+    public ResponseEntity<Object> addBlog(@RequestBody BlogForm blog, Authentication auth) {
+        class BlogId { public Long blogId; }
+
         try {
             if (auth == null) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
             }
-            _blogService.create(blog, auth);
-            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+            var result = new BlogId();
+            result.blogId = _blogService.create(blog, auth);
+            return new ResponseEntity<>(result, HttpStatusCode.valueOf(200));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
         }
@@ -188,7 +192,9 @@ public class AppController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity createPost(@RequestBody @Valid PostBody postBody, Authentication auth) {
+    public ResponseEntity<Object> createPost(@RequestBody @Valid PostBody postBody, Authentication auth) {
+        class PostId { public Long postId; }
+
         try {
             if (auth == null) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
@@ -199,8 +205,9 @@ public class AppController {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(403));
             }
 
-            _postService.createPost(postBody);
-            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+            var result = new PostId();
+            result.postId = _postService.createPost(postBody);
+            return new ResponseEntity<>(result, HttpStatusCode.valueOf(200));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
