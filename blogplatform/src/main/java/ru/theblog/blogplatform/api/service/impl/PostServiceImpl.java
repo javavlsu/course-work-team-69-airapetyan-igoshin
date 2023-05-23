@@ -22,10 +22,11 @@ public class PostServiceImpl implements PostService {
     private final BlogRepository blogRepository;
 
     @Override
-    public void createPost(PostBody postBody) {
+    public Long createPost(PostBody postBody) {
         var blog = blogRepository.findById(postBody.blogId).get();
         var post = new Post(postBody.title, postBody.description, postBody.content, LocalDateTime.now(), 0, postBody.isDraft, blog);
         postRepository.saveAndFlush(post);
+        return post.getId();
     }
 
     @Override
