@@ -1,6 +1,5 @@
 package ru.theblog.blogplatform.api.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -16,12 +15,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Reaction> reactions;
 
     @NonNull
     @Column(nullable = false)
@@ -52,6 +45,11 @@ public class Post {
     private Blog blog;
 
     protected Post() { }
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Reaction> reactions;
 
     public Post(@NonNull String title, String description, @NonNull String content, @NonNull LocalDateTime createDate, int rating, boolean isDraft, @NonNull Blog blog) {
         this.title = title;

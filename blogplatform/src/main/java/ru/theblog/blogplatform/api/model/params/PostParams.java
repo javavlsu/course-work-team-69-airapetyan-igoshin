@@ -2,14 +2,10 @@ package ru.theblog.blogplatform.api.model.params;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import ru.theblog.blogplatform.api.model.enums.FeedType;
 
 @Data
 public class PostParams {
     @NotNull
-    private LocalDateTime from;
-
-    @NotNull
-    private LocalDateTime to;
+    private FeedType feedType;
 }

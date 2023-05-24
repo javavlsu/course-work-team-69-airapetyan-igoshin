@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.ReactionBody;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.*;
@@ -39,9 +38,9 @@ public class AppController {
     private final UserService _userService;
     private final ReactionService _reactionService;
 
-    @GetMapping("/getPosts")
-    public List<Post> getPosts(@Valid PostParams s) {
-        return _postService.getPosts(s.getFrom(), s.getTo());
+    @GetMapping("/posts")
+    public List<PreviewPost> getPosts(@Valid PostParams s, Authentication auth) {
+        return _postService.getPostPreviews(s.getFeedType(), auth);
     }
 
     @GetMapping("/user")
