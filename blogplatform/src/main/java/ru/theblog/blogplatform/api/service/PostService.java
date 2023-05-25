@@ -12,7 +12,7 @@ import java.util.List;
 public interface PostService {
     Long createPost(PostBody postBody);
     Post getPost(Long id);
-    List<PreviewPost> getPostPreviews(FeedType feedType, Authentication auth);
+    List<PreviewPost> getPostPreviews(FeedType feedType, boolean onlySubscription, Authentication auth);
     List<Post> getBlogPosts(long blogId);
     void updatePost(PostUpdateBody postBody, Post post);
     void deletePost(Long postId);

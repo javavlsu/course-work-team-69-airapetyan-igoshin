@@ -40,7 +40,7 @@ public class AppController {
 
     @GetMapping("/posts")
     public List<PreviewPost> getPosts(@Valid PostParams s, Authentication auth) {
-        return _postService.getPostPreviews(s.getFeedType(), auth);
+        return _postService.getPostPreviews(s.getFeedType(), s.isOnlySubscription(), auth);
     }
 
     @GetMapping("/user")

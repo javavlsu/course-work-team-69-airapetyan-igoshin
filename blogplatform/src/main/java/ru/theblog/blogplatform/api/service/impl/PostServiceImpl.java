@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.theblog.blogplatform.api.model.Post;
+import ru.theblog.blogplatform.api.model.UserBlogRole;
 import ru.theblog.blogplatform.api.model.dto.PreviewPost;
 import ru.theblog.blogplatform.api.model.enums.FeedType;
 import ru.theblog.blogplatform.api.model.params.PostBody;
@@ -17,6 +18,7 @@ import ru.theblog.blogplatform.api.service.PostService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -44,52 +46,75 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PreviewPost> getPostPreviews(FeedType feedType, Authentication auth) {
+    public List<PreviewPost> getPostPreviews(FeedType feedType, boolean onlySubscription, Authentication auth) {
+        List<UserBlogRole> subscriptions = null;
+        if (auth != null && onlySubscription) {
+            var user = userRepository.findByEmail(auth.getName());
+            subscriptions = userBRRepository.findAllByUser(user);
+        }
+
         if (feedType == FeedType.Latest){
-            return postRepository.findAllByOrderByCreateDateDesc()
-                    .stream()
-                    .map(p -> new PreviewPost(
-                                    p.getId(),
-                                    p.getBlog().getId(),
-                                    p.getTitle(),
-                                    p.getDescription(),
-                                    p.getRating()
-                            )
-                    ).toList();
+            if (onlySubscription && subscriptions != null){
+                var result = new ArrayList<PreviewPost>();
+                for (var subscription : subscriptions) {
+                    var posts = postRepository.findByBlog_Id(subscription.getBlog().getId());
+                    result.addAll(posts.stream()
+                            .sorted((o1, o2) -> o2.getCreateDate().compareTo(o1.getCreateDate()))
+                            .map(p -> new PreviewPost(
+                                            p.getId(),
+                                            p.getBlog().getId(),
+                                            p.getTitle(),
+                                            p.getDescription(),
+                                            p.getRating()
+                                    )
+                            ).toList()
+                    );
+                }
+                return result;
+            } else {
+                return postRepository.findAllByOrderByCreateDateDesc()
+                        .stream()
+                        .map(p -> new PreviewPost(
+                                        p.getId(),
+                                        p.getBlog().getId(),
+                                        p.getTitle(),
+                                        p.getDescription(),
+                                        p.getRating()
+                                )
+                        ).toList();
+            }
         }
 
         if (feedType == FeedType.Popular) {
-            return postRepository.findAllByOrderByRatingDesc()
-                    .stream()
-                    .map(p -> new PreviewPost(
-                            p.getId(),
-                            p.getBlog().getId(),
-                            p.getTitle(),
-                            p.getDescription(),
-                            p.getRating()
-                            )
-                    ).toList();
-        }
-
-        if (feedType == FeedType.Subscriptions && auth != null) {
-            var user = userRepository.findByEmail(auth.getName());
-            var subscriptions = userBRRepository.findAllByUser(user);
-            var result = new ArrayList<PreviewPost>();
-            for (var subscription : subscriptions) {
-                var posts = postRepository.findByBlog_Id(subscription.getBlog().getId());
-                result.addAll(posts.stream()
-                        .sorted((o1, o2) -> o2.getCreateDate().compareTo(o1.getCreateDate()))
+            if (onlySubscription && subscriptions != null){
+                var result = new ArrayList<PreviewPost>();
+                for (var subscription : subscriptions) {
+                    var posts = postRepository.findByBlog_Id(subscription.getBlog().getId());
+                    result.addAll(posts.stream()
+                            .sorted(Comparator.comparingInt(Post::getRating).reversed())
+                            .map(p -> new PreviewPost(
+                                            p.getId(),
+                                            p.getBlog().getId(),
+                                            p.getTitle(),
+                                            p.getDescription(),
+                                            p.getRating()
+                                    )
+                            ).toList()
+                    );
+                }
+                return result;
+            } else {
+                return postRepository.findAllByOrderByRatingDesc()
+                        .stream()
                         .map(p -> new PreviewPost(
-                                p.getId(),
-                                p.getBlog().getId(),
-                                p.getTitle(),
-                                p.getDescription(),
-                                p.getRating()
+                                        p.getId(),
+                                        p.getBlog().getId(),
+                                        p.getTitle(),
+                                        p.getDescription(),
+                                        p.getRating()
                                 )
-                        ).toList()
-                );
+                        ).toList();
             }
-            return result;
         }
 
         return null;

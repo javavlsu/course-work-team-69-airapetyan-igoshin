@@ -8,4 +8,6 @@ import ru.theblog.blogplatform.api.model.enums.FeedType;
 public class PostParams {
     @NotNull
     private FeedType feedType;
+    @NotNull
+    private boolean onlySubscription;
 }
