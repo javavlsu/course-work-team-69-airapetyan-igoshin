@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.UserBlogRole;
+import ru.theblog.blogplatform.api.model.dto.PostDropdown;
 import ru.theblog.blogplatform.api.model.dto.PreviewPost;
 import ru.theblog.blogplatform.api.model.enums.FeedType;
 import ru.theblog.blogplatform.api.model.params.PostBody;
@@ -140,5 +141,10 @@ public class PostServiceImpl implements PostService {
         var post = postRepository.findById(postId).get();
         post.setDraft(isDraft);
         postRepository.saveAndFlush(post);
+    }
+
+    @Override
+    public List<PostDropdown> search(String query) {
+        return postRepository.getAllByTitle(query).stream().map(p -> new PostDropdown(p.getId(), p.getTitle())).toList();
     }
 }
