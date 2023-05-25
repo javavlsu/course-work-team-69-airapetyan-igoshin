@@ -43,6 +43,11 @@ public class AppController {
         return _postService.getPostPreviews(s.getFeedType(), s.isOnlySubscription(), auth);
     }
 
+    @GetMapping("/search")
+    public List<PostDropdown> search(@RequestParam String query) {
+        return _postService.search(query);
+    }
+
     @GetMapping("/user")
     public UserData getUser(Authentication auth) {
         if (auth == null)
