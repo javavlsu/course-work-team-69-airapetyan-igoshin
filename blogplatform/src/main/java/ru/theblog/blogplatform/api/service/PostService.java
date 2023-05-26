@@ -2,7 +2,6 @@ package ru.theblog.blogplatform.api.service;
 
 import org.springframework.security.core.Authentication;
 import ru.theblog.blogplatform.api.model.Post;
-import ru.theblog.blogplatform.api.model.dto.PostDropdown;
 import ru.theblog.blogplatform.api.model.dto.PreviewPost;
 import ru.theblog.blogplatform.api.model.enums.FeedType;
 import ru.theblog.blogplatform.api.model.params.PostBody;
@@ -18,5 +17,5 @@ public interface PostService {
     void updatePost(PostUpdateBody postBody, Post post);
     void deletePost(Long postId);
     void updateStatus(Long postId, boolean isDraft);
-    List<PostDropdown> search(String query);
+    List<PreviewPost> search(String query);
 }
