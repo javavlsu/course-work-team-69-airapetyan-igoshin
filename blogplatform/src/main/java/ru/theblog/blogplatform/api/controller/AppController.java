@@ -44,7 +44,7 @@ public class AppController {
     }
 
     @GetMapping("/search")
-    public List<PostDropdown> search(@RequestParam String query) {
+    public List<PreviewPost> search(@RequestParam String query) {
         return _postService.search(query);
     }
 
