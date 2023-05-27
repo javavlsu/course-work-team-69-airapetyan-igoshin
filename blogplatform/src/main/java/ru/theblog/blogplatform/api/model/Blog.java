@@ -22,7 +22,7 @@ public class Blog {
     @Column
     private String description;
 
-    @Column
+    @Column(columnDefinition = "TEXT", nullable = true)
     private String config;
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
