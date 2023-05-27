@@ -1,3 +1,4 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form'
 import { Blog, UserBlogRole } from '../../utils/globalTypes'
 
 export interface PreviewOptions {
@@ -85,4 +86,6 @@ export interface BlogPreviewProps {
   blogRole: UserBlogRole
   toggleEditMode: () => void
   blog: Blog
+  isEditMode: boolean
+  register: UseFormRegister<FieldValues>
 }

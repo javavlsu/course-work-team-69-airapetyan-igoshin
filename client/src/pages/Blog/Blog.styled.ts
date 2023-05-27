@@ -11,6 +11,7 @@ import {
   StatisticsCountOptions,
   StatisticsItemOptions
 } from './Blog.types'
+import { SmartInput } from '../../components/SmartInput/SmartInput'
 
 export const BlogWrapper = styled('section')`
   display: flex;
@@ -51,7 +52,7 @@ export const BlogAvatar = styled('img')<BlogAvatarOptions>`
   background: #d9d9d9;
 `
 
-export const BlogName = styled('h2')<BlogNameOptions>`
+export const BlogName = styled(SmartInput)<BlogNameOptions>`
   font-size: ${({ fontSize }) => fontSize}px;
   color: ${({ color }) => color};
   text-transform: ${({ textTransform }) => textTransform};
@@ -60,7 +61,7 @@ export const BlogName = styled('h2')<BlogNameOptions>`
   margin: ${({ margin }) => margin};
 `
 
-export const BlogDescription = styled('h2')<BlogDescriptionOptions>`
+export const BlogDescription = styled(SmartInput)<BlogDescriptionOptions>`
   font-size: ${({ fontSize }) => fontSize}px;
   color: ${({ color }) => color};
   text-transform: ${({ textTransform }) => textTransform};

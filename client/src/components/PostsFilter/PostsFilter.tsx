@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent, FC } from 'react'
 import { styled } from '@mui/material'
 
 const PostsFilterWrapper = styled('div')`
@@ -23,10 +23,17 @@ const PostsFilterInput = styled('input')`
   }
 `
 
-export const PostsFilter = () => {
+export const PostsFilter: FC<{
+  value: string
+  handleValue: (e: ChangeEvent<HTMLInputElement>) => void
+}> = ({ value, handleValue }) => {
   return (
     <PostsFilterWrapper>
-      <PostsFilterInput placeholder="Поиск..." />
+      <PostsFilterInput
+        value={value}
+        onChange={handleValue}
+        placeholder="Поиск..."
+      />
     </PostsFilterWrapper>
   )
 }

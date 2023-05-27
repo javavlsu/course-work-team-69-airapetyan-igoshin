@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { getBlog } from '../service/Blog'
 import { Blog, UserBlogRole } from '../utils/globalTypes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DomainPost from '../domain/Post'
+import designStore, { defaultDesignConfig } from '../store/designStore'
 
 export const useBlog = (id: number) => {
   const [isEditMode, setIsEditMode] = useState(false)
@@ -13,6 +15,7 @@ export const useBlog = (id: number) => {
     return blog?.userRole || 0
   }, [blog])
   const isCreator = blogRole === UserBlogRole.Creator
+  const { register, setValue, getValues } = useForm()
 
   const turnOffEdit = () => {
     isCreator && setIsEditMode(false)
@@ -31,12 +34,27 @@ export const useBlog = (id: number) => {
 
     if (!response) return navigate('/not-found')
     setBlog(response)
+
+    designStore.config = response.config || defaultDesignConfig
+    setValue('name', response.name)
+    setValue('description', response.description)
   }
 
   const handlePostDelete = async (id: number) => {
     const response = await DomainPost.removePost(id)
 
     response && blogRequest()
+  }
+
+  const updateBlogOnFE = (name: string, description: string) => {
+    setBlog((prevState) => {
+      return {
+        ...prevState,
+        description,
+        name,
+        config: designStore.config
+      } as Blog
+    })
   }
 
   useEffect(() => {
@@ -51,6 +69,9 @@ export const useBlog = (id: number) => {
     turnOffEdit,
     toggleEditMode,
     handlePostDelete,
-    isCreator
+    isCreator,
+    register,
+    getValues,
+    updateBlogOnFE
   }
 }

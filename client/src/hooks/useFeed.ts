@@ -1,45 +1,27 @@
 import { useEffect, useState } from 'react'
-import { IPreviewPost } from '../utils/globalTypes'
-
-export enum FeedType {
-  Popular,
-  Newest
-}
-
-const posts: IPreviewPost[] = [
-  {
-    id: 1,
-    title: 'Заголовок',
-    description: 'Description...',
-    rating: 145
-  },
-  {
-    id: 2,
-    title: 'Заголовок',
-    description: 'Description...',
-    rating: 145
-  }
-]
+import { FeedType, IPreviewPost } from '../utils/globalTypes'
+import Post from '../domain/Post'
 
 export const useFeed = () => {
   const [feed, setFeed] = useState<IPreviewPost[]>([])
   const [feedType, setFeedType] = useState<FeedType>(FeedType.Popular)
-  const [onlySubscribes, setOnlySubscribes] = useState(false)
+  const [onlySubscription, setOnlySubscription] = useState(false)
 
-  const getFeed = () => {
-    // Todo перенсти на сервис и реальный API
-    setFeed(posts)
-    console.log(
-      `/posts?feed=${FeedType[feedType]}&onlySubscribes=${onlySubscribes}`
-    )
+  const getFeed = async () => {
+    const feedPosts = await Post.getFeed({
+      feedType: FeedType[feedType],
+      onlySubscription
+    })
+
+    setFeed(feedPosts)
   }
   const handlePopular = () => setFeedType(FeedType.Popular)
-  const handleNewest = () => setFeedType(FeedType.Newest)
-  const toggleSubscribes = () => setOnlySubscribes(!onlySubscribes)
+  const handleNewest = () => setFeedType(FeedType.Latest)
+  const toggleSubscribes = () => setOnlySubscription(!onlySubscription)
 
   useEffect(() => {
     getFeed()
-  }, [feedType, onlySubscribes])
+  }, [feedType, onlySubscription])
 
   return {
     feed,

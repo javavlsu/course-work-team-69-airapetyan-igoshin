@@ -35,6 +35,7 @@ export interface Blog {
   subscribers: number
   rating: number
   posts?: IPost[]
+  config?: IDesignConfig
 }
 
 export interface IDesignConfig {
@@ -59,4 +60,9 @@ export enum UserBlogRole {
 export enum Reaction {
   Upvote,
   Downvote
+}
+
+export enum FeedType {
+  Popular,
+  Latest
 }

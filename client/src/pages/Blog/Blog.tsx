@@ -18,8 +18,16 @@ import { UserBlogRole } from '../../utils/globalTypes'
 const BlogComponent = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false)
   const { id } = useParams()
-  const { isEditMode, blogRole, toggleEditMode, handlePostDelete, blog } =
-    useBlog(Number(id))
+  const {
+    isEditMode,
+    blogRole,
+    toggleEditMode,
+    handlePostDelete,
+    blog,
+    register,
+    getValues,
+    updateBlogOnFE
+  } = useBlog(Number(id))
   const chunkedPosts = useMemo(() => {
     if (!blog?.posts) return []
     return parseToChunks(
@@ -40,10 +48,18 @@ const BlogComponent = () => {
             blog={blog}
             blogRole={blogRole}
             toggleEditMode={toggleEditMode}
+            isEditMode={isEditMode}
+            register={register}
           />
           <BlogContentWrapper isEditMode={isEditMode}>
             {isEditMode && (
-              <BlogAside isOpen={isAsideOpen} toggle={toggleAsideMenu} />
+              <BlogAside
+                isOpen={isAsideOpen}
+                toggle={toggleAsideMenu}
+                getValues={getValues}
+                updateBlogOnFE={updateBlogOnFE}
+                blogId={Number(id)}
+              />
             )}
             <BlogPostsWrapper isAsideOpen={isEditMode && isAsideOpen}>
               <BlogPostsContainer {...designStore.config.blogPostsOptions}>

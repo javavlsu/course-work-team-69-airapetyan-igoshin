@@ -1,1 +1,1 @@
-export { getBlog } from './Blog.api'
+export * from './Blog.api'

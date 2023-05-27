@@ -41,7 +41,21 @@ export const usePostEdit = () => {
           children: 'Пост успешно обновлен!'
         })
       } else {
-        await Post.publishPost(json)
+        const res = await Post.publishPost(json)
+
+        if (!res)
+          return alertStore.create({
+            type: 'error',
+            children: `Упс.. Произошла ошибка`
+          })
+
+        if (!isDraft) {
+          setValue('title', '')
+          setValue('description', '')
+          editorStore.clear()
+        }
+
+        !isDraft && navigate(`/post/${res.postId}`)
         alertStore.create({
           type: 'success',
           children: `Пост успешно ${

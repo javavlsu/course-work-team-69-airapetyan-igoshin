@@ -1,3 +1,3 @@
-export * from './user.api'
+export * from './User.api'
 
 export * from './user.types'

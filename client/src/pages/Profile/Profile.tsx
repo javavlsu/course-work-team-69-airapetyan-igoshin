@@ -2,7 +2,7 @@ import React from 'react'
 import { AsideMenu } from '../../components/AsideMenu'
 import { useOutletContext } from 'react-router-dom'
 import { BlogCard } from '../../components/BlogCard'
-import { AsideProfileContent } from './components/AsideProfileContent'
+import { AsideProfileContent } from './components/AsideProfileContent/AsideProfileContent'
 import {
   ProfileWrapper,
   ProfileContentWrapper,

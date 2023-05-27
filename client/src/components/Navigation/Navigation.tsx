@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { UserPreview } from '../UserPreviewDetails'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   MenuIconButton,
   BlogName,
@@ -35,7 +35,20 @@ const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
           gap: '20px'
         }}
       >
-        {userStore.isAuth ? <UserPreview /> : <Link to={'/login'}>Войти</Link>}
+        {userStore.isAuth ? (
+          <UserPreview />
+        ) : (
+          <>
+            <Button onClick={() => navigate('/login')}>Войти</Button>
+            <Button
+              variant={'outlined'}
+              onClick={() => navigate('/login/new-user')}
+              color={'info'}
+            >
+              Регистрация
+            </Button>
+          </>
+        )}
       </Box>
     </NavigationWrapper>
   )
