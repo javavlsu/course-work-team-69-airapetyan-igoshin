@@ -7,9 +7,18 @@ import {
   MenuButton
 } from '../Home.style'
 import React, { FC } from 'react'
+import { AsideContentProps } from '../Home.types'
 
-export const AsideContent: FC<{ isAsideOpen: boolean }> = ({ isAsideOpen }) => {
-  const settings = [{ name: 'Популярное' }, { name: 'Свежее' }]
+export const AsideContent: FC<AsideContentProps> = ({
+  isAsideOpen,
+  onNewest,
+  onPopular,
+  onSubscribes
+}) => {
+  const settings = [
+    { name: 'Популярное', handler: onPopular },
+    { name: 'Свежее', handler: onNewest }
+  ]
   const subsribes = [
     { name: 'Блог-1' },
     { name: 'Блог-2' },
@@ -22,7 +31,11 @@ export const AsideContent: FC<{ isAsideOpen: boolean }> = ({ isAsideOpen }) => {
       <MenuBlock isOpen={isAsideOpen}>
         <MenuHeader>{isAsideOpen && 'Настрройка ленты'}</MenuHeader>
         {settings.map((setting) => (
-          <MenuButton isOpen={isAsideOpen} key={setting.name}>
+          <MenuButton
+            onClick={setting.handler}
+            isOpen={isAsideOpen}
+            key={setting.name}
+          >
             <MenuButtonIcon isOpen={isAsideOpen} />
             {isAsideOpen && <MenuButtonText>{setting.name}</MenuButtonText>}
           </MenuButton>
@@ -34,6 +47,7 @@ export const AsideContent: FC<{ isAsideOpen: boolean }> = ({ isAsideOpen }) => {
               control={<Switch color="primary" />}
               label="Только подписки"
               labelPlacement="start"
+              onChange={onSubscribes}
             />
           </FormGroup>
         )}

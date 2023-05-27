@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import designStore from '../../../store/designStore'
 import {
   AvatarBlock,
@@ -25,7 +25,9 @@ import { removeBlog } from '../../../service/Blog/Blog.api'
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   blogRole,
   toggleEditMode,
-  blog
+  blog,
+  isEditMode,
+  register
 }) => {
   const { name, subscribers, rating, posts, description } = blog
   const navigate = useNavigate()
@@ -76,10 +78,22 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
         <AvatarBlock {...designStore.config.avatarBlockOptions}>
           <BlogAvatar {...designStore.config.blogAvatarOptions} />
         </AvatarBlock>
-        <BlogName {...designStore.config.blogNameOptions}>{name}</BlogName>
-        <BlogDescription {...designStore.config.blogDescriptionOptions}>
-          {description}
-        </BlogDescription>
+        <BlogName
+          variant={'standard'}
+          placeholder={'Введите имя блога'}
+          value={name}
+          editable={isEditMode}
+          {...designStore.config.blogNameOptions}
+          inputProps={{ ...register('name') }}
+        />
+        <BlogDescription
+          variant={'standard'}
+          placeholder={'Введите описание блога'}
+          value={description}
+          editable={isEditMode}
+          inputProps={{ ...register('description') }}
+          {...designStore.config.blogDescriptionOptions}
+        />
         <StatisticsBlock {...designStore.config.statisticsBlockOptions}>
           <StatisticsItem {...designStore.config.statisticsItemOptions}>
             <StatisticsCount

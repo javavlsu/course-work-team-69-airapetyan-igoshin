@@ -93,12 +93,10 @@ class EditorStore {
   toHtml() {
     const html = stateToHtml(this.state.getCurrentContent())
 
-    this.testSave(html)
     return html
   }
-  testSave(html: string) {
-    this.lastPost = html
-    console.log(this.lastPost)
+  clear() {
+    this.state = EditorState.createEmpty(decorator)
   }
 }
 

@@ -56,3 +56,33 @@ export const MenuButtonText = styled('p')`
   padding: 0;
   font-size: 15px;
 `
+
+export const HomeWrapper = styled('div')(() => ({
+  display: 'grid',
+  gridTemplate: '1fr / 70px 210px 1fr',
+  width: '100%',
+  height: '100%'
+}))
+
+export const MainContent = styled('div')<{ isAsideOpen: boolean }>`
+  grid-row: 1;
+  grid-column: ${({ isAsideOpen }) => (isAsideOpen ? '3' : '2')} / -1;
+  display: grid;
+  grid-template: 150px 1fr / 2fr 8fr 3fr;
+  overflow-y: scroll;
+`
+
+export const PostList = styled('div')`
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+`
+
+export const SearchBarBlock = styled('div')`
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+`

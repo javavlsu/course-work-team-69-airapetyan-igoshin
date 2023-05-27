@@ -1,14 +1,16 @@
 import ky from 'ky'
-import { PublishPost, ReactionBody, UpdatedPost } from './Post.types'
-import { IPost } from '../../utils/globalTypes'
+import { FeedData, PublishPost, ReactionBody, UpdatedPost } from './Post.types'
+import { IPost, IPreviewPost } from '../../utils/globalTypes'
 
 const PREFIX_API = '/api'
 
 export const publishPost = async (json: PublishPost) => {
   try {
-    const response = await ky.post(`${PREFIX_API}/post`, { json })
+    const response: { postId: number } = await ky
+      .post(`${PREFIX_API}/post`, { json })
+      .json()
 
-    return response.ok
+    return response
   } catch (e) {
     return false
   }
@@ -49,5 +51,17 @@ export const addReact = async (json: ReactionBody) => {
     return response.ok
   } catch (e) {
     throw new Error()
+  }
+}
+
+export const getFeed = async (feedData: FeedData) => {
+  try {
+    return await ky
+      .get(
+        `${PREFIX_API}/posts?feedType=${feedData.feedType}&onlySubscription=${feedData.onlySubscription}`
+      )
+      .json<IPreviewPost[]>()
+  } catch (e) {
+    return []
   }
 }

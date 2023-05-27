@@ -12,21 +12,32 @@ import { Button } from '@mui/material'
 import alertStore from '../../../../store/alertStore'
 import modalStore from '../../../../store/modalStore'
 import User from '../../../../domain/User'
+import { Link } from 'react-router-dom'
 
 const BlogForm = forwardRef<HTMLFormElement>((props, ref) => {
   const { register, handleSubmit } = useForm<BlogCreateData>()
   const submit = handleSubmit(async (data, event) => {
     event?.preventDefault()
-    const isSuccess = await createBlog(data)
+    const res = await createBlog(data)
 
-    if (isSuccess) {
-      alertStore.create({
-        type: 'success',
-        children: 'Блог успешно создан!'
+    if (!res)
+      return alertStore.create({
+        type: 'error',
+        children: 'Упс.. Произошла ошибка'
       })
-      modalStore.close()
-      User.getUserData()
-    }
+
+    alertStore.create({
+      type: 'success',
+      children: (
+        <>
+          <p>Блог успешно создан!</p>
+          {/* check */}
+          <Link to={`/blog/${res.blogId}`}>Перейти к блогу</Link>
+        </>
+      )
+    })
+    modalStore.close()
+    User.getUserData()
   })
 
   return (
