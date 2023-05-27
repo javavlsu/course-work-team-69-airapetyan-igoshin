@@ -4,7 +4,6 @@ import { MainLayout } from '../layouts/MainLayout'
 import { Home } from '../pages/Home'
 import { PostPage } from '../pages/PostPage'
 import { Blog } from '../pages/Blog'
-import { BlogEdit } from '../pages/BlogEdit'
 import { Profile } from '../pages/Profile'
 import { LoginLayout } from '../layouts/LoginLayout'
 import { Login } from '../pages/Login'
@@ -41,10 +40,6 @@ const layouts: Layout[] = [
         component: <Blog />
       },
       {
-        path: '/blog-edit',
-        component: <BlogEdit />
-      },
-      {
         path: '*',
         component: <PageNotFound />
       },
@@ -58,7 +53,11 @@ const layouts: Layout[] = [
       },
       {
         path: '/post-edit',
-        component: <PostEdit />
+        component: (
+          <ProtectedRoute>
+            <PostEdit />
+          </ProtectedRoute>
+        )
       }
     ]
   },

@@ -47,6 +47,7 @@ export const useBlog = (id: number) => {
   }
 
   const updateBlogOnFE = (name: string, description: string) => {
+    turnOffEdit()
     setBlog((prevState) => {
       return {
         ...prevState,
@@ -60,6 +61,13 @@ export const useBlog = (id: number) => {
   useEffect(() => {
     blogRequest()
   }, [location.key])
+
+  useEffect(() => {
+    if (!isEditMode) return
+
+    setValue('name', blog?.name)
+    setValue('description', blog?.description)
+  }, [isEditMode])
 
   return {
     blog,
