@@ -14,12 +14,21 @@ import {
   PostTitle
 } from './PostPage.styles'
 import { PostComments } from '../../components/PostComments'
-import { Box, Breadcrumbs, IconButton, Link, Typography } from '@mui/material'
+import {
+  Box,
+  Breadcrumbs,
+  IconButton,
+  Link,
+  Typography,
+  Divider
+} from '@mui/material'
 import LoaderPage from '../../hocks/LoaderPage'
 import { ToolsPanel } from '../../components/ToolsPanel'
 import { usePostPage } from '../../hooks/usePostPage'
 import { NavigateNext } from '@mui/icons-material'
 import { Reaction } from '../../utils/globalTypes'
+import { SendComment } from './components/SendComment'
+import stubComments from '../../store/stubComments'
 
 const PostPageComponent = () => {
   const { toolsItems, post, isLoaded, handleRating } = usePostPage()
@@ -65,8 +74,10 @@ const PostPageComponent = () => {
               </IconButton>
             </PostRating>
           </PostFooter>
+          <Divider />
           <CommentsWrapper>
-            <PostComments />
+            <SendComment />
+            <PostComments comments={stubComments.comments} />
           </CommentsWrapper>
         </PostPageWrapper>
       </Box>
