@@ -21,6 +21,7 @@ import { UserBlogRole } from '../../../utils/globalTypes'
 import { ToolsItem, ToolsPanel } from '../../../components/ToolsPanel'
 import { Delete } from '@mui/icons-material'
 import { removeBlog } from '../../../service/Blog/Blog.api'
+import { UNSUBSCRIBED_USER_ROLE } from '../../../utils/constants'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   blogRole,
@@ -31,6 +32,16 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
 }) => {
   const { name, subscribers, rating, posts, description } = blog
   const navigate = useNavigate()
+
+  const subscribe = () => {
+    // Todo
+    console.log('Subscribe')
+  }
+
+  const unsubscribe = () => {
+    // Todo
+    console.log('Unsubscribe')
+  }
   const toolsItems: ToolsItem[] = [
     {
       condition: blogRole >= UserBlogRole.Collaborator,
@@ -65,6 +76,26 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
       ),
       handler: () => removeBlog(blog.id).then(() => navigate('/profile')),
       animated: true
+    },
+    {
+      condition: blogRole === UNSUBSCRIBED_USER_ROLE,
+      content: (
+        <Button variant={'contained'} color={'error'}>
+          Подписаться
+        </Button>
+      ),
+      handler: () => subscribe(),
+      animated: false
+    },
+    {
+      condition: blogRole === UserBlogRole.Subscriber,
+      content: (
+        <Button variant={'contained'} color={'neutral'}>
+          Отписаться
+        </Button>
+      ),
+      handler: () => unsubscribe(),
+      animated: false
     }
   ]
 

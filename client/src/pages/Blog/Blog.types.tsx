@@ -83,7 +83,7 @@ export interface StatisticsCountOptions {
 }
 
 export interface BlogPreviewProps {
-  blogRole: UserBlogRole
+  blogRole: UserBlogRole | -1
   toggleEditMode: () => void
   blog: Blog
   isEditMode: boolean
