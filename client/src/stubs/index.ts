@@ -26,3 +26,16 @@ export const stubPosts: IPreviewPost[] = [
     rating: 145
   }
 ]
+
+export const stubComments = [
+  {
+    author: 'Дима',
+    date: new Date(),
+    text: 'Отличный пост, все кратко и по делу!'
+  },
+  {
+    author: 'Маша',
+    date: new Date(),
+    text: 'Давно об этом разымшляла, а тут все так красиво изложено'
+  }
+]
