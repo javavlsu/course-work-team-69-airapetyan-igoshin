@@ -10,6 +10,7 @@ import {
 } from './Navigation.styles'
 import userStore from '../../store/userStore'
 import { observer } from 'mobx-react-lite'
+import { ThemeToggler } from '../ThemeToggler'
 
 interface NavigationProps {
   toggleAside: () => void
@@ -35,6 +36,7 @@ const Navigation: FC<NavigationProps> = ({ toggleAside }) => {
           gap: '20px'
         }}
       >
+        <ThemeToggler />
         {userStore.isAuth ? (
           <UserPreview />
         ) : (

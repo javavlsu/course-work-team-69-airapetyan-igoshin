@@ -1,13 +1,15 @@
 import { BrowserRouter } from 'react-router-dom'
 import { AppRouter } from './router'
-import { CssBaseline, Modal, styled } from '@mui/material'
-import React, { useEffect } from 'react'
+import { CssBaseline, Modal, ThemeProvider, styled } from '@mui/material'
+import { useEffect, useMemo } from 'react'
 import './styles.css'
 import modalStore from './store/modalStore'
 import { observer } from 'mobx-react-lite'
 import user from './domain/User'
 import alertStore from './store/alertStore'
 import { AppAlert } from './components/AppAlert'
+import themeStore from './store/themeStore'
+import { getTheme } from './theme'
 
 const AppModal = styled(Modal)`
   display: flex;
@@ -23,23 +25,29 @@ const AlertsWrapper = styled('div')`
 `
 
 function App() {
+  const theme = useMemo(() => {
+    return getTheme(themeStore.mode)
+  }, [themeStore.mode])
+
   useEffect(() => {
     user.getUserData()
   }, [])
   return (
-    <BrowserRouter>
-      <CssBaseline enableColorScheme>
-        <AppModal open={modalStore.isOpen} onClose={modalStore.close}>
-          <>{modalStore.children}</>
-        </AppModal>
-        <AlertsWrapper>
-          {alertStore.alerts.map((alert, index) => (
-            <AppAlert key={index} alert={alert} />
-          ))}
-        </AlertsWrapper>
-        <AppRouter />
-      </CssBaseline>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <CssBaseline enableColorScheme>
+          <AppModal open={modalStore.isOpen} onClose={modalStore.close}>
+            <>{modalStore.children}</>
+          </AppModal>
+          <AlertsWrapper>
+            {alertStore.alerts.map((alert, index) => (
+              <AppAlert key={index} alert={alert} />
+            ))}
+          </AlertsWrapper>
+          <AppRouter />
+        </CssBaseline>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

@@ -25,7 +25,8 @@ export const PostFooter = styled('div')`
   gap: 20px;
   border-radius: 10px;
   overflow: hidden;
-  background: #d9d9d9;
+  background: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? theme.palette.app.light : '#d9d9d9'};
 `
 
 export const PostPicture = styled('img')`

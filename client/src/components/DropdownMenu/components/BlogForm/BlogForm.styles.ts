@@ -2,8 +2,7 @@ import { styled, TextField } from '@mui/material'
 
 export const BlogFormRoot = styled('form')`
   padding: 60px 30px;
-  background: #fff;
-  color: #000;
+  background: ${({ theme }) => theme.palette.app.light};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +25,8 @@ export const BlogDescription = styled('textarea')`
   width: 100%;
   min-width: 100%;
   border-radius: 4px;
-  border-color: #cccccc;
+  border-color: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? theme.palette.text.primary : '#cccccc'};
   padding: 10px;
   font-size: 14px;
   font-weight: 500;

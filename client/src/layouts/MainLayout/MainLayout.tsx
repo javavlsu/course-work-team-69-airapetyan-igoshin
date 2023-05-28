@@ -9,7 +9,7 @@ const Template = styled('div')`
   grid-template: 50px 1fr / 1fr;
   height: 100vh;
   color: ${({ theme }) => theme.palette.text.secondary};
-  background: ${({ theme }) => theme.palette.neutral.main};
+  background: ${({ theme }) => theme.palette.base.main};
 `
 const NavigationWrapper = styled('nav')`
   grid-row: 1;
