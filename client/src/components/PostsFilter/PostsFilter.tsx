@@ -9,14 +9,14 @@ const PostsFilterWrapper = styled('div')`
 const PostsFilterInput = styled('input')`
   width: 80%;
   padding: 10px 15px;
-  background: ${({ theme }) => theme.palette.neutral.main};
-  color: ${({ theme }) => theme.palette.neutral.contrastText};
+  background: ${({ theme }) => theme.palette.app.main};
+  color: ${({ theme }) => theme.palette.app.contrastText};
   box-shadow: ${({ theme }) => theme.shadows[1]};
   border: none;
   border-radius: 10px;
   outline: none;
   &::placeholder {
-    color: rgba(0, 0, 0, 0.8);
+    /* color: rgba(0, 0, 0, 0.8); */
   }
   &:focus {
     box-shadow: none;
