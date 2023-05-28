@@ -52,6 +52,7 @@ export interface IDesignConfig {
 }
 
 export enum UserBlogRole {
+  // Todo Сюда следует под 0 добавить unsubscribed user, для удобства
   Subscriber,
   Collaborator,
   Creator

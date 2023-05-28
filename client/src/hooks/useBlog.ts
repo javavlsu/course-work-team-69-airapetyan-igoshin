@@ -5,6 +5,7 @@ import { Blog, UserBlogRole } from '../utils/globalTypes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DomainPost from '../domain/Post'
 import designStore, { defaultDesignConfig } from '../store/designStore'
+import { UNSUBSCRIBED_USER_ROLE } from '../utils/constants'
 
 export const useBlog = (id: number) => {
   const [isEditMode, setIsEditMode] = useState(false)
@@ -12,7 +13,7 @@ export const useBlog = (id: number) => {
   const location = useLocation()
   const navigate = useNavigate()
   const blogRole = useMemo(() => {
-    return blog?.userRole || 0
+    return blog?.userRole || UNSUBSCRIBED_USER_ROLE
   }, [blog])
   const isCreator = blogRole === UserBlogRole.Creator
   const { register, setValue, getValues } = useForm()
