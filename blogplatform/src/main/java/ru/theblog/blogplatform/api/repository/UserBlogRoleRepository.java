@@ -14,4 +14,5 @@ public interface UserBlogRoleRepository extends JpaRepository<UserBlogRole, Long
     int countAllByBlog_Id(long blogId);
     Optional<UserBlogRole> findByUser_IdAndBlog_Id(long userId, long blogId);
     boolean existsByBlog_IdAndUser_Id(long blogId, long userId);
+    List<UserBlogRole> findByBlog_Id(long blogId);
 }

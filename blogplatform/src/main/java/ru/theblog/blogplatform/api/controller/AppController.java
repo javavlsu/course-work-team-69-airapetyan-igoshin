@@ -18,6 +18,7 @@ import ru.theblog.blogplatform.api.service.BlogService;
 import ru.theblog.blogplatform.api.service.PostService;
 import ru.theblog.blogplatform.api.service.ReactionService;
 import ru.theblog.blogplatform.api.service.UserService;
+import ru.theblog.blogplatform.api.service.impl.BlogServiceImpl;
 import ru.theblog.blogplatform.api.service.impl.ReactionServiceImpl;
 
 import java.util.ArrayList;
@@ -164,7 +165,7 @@ public class AppController {
     }
 
     @GetMapping("/post/{postId}")
-    public PostResult getPost(@PathVariable long postId, Authentication auth) {
+    public PostResult getPost(@PathVariable long postId) {
         var post = _postService.getPost(postId);
         return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft(), post.getBlog().getId(), post.getBlog().getName(), post.getRating());
     }
@@ -278,6 +279,22 @@ public class AppController {
             e.printStackTrace();
             if (e.getMessage().equals(ReactionServiceImpl.POST_NOT_EXIST)) {
                 return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+            }
+
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
+    @GetMapping("/subscribers/{blogId}")
+    public ResponseEntity<List<SubscribersResult>> getSubscribers(@PathVariable @NotNull Long blogId, Authentication auth) {
+        if (auth == null) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+        }
+        try{
+            return new ResponseEntity<>(_blogService.getSubscribers(blogId, auth), HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            if (e.getMessage().equals(BlogServiceImpl.FORBIDDEN)){
+                return new ResponseEntity<>(HttpStatusCode.valueOf(403));
             }
 
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));

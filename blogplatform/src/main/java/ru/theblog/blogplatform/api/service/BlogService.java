@@ -5,6 +5,7 @@ import ru.theblog.blogplatform.api.model.Blog;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.BlogUserResult;
+import ru.theblog.blogplatform.api.model.dto.SubscribersResult;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
@@ -24,4 +25,5 @@ public interface BlogService {
     void deleteBlog(long blogId);
     void createSubscription(Long blogId, Boolean subscribe, Authentication auth);
     BlogResult getBlogPage(long blogId, Authentication auth);
+    List<SubscribersResult> getSubscribers(Long blogId, Authentication auth) throws Exception;
 }
