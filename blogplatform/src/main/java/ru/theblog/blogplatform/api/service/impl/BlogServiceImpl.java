@@ -31,7 +31,7 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
     private final UserRepository userRepository;
-    private final UserBlogRoleRepository userBlogRoleRepository;
+    private final UserBlogRoleRepository userBRRepository;
     private final PostRepository postRepository;
 
     private final PasswordEncoder encoder;
@@ -42,7 +42,7 @@ public class BlogServiceImpl implements BlogService {
         var user = userRepository.findByEmail(auth.getName());
 
         blogRepository.saveAndFlush(blog);
-        userBlogRoleRepository.saveAndFlush(new UserBlogRole(blog, user, BlogRole.Creator));
+        userBRRepository.saveAndFlush(new UserBlogRole(blog, user, BlogRole.Creator));
         return blog.getId();
     }
 
@@ -66,7 +66,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogUserResult> getUserBlogs(User user) {
-        var roles = userBlogRoleRepository.findAllByUser(user);
+        var roles = userBRRepository.findAllByUser(user);
 
         var result = new ArrayList<BlogUserResult>();
         for (var role : roles) {
@@ -85,12 +85,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int getSubscribersCount(long blogId) {
-        return userBlogRoleRepository.countAllByBlog_Id(blogId);
+        return userBRRepository.countAllByBlog_Id(blogId);
     }
 
     @Override
     public BlogRole getUserBlogRole(long userId, long blogId) {
-        var role = userBlogRoleRepository.findByUser_IdAndBlog_Id(userId, blogId).orElse(null);
+        var role = userBRRepository.findByUser_IdAndBlog_Id(userId, blogId).orElse(null);
         return role != null ? role.getRole() : null;
     }
 
@@ -110,4 +110,22 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.deleteById(blogId);
     }
 
+    @Override
+    public void createSubscription(Long blogId, Boolean subscribe, Authentication auth) {
+        if (blogId == null || subscribe == null || auth == null)
+            throw new IllegalArgumentException();
+
+        var user = userRepository.findByEmail(auth.getName());
+
+        if (blogRepository.existsById(blogId)) {
+            var blog = blogRepository.findById(blogId).get();
+
+            if (subscribe && !userBRRepository.existsByBlog_IdAndUser_Id(blogId, user.getId())) {
+                userBRRepository.saveAndFlush(new UserBlogRole(blog, user, BlogRole.Subscriber));
+            } else if (!subscribe && userBRRepository.existsByBlog_IdAndUser_Id(blogId, user.getId())) {
+                var userBR = userBRRepository.findByUser_IdAndBlog_Id(user.getId(), blogId).get();
+                userBRRepository.delete(userBR);
+            }
+        }
+    }
 }
