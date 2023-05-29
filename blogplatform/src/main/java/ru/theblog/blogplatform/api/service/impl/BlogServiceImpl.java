@@ -9,15 +9,15 @@ import ru.theblog.blogplatform.api.model.Blog;
 import ru.theblog.blogplatform.api.model.RoleSystem;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.UserBlogRole;
+import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.BlogUserResult;
+import ru.theblog.blogplatform.api.model.dto.PreviewPost;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
+import ru.theblog.blogplatform.api.model.enums.ReactionType;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
-import ru.theblog.blogplatform.api.repository.BlogRepository;
-import ru.theblog.blogplatform.api.repository.PostRepository;
-import ru.theblog.blogplatform.api.repository.UserBlogRoleRepository;
-import ru.theblog.blogplatform.api.repository.UserRepository;
+import ru.theblog.blogplatform.api.repository.*;
 import ru.theblog.blogplatform.api.service.BlogService;
 
 import java.time.LocalDate;
@@ -33,6 +33,7 @@ public class BlogServiceImpl implements BlogService {
     private final UserRepository userRepository;
     private final UserBlogRoleRepository userBRRepository;
     private final PostRepository postRepository;
+    private final ReactionRepository reactionRepository;
 
     private final PasswordEncoder encoder;
 
@@ -127,5 +128,46 @@ public class BlogServiceImpl implements BlogService {
                 userBRRepository.delete(userBR);
             }
         }
+    }
+
+    @Override
+    public BlogResult getBlogPage(long blogId, Authentication auth) {
+        var blog = getBlog(blogId);
+        var posts = postRepository.findByBlog_Id(blogId);
+        User user = null;
+        if (auth != null){
+            user = userRepository.findByEmail(auth.getName());
+        }
+
+        var result = new BlogResult();
+        result.id = blog.getId();
+        result.name = blog.getName();
+        result.description = blog.getDescription();
+        result.config = blog.getConfig();
+        result.subscribers = getSubscribersCount(blogId);
+        if (user != null) {
+            var userblogrole = getUserBlogRole(user.getId(), blogId);
+            result.userRole = userblogrole != null ? userblogrole.ordinal() : null;
+        }
+        result.postAmount = posts.size();
+        result.rating = getRating(blogId);
+        result.posts = new ArrayList<>();
+
+        for (var post : posts) {
+            var previewPost = new PreviewPost();
+            previewPost.id = post.getId();
+            previewPost.title = post.getTitle();
+            previewPost.description = post.getDescription();
+            previewPost.rating = post.getRating();
+            previewPost.reactionType = user != null ? getUserPostReaction(user.getId(), post.getId()) : null;
+            result.posts.add(previewPost);
+        }
+
+        return result;
+    }
+
+    private ReactionType getUserPostReaction(Long userId, Long postId) {
+        var reaction = reactionRepository.findByUser_IdAndPost_Id(userId, postId).orElse(null);
+        return reaction != null ? reaction.getReactionType() : null;
     }
 }

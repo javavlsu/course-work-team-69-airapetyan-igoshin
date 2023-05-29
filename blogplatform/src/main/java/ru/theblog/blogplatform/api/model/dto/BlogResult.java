@@ -11,5 +11,5 @@ public class BlogResult {
     public int subscribers;
     public int rating;
     public int postAmount;
-    public List<FeedPostResult> posts;
+    public List<PreviewPost> posts;
 }

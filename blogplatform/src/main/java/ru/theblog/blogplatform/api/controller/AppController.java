@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.theblog.blogplatform.api.model.ReactionBody;
-import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.*;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import ru.theblog.blogplatform.api.model.params.*;
@@ -100,37 +99,7 @@ public class AppController {
 
     @GetMapping("/blog/{blogId}")
     public BlogResult getBlog(@PathVariable long blogId, Authentication auth) {
-        var blog = _blogService.getBlog(blogId);
-        var posts = _postService.getBlogPosts(blogId);
-        User user = null;
-        if (auth != null){
-            user = _userService.getUserByEmail(auth.getName());
-        }
-
-        var result = new BlogResult();
-        result.id = blog.getId();
-        result.name = blog.getName();
-        result.description = blog.getDescription();
-        result.config = blog.getConfig();
-        result.subscribers = _blogService.getSubscribersCount(blogId);
-        if (user != null) {
-            var userblogrole = _blogService.getUserBlogRole(user.getId(), blogId);
-            result.userRole = userblogrole != null ? userblogrole.ordinal() : null;
-        }
-        result.postAmount = posts.size();
-        result.rating = _blogService.getRating(blogId);
-        result.posts = new ArrayList<>();
-
-        for (var post : posts) {
-            var feedPost = new FeedPostResult();
-            feedPost.id = post.getId();
-            feedPost.title = post.getTitle();
-            feedPost.description = post.getDescription();
-            feedPost.rating = post.getRating();
-            result.posts.add(feedPost);
-        }
-
-        return result;
+        return _blogService.getBlogPage(blogId, auth);
     }
 
     @PostMapping("/blog")

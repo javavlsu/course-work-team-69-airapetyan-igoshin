@@ -3,6 +3,7 @@ package ru.theblog.blogplatform.api.service;
 import org.springframework.security.core.Authentication;
 import ru.theblog.blogplatform.api.model.Blog;
 import ru.theblog.blogplatform.api.model.User;
+import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.BlogUserResult;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
@@ -22,4 +23,5 @@ public interface BlogService {
     void update(BlogUpdateForm blog);
     void deleteBlog(long blogId);
     void createSubscription(Long blogId, Boolean subscribe, Authentication auth);
+    BlogResult getBlogPage(long blogId, Authentication auth);
 }
