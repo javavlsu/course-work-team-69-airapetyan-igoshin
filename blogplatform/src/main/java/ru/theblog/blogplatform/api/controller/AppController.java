@@ -11,10 +11,7 @@ import ru.theblog.blogplatform.api.model.ReactionBody;
 import ru.theblog.blogplatform.api.model.User;
 import ru.theblog.blogplatform.api.model.dto.*;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
-import ru.theblog.blogplatform.api.model.params.PostBody;
-import ru.theblog.blogplatform.api.model.params.PostParams;
-import ru.theblog.blogplatform.api.model.params.PostStatusBody;
-import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
+import ru.theblog.blogplatform.api.model.params.*;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
@@ -24,7 +21,6 @@ import ru.theblog.blogplatform.api.service.ReactionService;
 import ru.theblog.blogplatform.api.service.UserService;
 import ru.theblog.blogplatform.api.service.impl.ReactionServiceImpl;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +42,15 @@ public class AppController {
     @GetMapping("/search")
     public List<PreviewPost> search(@RequestParam String query) {
         return _postService.search(query);
+    }
+
+    @PostMapping("/subscribe")
+    public ResponseEntity subscribe(@RequestBody @Valid SubscribeParams params, Authentication auth) {
+        if (auth == null)
+            return new ResponseEntity(HttpStatusCode.valueOf(403));
+
+        _blogService.createSubscription(params.blogId, params.subscribe, auth);
+        return new ResponseEntity(HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/user")
@@ -72,7 +77,7 @@ public class AppController {
     }
 
     @PostMapping("/registration")
-    public String registration(@RequestBody UserForm user, Principal auth) {
+    public String registration(@RequestBody @Valid UserForm user) {
         _blogService.addUser(user);
         return "Successful";
     }
@@ -309,5 +314,4 @@ public class AppController {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
         }
     }
-
 }

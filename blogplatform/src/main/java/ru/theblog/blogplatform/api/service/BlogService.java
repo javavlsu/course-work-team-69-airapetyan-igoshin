@@ -21,4 +21,5 @@ public interface BlogService {
     int getRating(long blogId);
     void update(BlogUpdateForm blog);
     void deleteBlog(long blogId);
+    void createSubscription(Long blogId, Boolean subscribe, Authentication auth);
 }
