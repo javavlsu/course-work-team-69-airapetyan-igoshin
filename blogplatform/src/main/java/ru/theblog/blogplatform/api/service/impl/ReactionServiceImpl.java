@@ -42,7 +42,7 @@ public class ReactionServiceImpl implements ReactionService {
 
             if (reaction.getReactionType() != reactionType) {
                 reaction.setReactionType(reactionType);
-                post.setRating(post.getRating() + (reactionType == ReactionType.Upvote ? 1 : -1));
+                post.setRating(post.getRating() + (reactionType == ReactionType.Upvote ? 2 : -2));
                 reactionRepository.saveAndFlush(reaction);
                 postRepository.saveAndFlush(post);
             }
