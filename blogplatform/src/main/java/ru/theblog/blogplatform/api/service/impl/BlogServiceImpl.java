@@ -184,6 +184,25 @@ public class BlogServiceImpl implements BlogService {
                 .toList();
     }
 
+    @Override
+    public void createCollaborator(Long blogId, Long userId, Boolean create, Authentication auth) {
+        var admin = userRepository.findByEmail(auth.getName());
+        var adminBR = userBRRepository.findByUser_IdAndBlog_Id(admin.getId(), blogId).orElse(null);
+        if (adminBR == null || adminBR.getRole() == BlogRole.Creator)
+            throw new IllegalArgumentException();
+
+        var userBR = userBRRepository.findByUser_IdAndBlog_Id(userId, blogId).orElse(null);
+        if (userBR == null)
+            throw new IllegalArgumentException();
+
+        if (create){
+            userBR.setRole(BlogRole.Collaborator);
+        } else {
+            userBR.setRole(BlogRole.Subscriber);
+        }
+        userBRRepository.saveAndFlush(userBR);
+    }
+
     private ReactionType getUserPostReaction(Long userId, Long postId) {
         var reaction = reactionRepository.findByUser_IdAndPost_Id(userId, postId).orElse(null);
         return reaction != null ? reaction.getReactionType() : null;

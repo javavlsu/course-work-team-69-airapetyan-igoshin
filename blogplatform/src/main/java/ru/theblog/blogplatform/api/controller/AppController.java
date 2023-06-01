@@ -53,6 +53,15 @@ public class AppController {
         return new ResponseEntity(HttpStatusCode.valueOf(200));
     }
 
+    @PostMapping("/createCollaborator")
+    public ResponseEntity createCollaborator(@RequestBody @Valid CollaboratorParams params, Authentication auth) {
+        if (auth == null)
+            return new ResponseEntity(HttpStatusCode.valueOf(403));
+
+        _blogService.createCollaborator(params.blogId, params.userId, params.create, auth);
+        return new ResponseEntity(HttpStatusCode.valueOf(200));
+    }
+
     @GetMapping("/user")
     public UserData getUser(Authentication auth) {
         if (auth == null)
