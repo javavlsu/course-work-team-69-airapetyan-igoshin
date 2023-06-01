@@ -12,6 +12,7 @@ import ru.theblog.blogplatform.api.model.UserBlogRole;
 import ru.theblog.blogplatform.api.model.dto.BlogResult;
 import ru.theblog.blogplatform.api.model.dto.BlogUserResult;
 import ru.theblog.blogplatform.api.model.dto.PreviewPost;
+import ru.theblog.blogplatform.api.model.dto.SubscribersResult;
 import ru.theblog.blogplatform.api.model.enums.BlogRole;
 import ru.theblog.blogplatform.api.model.enums.ReactionType;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
@@ -36,6 +37,8 @@ public class BlogServiceImpl implements BlogService {
     private final ReactionRepository reactionRepository;
 
     private final PasswordEncoder encoder;
+
+    public static final String FORBIDDEN = "Forbidden";
 
     @Override
     public Long create(BlogForm blogForm, Authentication auth) {
@@ -164,6 +167,21 @@ public class BlogServiceImpl implements BlogService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<SubscribersResult> getSubscribers(Long blogId, Authentication auth) throws Exception {
+        var user = userRepository.findByEmail(auth.getName());
+        var userRole = userBRRepository.findByUser_IdAndBlog_Id(user.getId(), blogId).orElse(null);
+        if (userRole == null || userRole.getRole() != BlogRole.Creator) {
+            throw new Exception(FORBIDDEN);
+        }
+
+        return userBRRepository.findByBlog_Id(blogId)
+                .stream()
+                .filter(u -> u.getRole() != BlogRole.Creator)
+                .map(u -> new SubscribersResult(u.getId(), u.getUser().getName(), u.getRole() == BlogRole.Collaborator))
+                .toList();
     }
 
     private ReactionType getUserPostReaction(Long userId, Long postId) {
