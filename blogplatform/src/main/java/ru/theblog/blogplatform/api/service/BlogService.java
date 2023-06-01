@@ -26,4 +26,5 @@ public interface BlogService {
     void createSubscription(Long blogId, Boolean subscribe, Authentication auth);
     BlogResult getBlogPage(long blogId, Authentication auth);
     List<SubscribersResult> getSubscribers(Long blogId, Authentication auth) throws Exception;
+    void createCollaborator(Long blogId, Long userId, Boolean create, Authentication auth);
 }
