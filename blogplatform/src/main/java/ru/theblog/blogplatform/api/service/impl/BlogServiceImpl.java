@@ -80,7 +80,8 @@ public class BlogServiceImpl implements BlogService {
             rItem.description = blog.getDescription();
             rItem.name = blog.getName();
             rItem.userRole = role.getRole().ordinal();
-            //rItem.subscribers
+            rItem.rating = getRating(blog.getId());
+            rItem.subscribers = getSubscribersCount(blog.getId());
             result.add(rItem);
         }
 
