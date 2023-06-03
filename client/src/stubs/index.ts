@@ -27,15 +27,17 @@ export const stubPosts: IPreviewPost[] = [
   }
 ]
 
-export const stubComments = [
-  {
-    author: 'Дима',
-    date: new Date(),
-    text: 'Отличный пост, все кратко и по делу!'
-  },
-  {
-    author: 'Маша',
-    date: new Date(),
-    text: 'Давно об этом разымшляла, а тут все так красиво изложено'
-  }
-]
+export const stubComments = {
+  0: [
+    {
+      author: 'Дима',
+      date: new Date(),
+      text: 'Отличный пост, все кратко и по делу!'
+    },
+    {
+      author: 'Маша',
+      date: new Date(),
+      text: 'Давно об этом разымшляла, а тут все так красиво изложено'
+    }
+  ]
+}

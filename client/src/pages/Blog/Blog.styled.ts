@@ -91,6 +91,21 @@ export const StatisticsItem = styled('div')<StatisticsItemOptions>`
   font-size: 12px;
 `
 
+export const StatisticsItemButton = styled('button')<StatisticsItemOptions>`
+  display: flex;
+  flex-direction: ${({ direction }) => direction};
+  justify-content: ${(props) =>
+    props.direction === 'column' ? props.vertical : props.horizontal};
+  align-items: ${(props) =>
+    props.direction === 'column' ? props.horizontal : props.vertical};
+  gap: ${({ gap }) => gap}px;
+  font-size: 12px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+`
+
 export const StatisticsCount = styled('span')<StatisticsCountOptions>`
   font-size: ${({ fontSize }) => fontSize}px;
   color: ${({ color }) => color};

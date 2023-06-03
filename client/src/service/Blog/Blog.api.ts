@@ -1,6 +1,12 @@
 import ky from 'ky'
-import { BlogCreateData, BlogUpdateData, InBlog } from './Blog.types'
-import { Blog } from '../../utils/globalTypes'
+import {
+  BlogCreateData,
+  BlogUpdateData,
+  InBlog,
+  ManageCollaboratorData,
+  SubscribeBody
+} from './Blog.types'
+import { Blog, Subscriber } from '../../utils/globalTypes'
 
 const PREFIX_API = '/api'
 
@@ -44,6 +50,32 @@ export const updateBlog = async (json: BlogUpdateData) => {
     const response = await ky.put(`${PREFIX_API}/blog`, { json })
 
     return response.ok
+  } catch (e) {
+    return false
+  }
+}
+
+export const getSubscribers = async (blogId: number) => {
+  try {
+    return await ky
+      .get(`${PREFIX_API}/subscribers/${blogId}`)
+      .json<Subscriber[]>()
+  } catch (e) {
+    return []
+  }
+}
+
+export const subscribe = async (json: SubscribeBody) => {
+  try {
+    return (await ky.post(`${PREFIX_API}/subscribe`, { json })).ok
+  } catch (e) {
+    return false
+  }
+}
+
+export const manageCollaborator = async (json: ManageCollaboratorData) => {
+  try {
+    return (await ky.post(`${PREFIX_API}/createCollaborator`, { json })).ok
   } catch (e) {
     return false
   }

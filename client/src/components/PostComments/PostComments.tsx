@@ -4,6 +4,7 @@ import { Comment, CommentProps } from '../Comment'
 import { observer } from 'mobx-react-lite'
 
 const PostComments: FC<{ comments: CommentProps[] }> = ({ comments }) => {
+  if (!comments) return null
   return (
     <>
       <Typography variant={'h5'} sx={{ marginBottom: '15px' }}>

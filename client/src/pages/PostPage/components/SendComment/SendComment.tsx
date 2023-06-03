@@ -7,12 +7,14 @@ import {
 import stubComments from '../../../../store/stubComments'
 import userStore from '../../../../store/userStore'
 import { useForm } from 'react-hook-form'
+import { FC } from 'react'
 
-const SendComment = () => {
+const SendComment: FC<{ postId?: number }> = ({ postId }) => {
   const { register, getValues, setValue } = useForm()
 
   const handleSend = () => {
-    stubComments.add({
+    if (!postId) return
+    stubComments.add(postId, {
       author: userStore.name,
       date: new Date(),
       text: getValues('commentText')

@@ -13,7 +13,10 @@ export const useBlog = (id: number) => {
   const location = useLocation()
   const navigate = useNavigate()
   const blogRole = useMemo(() => {
-    return blog?.userRole || UNSUBSCRIBED_USER_ROLE
+    console.log(blog?.userRole)
+    return typeof blog?.userRole === 'number'
+      ? blog?.userRole
+      : UNSUBSCRIBED_USER_ROLE
   }, [blog])
   const isCreator = blogRole === UserBlogRole.Creator
   const { register, setValue, getValues } = useForm()
