@@ -158,6 +158,9 @@ public class BlogServiceImpl implements BlogService {
         result.posts = new ArrayList<>();
 
         for (var post : posts) {
+            if (post.isDraft() && (result.userRole == null || result.userRole == 0))
+                continue;
+
             var previewPost = new PreviewPost();
             previewPost.id = post.getId();
             previewPost.title = post.getTitle();

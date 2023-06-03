@@ -14,8 +14,8 @@ public class PostParams {
     private boolean onlySubscription;
     @NotNull
     private Integer part;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private Boolean reversed;
+    private LocalDate dateFrom = LocalDate.ofYearDay(100,1);
+    private LocalDate dateTo = LocalDate.ofYearDay(4000, 1);
+    private Boolean reversed = false;
     private Integer postsPerPart = 10;
 }

@@ -9,14 +9,14 @@ import ru.theblog.blogplatform.api.model.enums.FeedType;
 import ru.theblog.blogplatform.api.model.params.PostBody;
 import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostService {
     Long createPost(PostBody postBody);
     Post getPost(Long id);
     PostResult getPostForPage(Long id, Authentication auth);
-    List<PreviewPost> getPostPreviews(FeedType feedType, boolean onlySubscription, @NotNull Integer part, Integer postsPerPart, Boolean reversed, LocalDate dateFrom, LocalDate from, Authentication auth);
+    List<PreviewPost> getPostPreviews(FeedType feedType, boolean onlySubscription, @NotNull Integer part, Integer postsPerPart, Boolean reversed, LocalDateTime dateFrom, LocalDateTime from, Authentication auth);
     List<Post> getBlogPosts(long blogId);
     void updatePost(PostUpdateBody postBody, Post post);
     void deletePost(Long postId);

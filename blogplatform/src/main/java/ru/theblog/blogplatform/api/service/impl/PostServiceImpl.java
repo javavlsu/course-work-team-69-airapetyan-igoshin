@@ -16,7 +16,6 @@ import ru.theblog.blogplatform.api.model.params.PostUpdateBody;
 import ru.theblog.blogplatform.api.repository.*;
 import ru.theblog.blogplatform.api.service.PostService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,14 +70,10 @@ public class PostServiceImpl implements PostService {
             @NotNull Integer part,
             Integer postsPerPart,
             Boolean reversed,
-            LocalDate dateFrom,
-            LocalDate dateTo,
+            LocalDateTime dateFrom,
+            LocalDateTime dateTo,
             Authentication auth) {
 
-        if (dateFrom == null)
-            dateFrom = LocalDate.MIN;
-        if (dateTo == null)
-            dateTo = LocalDate.MAX;
         if (part < 0)
             part = 0;
         if (postsPerPart < 0)

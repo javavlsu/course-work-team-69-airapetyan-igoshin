@@ -36,7 +36,7 @@ public class AppController {
 
     @GetMapping("/posts")
     public List<PreviewPost> getPosts(@Valid PostParams s, Authentication auth) {
-        return _postService.getPostPreviews(s.getFeedType(), s.isOnlySubscription(), s.getPart(), s.getPostsPerPart(), s.getReversed(), s.getDateFrom(), s.getDateTo(), auth);
+        return _postService.getPostPreviews(s.getFeedType(), s.isOnlySubscription(), s.getPart(), s.getPostsPerPart(), s.getReversed(), s.getDateFrom().atStartOfDay(), s.getDateTo().atStartOfDay(), auth);
     }
 
     @GetMapping("/search")
