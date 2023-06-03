@@ -17,7 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByBlog_Id(long blogId);
     @Query("SELECT SUM(p.rating) FROM Post p WHERE p.blog.id = :blogId")
     Integer getTotalReputation(@Param("blogId")long blogId);
-    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%')) ORDER BY p.createDate DESC")
+    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%')) AND p.isDraft = false ORDER BY p.createDate DESC")
     List<Post> getAllByTitle(@Param("query")String query);
 
     @Query(value =
