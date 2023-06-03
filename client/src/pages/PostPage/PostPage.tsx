@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {
   CommentsWrapper,
@@ -18,7 +18,6 @@ import {
   Box,
   Breadcrumbs,
   IconButton,
-  Link,
   Typography,
   Divider
 } from '@mui/material'
@@ -32,6 +31,7 @@ import stubComments from '../../store/stubComments'
 
 const PostPageComponent = () => {
   const { toolsItems, post, isLoaded, handleRating } = usePostPage()
+  const postComments = post ? stubComments.comments[post.id] : []
 
   return (
     <LoaderPage loadingData={post} isLoaded={isLoaded}>
@@ -54,11 +54,7 @@ const PostPageComponent = () => {
                 separator={<NavigateNext fontSize="small" />}
                 aria-label="breadcrumb"
               >
-                <Link
-                  underline="hover"
-                  color="inherit"
-                  href={`/blog/${post?.blogId}`}
-                >
+                <Link color="inherit" to={`/blog/${post?.blogId}`}>
                   {post?.blogName}
                 </Link>
                 <Typography color="text.primary">{post?.title}</Typography>
@@ -76,8 +72,8 @@ const PostPageComponent = () => {
           </PostFooter>
           <Divider />
           <CommentsWrapper>
-            <SendComment />
-            <PostComments comments={stubComments.comments} />
+            <SendComment postId={post?.id} />
+            <PostComments comments={postComments} />
           </CommentsWrapper>
         </PostPageWrapper>
       </Box>

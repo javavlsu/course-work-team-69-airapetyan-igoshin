@@ -5,6 +5,7 @@ import {
   LoginTextFields
 } from '../../components/Login/Login.styled'
 import {
+  Box,
   Button,
   FormControl,
   IconButton,
@@ -16,7 +17,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useForm } from 'react-hook-form'
 import { RegistrationData } from '../../service/user'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import User from '../../domain/User'
 
 export const Registration = () => {
@@ -60,6 +61,7 @@ export const Registration = () => {
       <LoginTextFields>
         <TextField {...register('email')} label="E-mail" />
         <TextField {...register('name')} label="Ваше имя" />
+        <TextField {...register('birthdate')} type="date" />
         <FormControl variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
@@ -95,6 +97,9 @@ export const Registration = () => {
         </FormControl>
       </LoginTextFields>
       <Button type="submit">Зарегистрироваться</Button>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        Уже есть аккаунт?&nbsp;<Link to={'/login'}>Вход</Link>
+      </Box>
     </LoginForm>
   )
 }

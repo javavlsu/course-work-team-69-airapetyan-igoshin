@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import designStore from '../../../store/designStore'
 import {
   AvatarBlock,
@@ -9,7 +9,8 @@ import {
   PreviewContainer,
   StatisticsBlock,
   StatisticsCount,
-  StatisticsItem
+  StatisticsItem,
+  StatisticsItemButton
 } from '../Blog.styled'
 import EditIcon from '@mui/icons-material/Edit'
 import { observer } from 'mobx-react-lite'
@@ -17,14 +18,16 @@ import { BlogPreviewProps } from '../Blog.types'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { Box, Button, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { UserBlogRole } from '../../../utils/globalTypes'
+import { Subscriber, UserBlogRole } from '../../../utils/globalTypes'
 import { ToolsItem, ToolsPanel } from '../../../components/ToolsPanel'
 import { Delete } from '@mui/icons-material'
-import { removeBlog } from '../../../service/Blog/Blog.api'
+import { removeBlog, subscribe } from '../../../service/Blog/Blog.api'
 import { UNSUBSCRIBED_USER_ROLE } from '../../../utils/constants'
+import { Subscribers } from './Subscribers'
+import { getSubscribers } from '../../../service'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
-  blogRole,
+  blogRole: initialRole,
   toggleEditMode,
   blog,
   isEditMode,
@@ -32,15 +35,26 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
 }) => {
   const { name, subscribers, rating, posts, description } = blog
   const navigate = useNavigate()
+  const [isSubscribersOpen, setIsSubscribersOpen] = useState(false)
+  const [fullSubscribers, setFullSubscribers] = useState<Subscriber[]>([])
+  const [blogRole, setBlogRole] = useState(initialRole)
+  const handleSubscribersClose = () => setIsSubscribersOpen(false)
 
-  const subscribe = () => {
-    // Todo
-    console.log('Subscribe')
+  const handleSubscribersClick = async () => {
+    setIsSubscribersOpen(true)
+    const data = await getSubscribers(blog.id)
+
+    setFullSubscribers(data)
   }
 
-  const unsubscribe = () => {
-    // Todo
-    console.log('Unsubscribe')
+  const handleSubscribe = async (subscribeFlag = true) => {
+    const response = await subscribe({
+      blogId: blog.id,
+      subscribe: subscribeFlag
+    })
+
+    if (!response) return
+    subscribeFlag ? setBlogRole(UserBlogRole.Subscriber) : setBlogRole(-1)
   }
   const toolsItems: ToolsItem[] = [
     {
@@ -84,7 +98,7 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
           Подписаться
         </Button>
       ),
-      handler: () => subscribe(),
+      handler: () => handleSubscribe(),
       animated: false
     },
     {
@@ -94,13 +108,19 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
           Отписаться
         </Button>
       ),
-      handler: () => unsubscribe(),
+      handler: () => handleSubscribe(false),
       animated: false
     }
   ]
 
   return (
     <BlogPreviewWrapper {...designStore.config.previewOptions}>
+      <Subscribers
+        subscribers={fullSubscribers}
+        open={isSubscribersOpen}
+        onClose={handleSubscribersClose}
+        blogId={blog.id}
+      />
       <Box sx={{ marginRight: '20px' }}>
         <ToolsPanel items={toolsItems} />
       </Box>
@@ -126,14 +146,17 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
           {...designStore.config.blogDescriptionOptions}
         />
         <StatisticsBlock {...designStore.config.statisticsBlockOptions}>
-          <StatisticsItem {...designStore.config.statisticsItemOptions}>
+          <StatisticsItemButton
+            onClick={handleSubscribersClick}
+            {...designStore.config.statisticsItemOptions}
+          >
             <StatisticsCount
               {...designStore.config.statisticsCountsOptions.subscribers}
             >
               {subscribers}
             </StatisticsCount>
             Подписчиков
-          </StatisticsItem>
+          </StatisticsItemButton>
           <StatisticsItem {...designStore.config.statisticsItemOptions}>
             <StatisticsCount
               {...designStore.config.statisticsCountsOptions.rating}

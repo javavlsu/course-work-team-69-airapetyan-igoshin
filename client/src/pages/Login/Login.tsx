@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import {
+  Box,
   Button,
   FormControl,
   IconButton,
@@ -17,7 +18,7 @@ import {
 import User from '../../domain/User'
 import { useForm } from 'react-hook-form'
 import { LoginData } from '../../service/user'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -66,6 +67,9 @@ export const Login = () => {
         </FormControl>
       </LoginTextFields>
       <Button type="submit">Войти</Button>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Link to={'new-user'}>Зарегистрироваться</Link>
+      </Box>
     </LoginForm>
   )
 }

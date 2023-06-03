@@ -1,6 +1,6 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-import { styled } from '@mui/material'
+import { Outlet, Link } from 'react-router-dom'
+import { Box, Typography, styled } from '@mui/material'
 
 const LoginLayoutWrapper = styled('section')`
   display: grid;
@@ -19,9 +19,22 @@ const ContentWrapper = styled('div')`
   align-items: center;
 `
 
+export const BlogName = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  display: inline-block;
+`
+
 export const LoginLayout = () => {
   return (
     <LoginLayoutWrapper>
+      <Box sx={{ padding: '20px' }}>
+        <BlogName to="/">
+          <Typography variant="h1" sx={{ fontSize: '40px', fontWeight: 300 }}>
+            CustomBlog
+          </Typography>
+        </BlogName>
+      </Box>
       <ContentWrapper>
         <Outlet />
       </ContentWrapper>

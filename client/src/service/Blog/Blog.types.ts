@@ -11,3 +11,14 @@ export type BlogUpdateData = BlogCreateData & {
 }
 
 export type InBlog = Omit<Blog, 'config'> & { config: string }
+
+export interface SubscribeBody {
+  blogId: number
+  subscribe: boolean
+}
+
+export interface ManageCollaboratorData {
+  blogId: number
+  userId: number
+  create: boolean
+}
