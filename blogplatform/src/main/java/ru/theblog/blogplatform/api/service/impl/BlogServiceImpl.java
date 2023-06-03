@@ -189,7 +189,7 @@ public class BlogServiceImpl implements BlogService {
     public void createCollaborator(Long blogId, Long userId, Boolean create, Authentication auth) {
         var admin = userRepository.findByEmail(auth.getName());
         var adminBR = userBRRepository.findByUser_IdAndBlog_Id(admin.getId(), blogId).orElse(null);
-        if (adminBR == null || adminBR.getRole() == BlogRole.Creator)
+        if (adminBR == null || adminBR.getRole() != BlogRole.Creator)
             throw new IllegalArgumentException();
 
         var userBR = userBRRepository.findByUser_IdAndBlog_Id(userId, blogId).orElse(null);
