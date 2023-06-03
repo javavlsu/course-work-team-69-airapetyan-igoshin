@@ -10,12 +10,16 @@ import UserStore from '../../../store/userStore'
 import { DropdownMenuContentProps } from '../DropdownMenu.types'
 import { useDropdownMenu } from '../hooks/useDropdownMenu'
 import { DropdownItem } from '../DropdownMenu.styles'
+import { UserBlogRole } from '../../../utils/globalTypes'
 
 export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
   handleClose
 }) => {
   const { redirectToBlog, handleAddBlog, handleProfile, handleLogout } =
     useDropdownMenu(handleClose)
+  const ownerBlogs = UserStore.blogs.filter(
+    (blog) => blog.userRole === UserBlogRole.Creator
+  )
 
   return (
     <>
@@ -24,7 +28,7 @@ export const DropdownMenuContent: FC<DropdownMenuContentProps> = ({
           <PersonIcon color={'secondary'} /> Profile
         </DropdownItem>
       )}
-      {UserStore.blogs.map((blog) => (
+      {ownerBlogs.map((blog) => (
         <DropdownItem key={blog.id} onClick={() => redirectToBlog(blog.id)}>
           <BookIcon color={'secondary'} /> {blog.name}
         </DropdownItem>

@@ -73,6 +73,9 @@ export const MainContent = styled('div')<{ isAsideOpen: boolean }>`
 `
 
 export const PostList = styled('div')`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
   grid-column: 2;
   grid-row: 2;
   display: flex;
@@ -81,6 +84,9 @@ export const PostList = styled('div')`
 `
 
 export const SearchBarBlock = styled('div')`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 700px;
   grid-column: 2;
   grid-row: 1;
   display: flex;

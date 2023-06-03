@@ -28,10 +28,14 @@ import { NavigateNext } from '@mui/icons-material'
 import { Reaction } from '../../utils/globalTypes'
 import { SendComment } from './components/SendComment'
 import stubComments from '../../store/stubComments'
+import { blogPreviewImages } from '../../stubs'
 
 const PostPageComponent = () => {
   const { toolsItems, post, isLoaded, handleRating } = usePostPage()
   const postComments = post ? stubComments.comments[post.id] : []
+  // todo
+  const isDownvoteDisabled = false
+  const isUpvoteDisabled = false
 
   return (
     <LoaderPage loadingData={post} isLoaded={isLoaded}>
@@ -48,7 +52,7 @@ const PostPageComponent = () => {
             dangerouslySetInnerHTML={{ __html: post?.content || '' }}
           />
           <PostFooter>
-            <PostPicture />
+            <PostPicture src={blogPreviewImages[post?.blogId as number]} />
             <PostPath>
               <Breadcrumbs
                 separator={<NavigateNext fontSize="small" />}
@@ -61,11 +65,17 @@ const PostPageComponent = () => {
               </Breadcrumbs>
             </PostPath>
             <PostRating>
-              <IconButton onClick={() => handleRating(Reaction.Downvote)}>
+              <IconButton
+                onClick={() => handleRating(Reaction.Downvote)}
+                disabled={isDownvoteDisabled}
+              >
                 <IconRemove />
               </IconButton>
               <PostRatingCount>{post?.rating}</PostRatingCount>
-              <IconButton onClick={() => handleRating(Reaction.Upvote)}>
+              <IconButton
+                onClick={() => handleRating(Reaction.Upvote)}
+                disabled={isUpvoteDisabled}
+              >
                 <IconAdd />
               </IconButton>
             </PostRating>

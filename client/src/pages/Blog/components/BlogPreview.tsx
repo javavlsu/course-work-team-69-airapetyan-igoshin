@@ -25,6 +25,7 @@ import { removeBlog, subscribe } from '../../../service/Blog/Blog.api'
 import { UNSUBSCRIBED_USER_ROLE } from '../../../utils/constants'
 import { Subscribers } from './Subscribers'
 import { getSubscribers } from '../../../service'
+import { blogLogos, blogPreviewImages } from '../../../stubs'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   blogRole: initialRole,
@@ -114,7 +115,10 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   ]
 
   return (
-    <BlogPreviewWrapper {...designStore.config.previewOptions}>
+    <BlogPreviewWrapper
+      $image={blogPreviewImages[blog.id]}
+      {...designStore.config.previewOptions}
+    >
       <Subscribers
         subscribers={fullSubscribers}
         open={isSubscribersOpen}
@@ -127,7 +131,10 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
 
       <PreviewContainer {...designStore.config.previewContainerOptions}>
         <AvatarBlock {...designStore.config.avatarBlockOptions}>
-          <BlogAvatar {...designStore.config.blogAvatarOptions} />
+          <BlogAvatar
+            src={blogLogos[blog.id]}
+            {...designStore.config.blogAvatarOptions}
+          />
         </AvatarBlock>
         <BlogName
           variant={'standard'}

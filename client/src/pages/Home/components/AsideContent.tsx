@@ -6,8 +6,11 @@ import {
   MenuHeader,
   MenuButton
 } from '../Home.style'
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { AsideContentProps } from '../Home.types'
+import userStore from '../../../store/userStore'
+import { UserBlogRole } from '../../../utils/globalTypes'
+import { useNavigate } from 'react-router-dom'
 
 export const AsideContent: FC<AsideContentProps> = ({
   isAsideOpen,
@@ -15,16 +18,18 @@ export const AsideContent: FC<AsideContentProps> = ({
   onPopular,
   onSubscribes
 }) => {
+  const navigate = useNavigate()
   const settings = [
     { name: 'Популярное', handler: onPopular },
     { name: 'Свежее', handler: onNewest }
   ]
-  const subsribes = [
-    { name: 'Блог-1' },
-    { name: 'Блог-2' },
-    { name: 'Блог-3' },
-    { name: 'Блог-4' }
-  ]
+  const subscribes = userStore.blogs.filter(
+    (blog) => blog.userRole === UserBlogRole.Subscriber
+  )
+
+  const handleBlogClick = (blogId: number) => {
+    navigate(`/blog/${blogId}`)
+  }
 
   return (
     <>
@@ -53,15 +58,21 @@ export const AsideContent: FC<AsideContentProps> = ({
         )}
       </MenuBlock>
       <MenuBlock isOpen={isAsideOpen}>
-        <MenuHeader>{isAsideOpen && 'Ваши подписки'}</MenuHeader>
-        {subsribes.map((subsribe) => (
-          <MenuButton isOpen={isAsideOpen} key={subsribe.name}>
+        <MenuHeader>
+          {isAsideOpen && subscribes.length > 0 && 'Ваши подписки'}
+        </MenuHeader>
+        {subscribes.map((subsribe) => (
+          <MenuButton
+            onClick={() => handleBlogClick(subsribe.id)}
+            isOpen={isAsideOpen}
+            key={subsribe.name}
+          >
             <MenuButtonIcon isOpen={isAsideOpen} />
             {isAsideOpen && <MenuButtonText>{subsribe.name}</MenuButtonText>}
           </MenuButton>
         ))}
       </MenuBlock>
-      {isAsideOpen && 'Показать ещё'}
+      {isAsideOpen && subscribes.length > 5 && 'Показать ещё'}
     </>
   )
 }
