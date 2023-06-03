@@ -60,7 +60,8 @@ public class PostServiceImpl implements PostService {
                 post.getBlog().getId(),
                 post.getBlog().getName(),
                 post.getRating(),
-                user != null ? getUserPostReaction(user.getId(), post.getId()) : null);
+                user != null ? getUserPostReaction(user.getId(), post.getId()) : null,
+                post.getCreateDate());
     }
 
     @Override
