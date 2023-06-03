@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.theblog.blogplatform.api.model.Post;
 import ru.theblog.blogplatform.api.model.User;
+import ru.theblog.blogplatform.api.model.dto.PostResult;
 import ru.theblog.blogplatform.api.model.dto.PreviewPost;
 import ru.theblog.blogplatform.api.model.enums.FeedType;
 import ru.theblog.blogplatform.api.model.enums.ReactionType;
@@ -43,6 +44,23 @@ public class PostServiceImpl implements PostService {
     public Post getPost(Long id) {
         var post = postRepository.findById(id);
         return post.orElse(null);
+    }
+
+    @Override
+    public PostResult getPostForPage(Long id, Authentication auth) {
+        User user = null;
+        if (auth != null)
+            user = userRepository.findByEmail(auth.getName());
+        var post = getPost(id);
+        return new PostResult(post.getId(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getContent(),
+                post.isDraft(),
+                post.getBlog().getId(),
+                post.getBlog().getName(),
+                post.getRating(),
+                user != null ? getUserPostReaction(user.getId(), post.getId()) : null);
     }
 
     @Override
@@ -133,12 +151,16 @@ public class PostServiceImpl implements PostService {
         if (query.isEmpty() || query.isBlank() || query == null)
             return new ArrayList<>(0);
 
-        var user = userRepository.findByEmail(auth.getName());
+        User user = null;
+        if (auth != null)
+            user = userRepository.findByEmail(auth.getName());
+
+        User finalUser = user;
         return postRepository.getAllByTitle(query).stream().map(p -> new PreviewPost(p.getId(),
                 p.getTitle(),
                 p.getDescription(),
                 p.getRating(),
-                user != null ? getUserPostReaction(user.getId(), p.getId()) : null,
+                finalUser != null ? getUserPostReaction(finalUser.getId(), p.getId()) : null,
                 p.getCreateDate())).toList();
     }
 }

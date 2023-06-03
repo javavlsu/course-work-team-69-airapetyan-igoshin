@@ -174,9 +174,8 @@ public class AppController {
     }
 
     @GetMapping("/post/{postId}")
-    public PostResult getPost(@PathVariable long postId) {
-        var post = _postService.getPost(postId);
-        return new PostResult(post.getId(), post.getTitle(), post.getDescription(), post.getContent(), post.isDraft(), post.getBlog().getId(), post.getBlog().getName(), post.getRating());
+    public PostResult getPost(@PathVariable long postId, Authentication auth) {
+        return _postService.getPostForPage(postId, auth);
     }
 
     @PostMapping("/post")
