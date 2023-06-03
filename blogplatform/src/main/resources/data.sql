@@ -12,9 +12,13 @@ VALUES (DEFAULT, null, 'user@g.com', 'User', '$2a$10$xF5xxLpShRJSzBeniu704eLwpW3
         '2023-04-23', null, 2);
 
 INSERT INTO public.post (id, content, create_date, update_date, description, rating, title, blog_id, is_draft)
-VALUES (DEFAULT, 'Post1Draft', '2023-04-23 16:49:40.000000', '2023-04-23 16:49:40.000000', 'Text', 1128, 'SamplePost', 1, true),
-       (DEFAULT, 'Post2Draft', '2023-04-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 0, 'SamplePost', 1, true),
-       (DEFAULT, 'Post3NotDraft', '2023-04-23 16:49:50.000000', '2023-04-23 16:49:50.000000', 'Text', 15, 'SamplePost', 1, false);
+VALUES (DEFAULT, 'Post1Draft', '2010-04-23 16:49:40.000000', '2023-04-23 16:49:40.000000', 'Text', 1128, 'SamplePost', 1, true),
+       (DEFAULT, 'Post2Draft', '2011-05-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 43, 'SamplePost', 1, true),
+       (DEFAULT, 'Post2Draft', '2012-05-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 19390, 'SamplePost', 1, true),
+       (DEFAULT, 'Post2Draft', '2013-05-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 333, 'SamplePost', 1, true),
+       (DEFAULT, 'Post2Draft', '2014-05-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 933, 'SamplePost', 1, true),
+       (DEFAULT, 'Post2Draft', '2015-05-23 16:49:45.000000', '2023-04-23 16:49:45.000000', 'Text', 123, 'SamplePost', 1, true),
+       (DEFAULT, 'Post3NotDraft', '2016-02-23 16:49:50.000000', '2023-04-23 16:49:50.000000', 'Text', 33, 'SamplePost', 1, false);
 
 INSERT INTO public.user_blog_role (id, role, blog_id, user_id)
 VALUES (DEFAULT, 2, 1, 1);
