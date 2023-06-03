@@ -21,12 +21,15 @@ export const BlogWrapper = styled('section')`
   overflow-y: scroll;
 `
 
-export const BlogPreviewWrapper = styled('div')<PreviewOptions>`
+export const BlogPreviewWrapper = styled('div')<
+  PreviewOptions & { $image?: string }
+>`
   min-height: ${({ height }) => height}vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: #9a9a9a;
+  background-color: #9a9a9a;
+  background: ${({ $image }) => `url(${$image})`} center center no-repeat;
 `
 
 export const PreviewContainer = styled('div')<PreviewContainerOptions>`
@@ -50,6 +53,7 @@ export const BlogAvatar = styled('img')<BlogAvatarOptions>`
   width: ${({ width }) => width}px;
   border-radius: ${({ borderRadius }) => borderRadius};
   background: #d9d9d9;
+  object-fit: cover;
 `
 
 export const BlogName = styled(SmartInput)<BlogNameOptions>`

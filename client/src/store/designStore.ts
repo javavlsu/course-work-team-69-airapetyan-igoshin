@@ -4,7 +4,7 @@ import { IDesignConfig } from '../utils/globalTypes'
 export const defaultDesignConfig: IDesignConfig = {
   previewOptions: {
     name: 'Превью блога',
-    height: 50
+    height: 70
   },
   previewContainerOptions: {
     name: 'Содержимое превью',

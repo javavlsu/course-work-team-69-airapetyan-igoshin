@@ -12,6 +12,8 @@ import {
 } from './Post.styles'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '@mui/material'
+import { PostPreviews } from '../../stubs'
 
 interface PostProps {
   post: IPreviewPost
@@ -27,6 +29,7 @@ export const Post: FC<PostProps> = ({
   handleDelete
 }) => {
   const navigate = useNavigate()
+  const theme = useTheme()
 
   const navigateToPost = () => {
     navigate(`/post/${post.id}`)
@@ -41,13 +44,19 @@ export const Post: FC<PostProps> = ({
       )}
       <PostHeader>{post.title}</PostHeader>
       <PostDescription>{post.description}</PostDescription>
-      <PostPicture isAsideOpen={isAsideOpen} />
+      <PostPicture src={PostPreviews[post.id]} />
       <PostFooter>
         <PostFooterItem>
-          Рейтинг: <PostStatistics color="green">{post.rating}</PostStatistics>
+          Рейтинг:{' '}
+          <PostStatistics color={theme.palette.success.main}>
+            {post.rating}
+          </PostStatistics>
         </PostFooterItem>
         <PostFooterItem>
-          Просмотров: <PostStatistics color="black">{0}</PostStatistics>
+          Просмотров:{' '}
+          <PostStatistics color={theme.palette.text.primary}>
+            {0}
+          </PostStatistics>
         </PostFooterItem>
       </PostFooter>
     </PostWrapper>

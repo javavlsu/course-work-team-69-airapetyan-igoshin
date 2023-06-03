@@ -31,11 +31,11 @@ export const PostDescription = styled('p')`
   font-size: 14px;
 `
 
-export const PostPicture = styled('img')<{ isAsideOpen: boolean }>`
+export const PostPicture = styled('img')`
   margin: 10px 0;
-  background: #9a9a9a;
   width: 100%;
-  height: ${({ isAsideOpen }) => (isAsideOpen ? '260px' : '350px')};
+  height: 350px;
+  background-color: #9a9a9a;
 `
 
 export const PostFooter = styled('div')`

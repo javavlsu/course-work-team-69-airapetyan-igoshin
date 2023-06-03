@@ -2,7 +2,7 @@ import { styled, TextField } from '@mui/material'
 
 export const BlogFormRoot = styled('form')`
   padding: 60px 30px;
-  background: ${({ theme }) => theme.palette.app.light};
+  background: ${({ theme }) => theme.palette.base.main};
   display: flex;
   justify-content: center;
   align-items: center;
