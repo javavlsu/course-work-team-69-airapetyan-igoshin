@@ -17,7 +17,7 @@ import { observer } from 'mobx-react-lite'
 import { BlogPreviewProps } from '../Blog.types'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { Box, Button, IconButton } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { Subscriber, UserBlogRole } from '../../../utils/globalTypes'
 import { ToolsItem, ToolsPanel } from '../../../components/ToolsPanel'
 import { Delete } from '@mui/icons-material'
@@ -26,6 +26,8 @@ import { UNSUBSCRIBED_USER_ROLE } from '../../../utils/constants'
 import { Subscribers } from './Subscribers'
 import { getSubscribers } from '../../../service'
 import { blogLogos, blogPreviewImages } from '../../../stubs'
+import userStore from '../../../store/userStore'
+import alertStore from '../../../store/alertStore'
 
 const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   blogRole: initialRole,
@@ -49,6 +51,15 @@ const BlogPreviewComponent: FC<BlogPreviewProps> = ({
   }
 
   const handleSubscribe = async (subscribeFlag = true) => {
+    if (!userStore.isAuth)
+      return alertStore.create({
+        type: 'info',
+        children: (
+          <>
+            Для начала необходимо <Link to={'/login'}>авторизоваться</Link>
+          </>
+        )
+      })
     const response = await subscribe({
       blogId: blog.id,
       subscribe: subscribeFlag

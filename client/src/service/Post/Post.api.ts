@@ -54,13 +54,24 @@ export const addReact = async (json: ReactionBody) => {
   }
 }
 
+const objectToSearchParams = <T extends { [k: string]: any }>(obj: T) => {
+  const output = []
+  let key: keyof typeof obj
+
+  for (key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      output.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+    }
+  }
+
+  return output.join('&')
+}
+
 export const getFeed = async (feedData: FeedData) => {
+  const params = objectToSearchParams(feedData)
+
   try {
-    return await ky
-      .get(
-        `${PREFIX_API}/posts?feedType=${feedData.feedType}&onlySubscription=${feedData.onlySubscription}`
-      )
-      .json<IPreviewPost[]>()
+    return await ky.get(`${PREFIX_API}/posts?${params}`).json<IPreviewPost[]>()
   } catch (e) {
     return []
   }

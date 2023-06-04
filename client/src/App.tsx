@@ -10,6 +10,8 @@ import alertStore from './store/alertStore'
 import { AppAlert } from './components/AppAlert'
 import themeStore from './store/themeStore'
 import { getTheme } from './theme'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const AppModal = styled(Modal)`
   display: flex;
@@ -33,21 +35,23 @@ function App() {
     user.getUserData()
   }, [])
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <CssBaseline enableColorScheme>
-          <AppModal open={modalStore.isOpen} onClose={modalStore.close}>
-            <>{modalStore.children}</>
-          </AppModal>
-          <AlertsWrapper>
-            {alertStore.alerts.map((alert, index) => (
-              <AppAlert key={index} alert={alert} />
-            ))}
-          </AlertsWrapper>
-          <AppRouter />
-        </CssBaseline>
-      </BrowserRouter>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <CssBaseline enableColorScheme>
+            <AppModal open={modalStore.isOpen} onClose={modalStore.close}>
+              <>{modalStore.children}</>
+            </AppModal>
+            <AlertsWrapper>
+              {alertStore.alerts.map((alert, index) => (
+                <AppAlert key={index} alert={alert} />
+              ))}
+            </AlertsWrapper>
+            <AppRouter />
+          </CssBaseline>
+        </BrowserRouter>
+      </ThemeProvider>
+    </LocalizationProvider>
   )
 }
 

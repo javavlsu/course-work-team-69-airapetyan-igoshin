@@ -13,13 +13,15 @@ import {
 
 export interface IPost {
   id: number
-  blogId: number
   title: string
   description: string
+  createDate: Date
   content: string
-  rating: number
   isDraft: boolean
+  blogId: number
   blogName: string
+  rating: number
+  reactionType: keyof typeof Reaction | null
 }
 
 export type IPreviewPost = Omit<
