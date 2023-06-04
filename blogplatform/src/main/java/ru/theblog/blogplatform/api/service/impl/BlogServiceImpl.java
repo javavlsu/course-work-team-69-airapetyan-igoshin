@@ -167,6 +167,7 @@ public class BlogServiceImpl implements BlogService {
             previewPost.description = post.getDescription();
             previewPost.rating = post.getRating();
             previewPost.reactionType = user != null ? getUserPostReaction(user.getId(), post.getId()) : null;
+            previewPost.createDate = post.getCreateDate();
             result.posts.add(previewPost);
         }
 
