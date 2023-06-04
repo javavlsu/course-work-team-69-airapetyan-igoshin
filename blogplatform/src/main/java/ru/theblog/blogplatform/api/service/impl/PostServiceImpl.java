@@ -93,7 +93,7 @@ public class PostServiceImpl implements PostService {
                     dateTo,
                     reversed,
                     feedType == FeedType.Popular);
-        } else {
+        } else if (!onlySubscription)/*In case unauthorized user tries to send onlySubscription == true*/ {
             posts = postRepository.findForFeed(
                     part * postsPerPart,
                     postsPerPart,
