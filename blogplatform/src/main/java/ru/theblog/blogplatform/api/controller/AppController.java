@@ -1,5 +1,7 @@
 package ru.theblog.blogplatform.api.controller;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import ru.theblog.blogplatform.api.model.params.*;
 import ru.theblog.blogplatform.api.model.params.form.BlogForm;
 import ru.theblog.blogplatform.api.model.params.form.BlogUpdateForm;
 import ru.theblog.blogplatform.api.model.params.form.UserForm;
+import ru.theblog.blogplatform.api.model.params.form.UserPutForm;
 import ru.theblog.blogplatform.api.service.BlogService;
 import ru.theblog.blogplatform.api.service.PostService;
 import ru.theblog.blogplatform.api.service.ReactionService;
@@ -21,6 +24,7 @@ import ru.theblog.blogplatform.api.service.UserService;
 import ru.theblog.blogplatform.api.service.impl.BlogServiceImpl;
 import ru.theblog.blogplatform.api.service.impl.ReactionServiceImpl;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +93,23 @@ public class AppController {
     public String registration(@RequestBody @Valid UserForm user) {
         _blogService.addUser(user);
         return "Successful";
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity user(@RequestBody @Valid UserPutForm userPF, Authentication auth, HttpServletRequest request) {
+        try {
+            _userService.updateUser(userPF, auth);
+            if (userPF.email != null && userPF.password != null) {
+                request.logout();
+                request.login(userPF.email, userPF.password);
+            }
+
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(403));
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/profile")
