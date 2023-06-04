@@ -30,3 +30,6 @@
 .text--italic {
   font-style: italic;
 }
+.MuiDateRangeCalendar-root div[style] {
+  display: none;
+}

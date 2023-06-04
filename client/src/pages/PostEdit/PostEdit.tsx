@@ -1,4 +1,12 @@
-import { TextField, Typography } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography
+} from '@mui/material'
 import { TextEditor } from '../../components/TextEditor'
 import {
   EditArea,
@@ -9,7 +17,13 @@ import {
 import { usePostEdit } from '../../hooks/usePostEdit'
 
 export const PostEdit = () => {
-  const { register, post, publishPost } = usePostEdit()
+  const {
+    register,
+    post,
+    publishPost,
+    showExitDraftModal,
+    handleCloseExitDraftModal
+  } = usePostEdit()
 
   return (
     <PageContainer>
@@ -34,7 +48,7 @@ export const PostEdit = () => {
             color={'warning'}
             onClick={() => publishPost({ isDraft: false, id: post?.id })}
           >
-            Опубликовать
+            Опубликовать повторно
           </PublishButton>
         ) : (
           <PublishButton
@@ -52,6 +66,22 @@ export const PostEdit = () => {
           Сохранить в черновик
         </PublishButton>
       </PublishButtons>
+      <Dialog
+        open={showExitDraftModal}
+        onClose={() => handleCloseExitDraftModal()}
+      >
+        <DialogTitle>Хотите остаться и продолжить редактирование?</DialogTitle>
+        <DialogContent>
+          После вашего ухода все изменения будут сохранены и вы сможете
+          вернуться к посту позднее
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleCloseExitDraftModal()}>Уйти</Button>
+          <Button onClick={() => handleCloseExitDraftModal(false)} autoFocus>
+            Остаться
+          </Button>
+        </DialogActions>
+      </Dialog>
     </PageContainer>
   )
 }

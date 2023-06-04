@@ -1,32 +1,4 @@
 import { Blog_1_Post_1, Blog_1_Post_2, Blog_1_Post_3 } from '../assets'
-import { IPreviewPost } from '../utils/globalTypes.js'
-
-export const stubPosts: IPreviewPost[] = [
-  {
-    id: 1,
-    title: 'Заголовок',
-    description: 'asdsd',
-    rating: 100
-  },
-  {
-    id: 2,
-    title: 'Заголовок',
-    description: 'Description...',
-    rating: 145
-  },
-  {
-    id: 3,
-    title: 'Заголовок',
-    description: 'accusamus aut adipisci.',
-    rating: 145
-  },
-  {
-    id: 4,
-    title: 'Заголовок',
-    description: 'Description...',
-    rating: 145
-  }
-]
 
 export const stubComments = {
   0: [

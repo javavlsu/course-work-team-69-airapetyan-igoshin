@@ -6,13 +6,36 @@ import { useEffect, useState } from 'react'
 import { IPost } from '../utils/globalTypes'
 import { checkUserRights } from '../utils/checkUserRights'
 import alertStore from '../store/alertStore'
+import { UpdatedPost } from '../service/Post/Post.types'
 
 export const usePostEdit = () => {
   const navigate = useNavigate()
+  const [currentPostId, setCurrentPostId] = useState<number | null>(null)
+  const [showExitDraftModal, setShowExitDraftModal] = useState(false)
   const { register, handleSubmit, setValue } =
     useForm<Record<'title' | 'description', string>>()
   const [searchParams] = useSearchParams()
   const [post, setPost] = useState<IPost>()
+
+  const exitEditor = (to = '/') => {
+    navigate(to)
+    editorStore.clear()
+  }
+
+  const handleCloseExitDraftModal = (isExit = true) => {
+    if (isExit) exitEditor()
+    setShowExitDraftModal(false)
+  }
+
+  const handleUpdatePost = async (json: UpdatedPost) => {
+    await Post.updatePost(json)
+    alertStore.create({
+      type: 'success',
+      children: 'Пост успешно обновлен!'
+    })
+    if (json.isDraft) setShowExitDraftModal(true)
+    else exitEditor(`/post/${json.id}`)
+  }
   const publishPost = ({ isDraft, id }: { isDraft: boolean; id?: number }) =>
     handleSubmit(async ({ title, description }) => {
       const content = editorStore.toHtml()
@@ -33,36 +56,40 @@ export const usePostEdit = () => {
         content,
         isDraft
       }
+      // id comes from BE and search params. CurrentPostId is sets by save to draft
+      const postId = currentPostId || id
 
-      if (id) {
-        await Post.updatePost({ id, ...json })
+      if (postId) return handleUpdatePost({ ...json, id: postId })
+
+      // publish post
+      const res = await Post.publishPost(json)
+
+      if (!res)
+        return alertStore.create({
+          type: 'error',
+          children: `Упс.. Произошла ошибка`
+        })
+
+      if (!isDraft) {
+        // Пост опубликован
+        setValue('title', '')
+        setValue('description', '')
+        exitEditor(`/post/${res.postId}`)
         alertStore.create({
           type: 'success',
-          children: 'Пост успешно обновлен!'
+          children: `Пост успешно создан
+            }!`
         })
-      } else {
-        const res = await Post.publishPost(json)
-
-        if (!res)
-          return alertStore.create({
-            type: 'error',
-            children: `Упс.. Произошла ошибка`
-          })
-
-        if (!isDraft) {
-          setValue('title', '')
-          setValue('description', '')
-          editorStore.clear()
-        }
-
-        !isDraft && navigate(`/post/${res.postId}`)
-        alertStore.create({
-          type: 'success',
-          children: `Пост успешно ${
-            isDraft ? 'сохранен в черновик' : 'создан'
-          }!`
-        })
+        return
       }
+
+      // Черновик
+      setCurrentPostId(res.postId)
+      alertStore.create({
+        type: 'success',
+        children: `Пост успешно сохранен!`
+      })
+      setShowExitDraftModal(true)
     })()
 
   useEffect(() => {
@@ -85,6 +112,8 @@ export const usePostEdit = () => {
   return {
     publishPost,
     register,
-    post
+    post,
+    showExitDraftModal,
+    handleCloseExitDraftModal
   }
 }

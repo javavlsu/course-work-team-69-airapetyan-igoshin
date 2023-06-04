@@ -12,12 +12,18 @@ export const usePostPage = () => {
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<IPost>()
   const [isLoaded, setIsLoaded] = useState(false)
+  const [reactionActivity, setReactionActivity] = useState(0)
 
   const handleRating = async (reactionType: Reaction) => {
     if (!post) return
-
     const newRating =
       reactionType === Reaction.Upvote ? post.rating + 1 : post.rating - 1
+
+    if (reactionType === Reaction.Upvote) {
+      setReactionActivity(reactionActivity + 1)
+    } else {
+      setReactionActivity(reactionActivity - 1)
+    }
 
     setPost({ ...post, rating: newRating })
     Post.addReact({
@@ -45,6 +51,10 @@ export const usePostPage = () => {
     ],
     [post]
   )
+  const reactionActivityMap: { [K in keyof typeof Reaction]: number } = {
+    Upvote: 1,
+    Downvote: -1
+  }
 
   const requestPost = async () => {
     const response = await Post.getPost(Number(id))
@@ -52,6 +62,11 @@ export const usePostPage = () => {
     setIsLoaded(true)
     if (!response) return
     setPost(response)
+    setReactionActivity(
+      response.reactionType === null
+        ? 0
+        : reactionActivityMap[response.reactionType]
+    )
   }
 
   useEffect(() => {
@@ -63,6 +78,7 @@ export const usePostPage = () => {
     toolsItems,
     post,
     isLoaded,
-    handleRating
+    handleRating,
+    reactionActivity
   }
 }

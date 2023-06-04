@@ -31,11 +31,9 @@ import stubComments from '../../store/stubComments'
 import { blogPreviewImages } from '../../stubs'
 
 const PostPageComponent = () => {
-  const { toolsItems, post, isLoaded, handleRating } = usePostPage()
+  const { toolsItems, post, isLoaded, handleRating, reactionActivity } =
+    usePostPage()
   const postComments = post ? stubComments.comments[post.id] : []
-  // todo
-  const isDownvoteDisabled = false
-  const isUpvoteDisabled = false
 
   return (
     <LoaderPage loadingData={post} isLoaded={isLoaded}>
@@ -67,14 +65,16 @@ const PostPageComponent = () => {
             <PostRating>
               <IconButton
                 onClick={() => handleRating(Reaction.Downvote)}
-                disabled={isDownvoteDisabled}
+                disabled={reactionActivity <= -1}
               >
                 <IconRemove />
               </IconButton>
+
               <PostRatingCount>{post?.rating}</PostRatingCount>
+
               <IconButton
                 onClick={() => handleRating(Reaction.Upvote)}
-                disabled={isUpvoteDisabled}
+                disabled={reactionActivity >= 1}
               >
                 <IconAdd />
               </IconButton>

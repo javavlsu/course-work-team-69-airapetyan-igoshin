@@ -40,7 +40,6 @@ export const PostPicture = styled('img')`
 
 export const PostFooter = styled('div')`
   display: flex;
-  justify-content: end;
   width: 100%;
   gap: 30px;
   padding: 0 20px 5px;
@@ -50,6 +49,11 @@ export const PostFooterItem = styled('div')`
   display: flex;
   gap: 10px;
   font-size: 12px;
+  &:last-child {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
 `
 
 export const PostStatistics = styled('span')<{ color: string }>`

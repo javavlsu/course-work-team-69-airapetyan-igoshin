@@ -72,6 +72,8 @@ export const BlogDescription = styled(SmartInput)<BlogDescriptionOptions>`
   text-decoration: ${({ textDecoration }) => textDecoration};
   font-style: ${({ fontStyle }) => fontStyle};
   margin: ${({ margin }) => margin};
+  max-width: 50%;
+  text-align: center;
 `
 
 export const StatisticsBlock = styled('div')<StatisticsBlockOptions>`

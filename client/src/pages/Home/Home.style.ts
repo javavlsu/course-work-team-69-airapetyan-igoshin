@@ -26,12 +26,16 @@ export const MenuHeader = styled('p')`
   font-weight: 700;
 `
 
-export const MenuButton = styled('button')<{ isOpen: boolean }>`
+export const MenuButton = styled('button')<{
+  isOpen: boolean
+  $selected?: boolean
+}>`
   width: 100%;
   height: 45px;
   display: flex;
   align-items: center;
-  background: ${({ theme }) => theme.palette.app.main};
+  background: ${({ theme, $selected }) =>
+    $selected ? theme.palette.app.light : theme.palette.app.main};
   color: ${({ theme }) => theme.palette.app.contrastText};
   padding: 0 ${(props) => (props.isOpen ? '20px' : '10px')};
   border: none;
@@ -53,7 +57,7 @@ export const MenuButtonIcon = styled('img')<{ isOpen: boolean }>`
 `
 
 export const MenuButtonText = styled('p')`
-  padding: 0;
+  padding: 0 0 0 10px;
   font-size: 15px;
 `
 

@@ -10,23 +10,26 @@ import {
   PostDescription,
   DeleteButton
 } from './Post.styles'
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { PostPreviews } from '../../stubs'
+import dayjs from 'dayjs'
 
 interface PostProps {
   post: IPreviewPost
-  isAsideOpen?: boolean
   deletable?: boolean
   handleDelete?: (id: number) => void
 }
 
+const getFormattedPostDate = (date: Date) => {
+  return dayjs(date).format('LL')
+}
+
 export const Post: FC<PostProps> = ({
   post,
-  isAsideOpen = false,
   deletable,
-  handleDelete
+  handleDelete: onDelete
 }) => {
   const navigate = useNavigate()
   const theme = useTheme()
@@ -35,10 +38,15 @@ export const Post: FC<PostProps> = ({
     navigate(`/post/${post.id}`)
   }
 
+  const handleDelete = (event: MouseEvent, postId: number) => {
+    event.stopPropagation()
+    onDelete && onDelete(postId)
+  }
+
   return (
     <PostWrapper onClick={navigateToPost}>
       {deletable && (
-        <DeleteButton onClick={() => handleDelete && handleDelete(post.id)}>
+        <DeleteButton onClick={(e) => handleDelete && handleDelete(e, post.id)}>
           <Delete />
         </DeleteButton>
       )}
@@ -58,6 +66,7 @@ export const Post: FC<PostProps> = ({
             {0}
           </PostStatistics>
         </PostFooterItem>
+        <PostFooterItem>{getFormattedPostDate(post.createDate)}</PostFooterItem>
       </PostFooter>
     </PostWrapper>
   )
