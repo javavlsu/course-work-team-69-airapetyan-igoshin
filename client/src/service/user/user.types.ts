@@ -26,3 +26,7 @@ export interface IProfile {
   email: string
   blogs: Blog[]
 }
+
+export type ChangeProfileData = Omit<IProfile, 'profileImage' | 'blogs'> & {
+  password: string
+}

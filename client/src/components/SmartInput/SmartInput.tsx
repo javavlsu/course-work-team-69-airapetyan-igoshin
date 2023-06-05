@@ -5,7 +5,7 @@ interface SmartInputProps {
   type?: string
   placeholder: string
   editable?: boolean
-  value: string
+  value?: string | Date | boolean
   className?: string
   variant?: 'filled' | 'outlined' | 'standard'
   inputProps?: any
@@ -36,7 +36,7 @@ export const SmartInput: FC<SmartInputProps> = ({
           {...inputProps}
         />
       ) : (
-        <SmartTextField className={className}>{value}</SmartTextField>
+        <SmartTextField className={className}>{String(value)}</SmartTextField>
       )}
     </>
   )

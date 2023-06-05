@@ -1,5 +1,5 @@
 export const initialUser = {
-  username: 'Денис Игошин',
+  name: 'Денис Игошин',
   birthdate: '22.04.2003',
   status: 'Какой-то статус...',
   email: 'd.igoschin.igoshin@gmail.com',

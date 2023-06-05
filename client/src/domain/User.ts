@@ -4,7 +4,9 @@ import {
   register,
   logout,
   getUserData,
-  getProfile
+  getProfile,
+  ChangeProfileData,
+  changeUserData
 } from '../service/user'
 import userStore from '../store/userStore'
 
@@ -45,6 +47,9 @@ class User {
 
   async getProfile() {
     return await getProfile()
+  }
+  async changeProfile(json: ChangeProfileData) {
+    return await changeUserData(json)
   }
 }
 
