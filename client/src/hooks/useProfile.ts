@@ -10,5 +10,5 @@ export const useProfile = () => {
   useEffect(() => {
     profileRequest()
   }, [])
-  return { profile }
+  return { profile, profileRequest }
 }

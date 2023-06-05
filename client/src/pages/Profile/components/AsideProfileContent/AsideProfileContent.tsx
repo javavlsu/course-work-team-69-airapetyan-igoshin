@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import {
   Button,
   FormControl,
@@ -16,16 +17,33 @@ import {
   ProfileForm
 } from './AsideProfileContent.styles'
 import { initialUser } from './AsideProfileContent.data'
+import { ChangeProfileData } from '../../../../service'
+import User from '../../../../domain/User'
+import { useProfile } from '../../../../hooks/useProfile'
 
 export const AsideProfileContent: FC<{ isAsideOpen: boolean }> = ({
   isAsideOpen
 }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [user, setUser] = useState(initialUser)
+  const { register, handleSubmit, setValue } = useForm<ChangeProfileData>()
+  const { profile, profileRequest } = useProfile()
+
+  useEffect(() => {
+    if (!profile) return
+    setValue('email', profile.email)
+    setValue('birthdate', profile.birthdate)
+    setValue('name', profile.name)
+    setValue('status', profile.status)
+  }, [profile])
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
+  const handleProfileSubmit = handleSubmit(async (data) => {
+    await User.changeProfile(data)
+    profileRequest()
+  })
 
   return (
     <AsideWrapper>
@@ -33,29 +51,32 @@ export const AsideProfileContent: FC<{ isAsideOpen: boolean }> = ({
         <ProfileAvatarBlock>
           <ProfileAvatar />
         </ProfileAvatarBlock>
-        <ProfileForm>
-          {/* Todo как в BlogPreview */}
+        <ProfileForm onSubmit={handleProfileSubmit}>
           <SmartInput
             editable={isAsideOpen}
             placeholder="Имя пользователя"
-            value={user.username}
+            value={profile?.name}
+            inputProps={register('name')}
           />
           <SmartInput
             editable={isAsideOpen}
             placeholder="Дата рождения"
             type="date"
-            value={user.birthdate}
+            value={profile?.birthdate}
+            inputProps={register('birthdate')}
           />
           <SmartInput
             editable={isAsideOpen}
             placeholder="Статус"
-            value={user.status}
+            value={profile?.status}
+            inputProps={register('status')}
           />
           <SmartInput
             editable={isAsideOpen}
             placeholder="E-mail"
             type="email"
-            value={user.email}
+            value={profile?.email}
+            inputProps={{ ...register('email') }}
           />
           {isAsideOpen && (
             <>
@@ -64,6 +85,7 @@ export const AsideProfileContent: FC<{ isAsideOpen: boolean }> = ({
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Пароль"
+                  {...register('password')}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton onClick={handleClickShowPassword} edge="end">
@@ -73,7 +95,7 @@ export const AsideProfileContent: FC<{ isAsideOpen: boolean }> = ({
                   }
                 />
               </FormControl>
-              <Button>Сохранить</Button>
+              <Button type={'submit'}>Сохранить</Button>
             </>
           )}
         </ProfileForm>

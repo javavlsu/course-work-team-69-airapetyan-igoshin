@@ -4,6 +4,7 @@ import { DateRange } from '@mui/x-date-pickers-pro'
 import Post from '../domain/Post'
 import { Dayjs } from 'dayjs'
 import { FeedData } from '../service/Post/Post.types'
+import { RefObject } from 'react'
 
 class FeedStore {
   feed: IPreviewPost[] = []
@@ -13,12 +14,14 @@ class FeedStore {
   dates: DateRange<Dayjs> = [null, null]
   reversed = false
   hasMorePosts = true
+  isLoading = false
+  scrollable: RefObject<HTMLDivElement> | null = null
   constructor() {
     makeAutoObservable(this)
   }
-  handlePart = () => {
+  handlePart = async () => {
     this.part += 1
-    this.getFeed()
+    await this.getFeed()
   }
   handleDates = (newDates: DateRange<Dayjs>) => {
     this.resetSecondaryParams()
@@ -84,6 +87,15 @@ class FeedStore {
   resetSecondaryParams = () => {
     this.part = 0
     this.hasMorePosts = true
+    this.scrollable?.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+  turnOnLoading = () => (this.isLoading = true)
+  turnOffLoading = () => (this.isLoading = false)
+  setScrollableContent = (scrollable: RefObject<HTMLDivElement> | null) => {
+    this.scrollable = scrollable
   }
 }
 

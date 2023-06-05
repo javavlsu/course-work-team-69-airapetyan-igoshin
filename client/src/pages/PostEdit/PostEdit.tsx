@@ -45,10 +45,10 @@ export const PostEdit = () => {
         {post ? (
           <PublishButton
             variant={'contained'}
-            color={'warning'}
+            color={post.isDraft ? 'success' : 'warning'}
             onClick={() => publishPost({ isDraft: false, id: post?.id })}
           >
-            Опубликовать повторно
+            {post.isDraft ? 'Опубликовать' : 'Опубликовать повторно'}
           </PublishButton>
         ) : (
           <PublishButton

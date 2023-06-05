@@ -16,6 +16,8 @@ import { useTheme } from '@mui/material'
 import { PostPreviews } from '../../stubs'
 import dayjs from 'dayjs'
 
+require('dayjs/locale/ru')
+
 interface PostProps {
   post: IPreviewPost
   deletable?: boolean
@@ -23,7 +25,7 @@ interface PostProps {
 }
 
 const getFormattedPostDate = (date: Date) => {
-  return dayjs(date).format('LL')
+  return dayjs(date).locale('ru').format('LL')
 }
 
 export const Post: FC<PostProps> = ({
